@@ -6,9 +6,7 @@
 <title>TV Quiz</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -50,9 +48,21 @@ h1 {
     font-size: 28px;
 }
 
-.answer:hover {
-    background: #405d94;
+.answer:hover { background: #405d94; }
+
+#startBtn {
+    margin-top: 35px;
+    padding: 18px 42px;
+    border: 0;
+    border-radius: 12px;
+    background: #668cff;
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
 }
+
+#startBtn:hover { background: #83a2ff; }
 </style>
 </head>
 
@@ -70,6 +80,14 @@ h1 {
     <div class="answer">В. Марс</div>
     <div class="answer">Г. Венера</div>
 </div>
+
+<button id="startBtn" onclick="startGame()">Начать игру</button>
+
+<script>
+function startGame() {
+    alert("Игра начинается!");
+}
+</script>
 
 </body>
 </html>
