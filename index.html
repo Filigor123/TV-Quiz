@@ -68,7 +68,7 @@ function roster(){return [...players.values()]}
 function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function updateLobby(){
  const list=roster();$('players').innerHTML=list.length?list.map(p=>'<div class="player">'+safe(p.avatar)+' '+safe(p.name)+'<small>'+(p.ready?'✅ Готов':'⏳ Не готов')+'</small></div>').join(''):'<div class="player">Ждём участников…</div>';
- const btn=$('startGame');btn.disabled=!list.length||!list.every(p=>p.ready);btn.textContent=btn.disabled?'Ждём, пока все будут готовы':'Начать викторину';
+ const btn=$('startGame');btn.disabled=!list.length||!list.every(p=>p.ready);btn.textContent=btn.disabled?'Ждём, пока все будут готовы':'Начать викторину';if(phase==='game')renderLivePlayers();
 }
 function makeDeck(){
  const cats=[...document.querySelectorAll('#categories input:checked')].map(x=>x.value);
