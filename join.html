@@ -13,9 +13,9 @@ label{display:block;margin:18px 0 9px;font-weight:bold}
 input{width:100%;padding:15px;border:2px solid #405273;border-radius:12px;background:#101a2d;color:white;font-size:18px;outline:none}
 input:focus{border-color:#8daaff}
 .avatars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.avatar{-webkit-appearance:none;appearance:none;touch-action:manipulation;min-height:68px;border:2px solid #405273;border-radius:15px;background:#263653;font-size:36px;cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
+.avatar{-webkit-appearance:none;appearance:none;touch-action:manipulation;min-height:108px;border:2px solid #405273;border-radius:16px;background:linear-gradient(155deg,#344c73,#202e48);font-size:39px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#fff;transition:transform .12s,border-color .12s,background .12s}.avatar span{font-size:12px;font-weight:bold;letter-spacing:.2px;color:#dce7ff}
 .avatar:active{transform:scale(.94)}
-.avatar.selected{border-color:#b9caff;background:#405d94;box-shadow:0 0 0 3px #9bb3ff55;transform:scale(1.04)}
+.avatar.selected{border-color:#b9caff;background:linear-gradient(155deg,#526fa5,#354d78);box-shadow:0 0 0 3px #9bb3ff55;transform:scale(1.04)}
 .action{width:100%;margin-top:20px;padding:16px;border:0;border-radius:13px;background:linear-gradient(135deg,#779cff,#526fe0);color:white;font-size:20px;font-weight:bold;cursor:pointer;touch-action:manipulation}
 .action:disabled{opacity:.55;cursor:wait}
 #message{min-height:28px;margin:14px 0 0;text-align:center;color:#d7e1ff;line-height:1.4}
@@ -32,9 +32,18 @@ input:focus{border-color:#8daaff}
 <input id="playerName" maxlength="16" placeholder="Введи своё имя" autocomplete="nickname">
 <label>Выбери аватар</label>
 <div class="avatars" id="avatars">
-<button class="avatar selected" type="button">😎</button><button class="avatar" type="button">🤠</button><button class="avatar" type="button">🥸</button><button class="avatar" type="button">🤯</button>
-<button class="avatar" type="button">🤡</button><button class="avatar" type="button">🤖</button><button class="avatar" type="button">👽</button><button class="avatar" type="button">👹</button>
-<button class="avatar" type="button">😺</button><button class="avatar" type="button">🦊</button><button class="avatar" type="button">🙈</button><button class="avatar" type="button">💀</button>
+<button class="avatar selected" type="button" data-avatar="🧑‍🚀">🧑‍🚀<span>Космонавт</span></button>
+<button class="avatar" type="button" data-avatar="🧙">🧙<span>Маг</span></button>
+<button class="avatar" type="button" data-avatar="🥷">🥷<span>Ниндзя</span></button>
+<button class="avatar" type="button" data-avatar="🦸">🦸<span>Герой</span></button>
+<button class="avatar" type="button" data-avatar="🧛">🧛<span>Вампир</span></button>
+<button class="avatar" type="button" data-avatar="🧟">🧟<span>Зомби</span></button>
+<button class="avatar" type="button" data-avatar="🤠">🤠<span>Ковбой</span></button>
+<button class="avatar" type="button" data-avatar="🧑‍🎤">🧑‍🎤<span>Рокер</span></button>
+<button class="avatar" type="button" data-avatar="🧑‍🍳">🧑‍🍳<span>Повар</span></button>
+<button class="avatar" type="button" data-avatar="🕵️">🕵️<span>Детектив</span></button>
+<button class="avatar" type="button" data-avatar="🧑‍🚒">🧑‍🚒<span>Пожарный</span></button>
+<button class="avatar" type="button" data-avatar="👽">👽<span>Пришелец</span></button>
 </div>
 <button class="action" id="connectBtn">Подключиться</button>
 </section>
@@ -62,7 +71,7 @@ document.getElementById('avatars').addEventListener('click',event=>{
  if(!button)return;
  document.querySelectorAll('.avatar').forEach(x=>x.classList.remove('selected'));
  button.classList.add('selected');
- avatar=button.textContent.trim();
+ avatar=button.dataset.avatar;
  setMessage('Выбран персонаж '+avatar);
 });
 function send(data){if(conn&&conn.open)conn.send(data)}
