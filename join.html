@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TV Quiz — подключение игрока</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; padding: 24px 16px;
+  display: flex; justify-content: center; align-items: center;
+  background: #101522; color: #fff; font-family: Arial, sans-serif;
+}
+.card {
+  width: 100%; max-width: 440px; padding: 26px 20px;
+  border-radius: 22px; background: #1b2740;
+  box-shadow: 0 18px 50px #0006;
+}
+h1 { margin: 0 0 8px; text-align: center; color: #9bb3ff; font-size: 27px; }
+.subtitle { text-align: center; color: #c5cee2; margin: 0 0 26px; }
+label { display: block; margin: 18px 0 9px; font-weight: bold; }
+input {
+  width: 100%; padding: 15px; border: 2px solid #405273; border-radius: 12px;
+  background: #101a2d; color: white; font-size: 18px; outline: none;
+}
+input:focus { border-color: #8daaff; }
+.avatars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.avatar {
+  min-height: 66px; border: 2px solid #405273; border-radius: 14px;
+  background: #263653; font-size: 34px; cursor: pointer;
+}
+.avatar.selected { border-color: #9bb3ff; background: #405d94; box-shadow: 0 0 0 2px #9bb3ff55; }
+button.ready {
+  width: 100%; margin-top: 24px; padding: 16px; border: 0; border-radius: 13px;
+  background: #668cff; color: white; font-size: 20px; font-weight: bold; cursor: pointer;
+}
+button.ready:active { transform: scale(.99); }
+#message { min-height: 22px; margin: 14px 0 0; text-align: center; color: #b9c9ff; }
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>🎮 TV QUIZ</h1>
+  <p class="subtitle">Подключение игрока</p>
+
+  <label for="playerName">Как тебя зовут?</label>
+  <input id="playerName" maxlength="16" placeholder="Введи своё имя" autocomplete="nickname">
+
+  <label>Выбери себе аватар</label>
+  <div class="avatars" id="avatars">
+    <button class="avatar selected" type="button" aria-label="Весёлый" title="Весёлый">😎</button>
+    <button class="avatar" type="button" aria-label="Хитрый" title="Хитрый">🤠</button>
+    <button class="avatar" type="button" aria-label="Крутой" title="Крутой">🥸</button>
+    <button class="avatar" type="button" aria-label="Удивлённый" title="Удивлённый">🤯</button>
+    <button class="avatar" type="button" aria-label="Смешной" title="Смешной">🤡</button>
+    <button class="avatar" type="button" aria-label="Киборг" title="Киборг">🤖</button>
+    <button class="avatar" type="button" aria-label="Инопланетянин" title="Инопланетянин">👽</button>
+    <button class="avatar" type="button" aria-label="Монстр" title="Монстр">👹</button>
+    <button class="avatar" type="button" aria-label="Кот" title="Кот">😺</button>
+    <button class="avatar" type="button" aria-label="Лиса" title="Лиса">🦊</button>
+    <button class="avatar" type="button" aria-label="Обезьяна" title="Обезьяна">🙈</button>
+    <button class="avatar" type="button" aria-label="Череп" title="Череп">💀</button>
+  </div>
+
+  <button class="ready" id="readyBtn" type="button">Готов</button>
+  <p id="message" aria-live="polite"></p>
+</main>
+<script>
+let selectedAvatar = "😎";
+document.querySelectorAll(".avatar").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".avatar").forEach(item => item.classList.remove("selected"));
+    button.classList.add("selected");
+    selectedAvatar = button.textContent.trim();
+  });
+});
+document.getElementById("readyBtn").addEventListener("click", () => {
+  const name = document.getElementById("playerName").value.trim();
+  const message = document.getElementById("message");
+  if (!name) {
+    message.textContent = "Сначала введи имя игрока.";
+    document.getElementById("playerName").focus();
+    return;
+  }
+  message.textContent = selectedAvatar + " " + name + " — готов! (Пока это демонстрация экрана.)";
+});
+</script>
+</body>
+</html>
