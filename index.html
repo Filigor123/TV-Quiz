@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TV Quiz</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #101522;
+    color: white;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+h1 {
+    font-size: 28px;
+    color: #8daaff;
+}
+
+.question {
+    font-size: 42px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.answer {
+    background: #26334f;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 28px;
+}
+
+.answer:hover {
+    background: #405d94;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📺 TV QUIZ</h1>
+
+<div class="question">
+    Какая планета самая большая в Солнечной системе?
+</div>
+
+<div class="answers">
+    <div class="answer">А. Земля</div>
+    <div class="answer">Б. Юпитер</div>
+    <div class="answer">В. Марс</div>
+    <div class="answer">Г. Венера</div>
+</div>
+
+</body>
+</html>
