@@ -51,7 +51,7 @@ input:focus{border-color:#8daaff}
 </main>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
-let avatar='😎',peer=null,conn=null,amReady=false,players=[],started=false,answered=false;
+let avatar='😎',peer=null,conn=null,amReady=false,players=[],started=false,answered=false,phoneTimer=null;
 const hostId=new URLSearchParams(location.search).get('host');
 const msg=document.getElementById('message');
 const connectBtn=document.getElementById('connectBtn');
@@ -73,10 +73,10 @@ function renderPlayers(list){
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function startQuestion(data){
- started=true;answered=false;document.getElementById('lobby').style.display='none';document.getElementById('profile').style.display='none';document.getElementById('play').style.display='block';
+ started=true;answered=false;clearInterval(phoneTimer);document.getElementById('lobby').style.display='none';document.getElementById('profile').style.display='none';document.getElementById('play').style.display='block';
  const q=data.question||data;
  document.getElementById('roundInfo').textContent=data.round&&data.total?'Вопрос '+data.round+' из '+data.total:'';
- document.getElementById('phoneTimer').textContent=data.time?data.time+' сек.':'';
+ let left=Number(data.time)||0;document.getElementById('phoneTimer').textContent=left?left+' сек.':'';if(left)phoneTimer=setInterval(()=>{left=Math.max(0,left-1);document.getElementById('phoneTimer').textContent=left+' сек.';if(left===0)clearInterval(phoneTimer)},1000);
  document.getElementById('question').textContent=q.text;
  document.getElementById('answerMessage').textContent='Выбери правильный ответ';
  document.getElementById('choices').innerHTML=q.answers.map((a,i)=>'<button class="choice" data-index="'+i+'">'+String.fromCharCode(1040+i)+'. '+escapeHtml(a)+'</button>').join('');
@@ -118,8 +118,8 @@ connectBtn.addEventListener('click',()=>{
     if(data.type==='state'){renderPlayers(data.players);if(data.gameStarted&&data.question)startQuestion({question:data.question})}
     if(data.type==='players')renderPlayers(data.players);
     if(data.type==='question')startQuestion(data);
-    if(data.type==='reveal'){document.getElementById('answerMessage').textContent='Правильный ответ: '+data.answerText;document.getElementById('phoneTimer').textContent='Раунд завершён';}
-    if(data.type==='game-over'){document.getElementById('play').innerHTML='<h1>🏆 Игра завершена</h1><div class="resultBox">'+data.players.map((p,i)=>(i+1)+'. '+escapeHtml(p.name)+' — '+p.score+' очков').join('<br>')+'</div><p class="hint">Спасибо за игру!</p>';}
+    if(data.type==='reveal'){clearInterval(phoneTimer);document.getElementById('answerMessage').textContent='Правильный ответ: '+data.answerText;document.getElementById('phoneTimer').textContent='Раунд завершён';}
+    if(data.type==='game-over'){clearInterval(phoneTimer);document.getElementById('play').innerHTML='<h1>🏆 Игра завершена</h1><div class="resultBox">'+data.players.map((p,i)=>(i+1)+'. '+escapeHtml(p.name)+' — '+p.score+' очков').join('<br>')+'</div><p class="hint">Спасибо за игру!</p>';}
    });
    conn.on('close',()=>{clearTimeout(timeout);resetConnect('Связь с телевизором потеряна. Обнови страницу и подключись снова.')});
    conn.on('error',()=>{clearTimeout(timeout);resetConnect('Ошибка связи с телевизором. Проверь, что экран TV Quiz всё ещё открыт.')});
