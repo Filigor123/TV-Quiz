@@ -1,114 +1,140 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TV Quiz</title>
 <style>
-*{box-sizing:border-box} body{margin:0;min-height:100vh;padding:28px;background:#101522;color:#fff;font-family:Arial,sans-serif;display:flex;flex-direction:column;align-items:center}
-h1{margin:8px 0;color:#9bb3ff;font-size:clamp(28px,4vw,48px)} .sub{color:#c4cee5;font-size:clamp(16px,2vw,23px);text-align:center}
-#status{margin:14px 0;color:#b9c9ff;font-size:18px;text-align:center}
-#qr{background:#fff;padding:12px;border-radius:14px;min-width:224px;min-height:224px;display:flex;align-items:center;justify-content:center;margin:16px auto}
-#qr img{display:block} #room{font-size:14px;color:#aebbd4;text-align:center;word-break:break-all;max-width:850px}
-.panel{width:min(100%,1000px);margin-top:24px;background:#1b2740;border-radius:20px;padding:24px}
-h2{text-align:center;margin:0 0 18px;color:#dce5ff}
-#players{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
-.player{background:#293957;border-radius:13px;padding:16px;font-size:22px;text-align:center}
-.player small{display:block;color:#b9c9df;font-size:14px;margin-top:6px}
-#game{display:none;width:min(100%,1000px);margin-top:24px}
-.question{font-size:clamp(26px,4vw,46px);text-align:center;margin:24px 0}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.answer{padding:22px;background:#293957;border-radius:14px;text-align:center;font-size:clamp(20px,3vw,30px)}
-#scores{margin-top:20px;line-height:1.8;text-align:center;font-size:20px}
-@media(max-width:600px){.answers{grid-template-columns:1fr}body{padding:16px}}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:24px;background:radial-gradient(circle at top,#263b63,#101522 62%);color:#fff;font-family:Arial,sans-serif;display:flex;flex-direction:column;align-items:center}
+h1{margin:8px 0;color:#b7caff;font-size:clamp(30px,4vw,48px);text-align:center}h2{margin:0 0 18px;text-align:center;color:#e0e8ff}
+.sub{color:#c4cee5;text-align:center;font-size:clamp(16px,2vw,22px)}.screen{width:min(100%,1050px);margin-top:22px}.panel{background:#1b2943;border:1px solid #34496c;border-radius:22px;padding:clamp(18px,3vw,30px);box-shadow:0 18px 50px #0005}
+.field-title{font-size:19px;font-weight:bold;margin:22px 0 12px}.options{display:flex;flex-wrap:wrap;gap:10px}.option{display:flex;align-items:center;gap:8px;padding:12px 15px;border:1px solid #52698f;border-radius:13px;background:#263958;font-size:17px;cursor:pointer}.option input{accent-color:#91adff;width:18px;height:18px}
+select{padding:13px 16px;border-radius:12px;background:#101a2d;color:white;border:1px solid #52698f;font-size:17px;min-width:190px}
+.row{display:flex;gap:18px;flex-wrap:wrap}.row>div{flex:1;min-width:190px}
+button.primary{display:block;width:min(100%,460px);margin:26px auto 0;padding:17px;border:0;border-radius:14px;background:linear-gradient(135deg,#789cff,#536fe0);color:white;font-size:21px;font-weight:bold;cursor:pointer}
+button.primary:disabled{opacity:.45;cursor:not-allowed}
+#status{margin:14px 0;color:#c2d0ff;text-align:center;font-size:18px;min-height:25px}
+#qr{background:#fff;padding:12px;border-radius:14px;width:244px;height:244px;display:flex;align-items:center;justify-content:center;margin:16px auto}
+#room{font-size:14px;color:#aebbd4;text-align:center;word-break:break-all}
+#players{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.player{background:#293957;border-radius:13px;padding:16px;font-size:21px;text-align:center}.player small{display:block;color:#b9c9df;font-size:14px;margin-top:6px}
+#game,#results,#lobby{display:none}.question{font-size:clamp(27px,4vw,46px);text-align:center;line-height:1.25;margin:24px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:14px}.answer{padding:18px;background:#293957;border:2px solid #405273;border-radius:14px;text-align:center;font-size:clamp(19px,2.7vw,28px)}.answer.correct{border-color:#63d99b;background:#1c513f}.answer.wrong{opacity:.55}
+#timer{font-size:clamp(30px,5vw,54px);font-weight:bold;text-align:center;color:#ffda83}#roundInfo{text-align:center;color:#c6d4f4;font-size:18px}#scores{text-align:center;font-size:20px;line-height:1.8;margin-top:20px}
+@media(max-width:600px){body{padding:14px}.answers{grid-template-columns:1fr}.option{font-size:15px}}
 </style>
 </head>
 <body>
-<h1>📺 TV QUIZ</h1>
-<p class="sub">Отсканируйте QR-код телефоном, введите имя и выберите аватар.</p>
-<div id="status">Подключаем игровую комнату…</div>
-<div id="qr">Создаём QR-код…</div>
-<div id="room"></div>
-<section class="panel" id="lobby">
-<h2>Игроки в комнате</h2>
-<div id="players"><div class="player">Пока никого нет<small>Ждём участников…</small></div></div>
+<h1>📺 TV QUIZ</h1><p class="sub">Настрой викторину, подключи игроков и начинай игру.</p>
+<section class="screen panel" id="setup">
+<h2>Настройки игры</h2>
+<div class="field-title">Темы викторины</div>
+<div class="options" id="categories">
+<label class="option"><input type="checkbox" value="Кино" checked> 🎬 Кино</label>
+<label class="option"><input type="checkbox" value="Музыка" checked> 🎵 Музыка</label>
+<label class="option"><input type="checkbox" value="Автомобили" checked> 🚗 Автомобили</label>
+<label class="option"><input type="checkbox" value="География" checked> 🌍 География</label>
+<label class="option"><input type="checkbox" value="Наука" checked> 🔬 Наука</label>
+</div>
+<div class="field-title">Сложность</div>
+<div class="options" id="difficulties">
+<label class="option"><input type="checkbox" value="Лёгкий" checked> 🟢 Лёгкая</label>
+<label class="option"><input type="checkbox" value="Средний" checked> 🟡 Средняя</label>
+<label class="option"><input type="checkbox" value="Сложный" checked> 🔴 Сложная</label>
+</div>
+<div class="row">
+<div><div class="field-title">Количество вопросов</div><select id="questionCount"><option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option></select></div>
+<div><div class="field-title">Время на ответ</div><select id="timeLimit"><option value="10">10 секунд</option><option value="15" selected>15 секунд</option><option value="20">20 секунд</option><option value="30">30 секунд</option></select></div>
+</div>
+<button class="primary" id="createRoom">Создать игровую комнату</button>
+<p id="setupNote" class="sub"></p>
 </section>
-<section id="game">
-<div class="question" id="question"></div>
-<div class="answers" id="answers"></div>
-<div id="scores"></div>
+<section class="screen panel" id="lobby">
+<h2>Игровая комната</h2><p class="sub">Отсканируйте QR-код, чтобы присоединиться</p><div id="qr">Создаём QR-код…</div><div id="room"></div>
+<div class="field-title" style="text-align:center">Игроки</div><div id="players"><div class="player">Ждём участников…</div></div>
+<button class="primary" id="startGame" disabled>Ждём игроков</button>
 </section>
+<section class="screen panel" id="game">
+<div id="roundInfo"></div><div id="timer"></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div id="scores"></div>
+</section>
+<section class="screen panel" id="results"><h2>🏆 Итоги игры</h2><div id="finalScores" class="scores"></div><button class="primary" onclick="location.reload()">Новая игра</button></section>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="questions.js"></script>
 <script>
-const statusEl=document.getElementById('status');
-const playersEl=document.getElementById('players');
-const qrEl=document.getElementById('qr');
-const lobbyEl=document.getElementById('lobby');
-const gameEl=document.getElementById('game');
-const players=new Map();
-let peer=null, gameStarted=false;
-const question={text:'Какая планета самая большая в Солнечной системе?',answers:['Земля','Юпитер','Марс','Венера'],correct:1};
-function send(conn,data){try{if(conn&&conn.open)conn.send(data)}catch(e){}}
-function broadcast(data){connections.forEach(c=>send(c,data))}
-const connections=new Set();
-function roster(){return [...players.values()].map(p=>({id:p.id,name:p.name,avatar:p.avatar,ready:p.ready,score:p.score,answer:p.answer??null}))}
-function sendState(conn){send(conn,{type:'state',players:roster(),gameStarted,question:gameStarted?question:null})}
+const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
+let peer=null,config=null,deck=[],round=0,seconds=0,timer=null,phase='setup';
+function send(c,d){try{if(c&&c.open)c.send(d)}catch(e){}}
+function broadcast(d){connections.forEach(c=>send(c,d))}
+function roster(){return [...players.values()]}
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function updateLobby(){
- const list=roster();
- playersEl.innerHTML=list.length?list.map(p=>'<div class="player">'+p.avatar+' '+escapeHtml(p.name)+'<small>'+(p.ready?'✅ Готов':'⏳ Ещё думает')+'</small></div>').join(''):'<div class="player">Пока никого нет<small>Ждём участников…</small></div>';
- if(!gameStarted)statusEl.textContent=list.length?('Подключено игроков: '+list.length+'. Ждём готовности.'):'Комната открыта. Ждём игроков…';
+ const list=roster();$('players').innerHTML=list.length?list.map(p=>'<div class="player">'+safe(p.avatar)+' '+safe(p.name)+'<small>'+(p.ready?'✅ Готов':'⏳ Не готов')+'</small></div>').join(''):'<div class="player">Ждём участников…</div>';
+ const btn=$('startGame');btn.disabled=!list.length||!list.every(p=>p.ready);btn.textContent=btn.disabled?'Ждём, пока все будут готовы':'Начать викторину';
 }
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function showGame(){
- lobbyEl.style.display='none';qrEl.style.display='none';document.getElementById('room').style.display='none';gameEl.style.display='block';
- document.getElementById('question').textContent=question.text;
- document.getElementById('answers').innerHTML=question.answers.map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+a+'</div>').join('');
- updateScores();
+function makeDeck(){
+ const cats=[...document.querySelectorAll('#categories input:checked')].map(x=>x.value);
+ const diffs=[...document.querySelectorAll('#difficulties input:checked')].map(x=>x.value);
+ if(!cats.length||!diffs.length){$('setupNote').textContent='Выбери хотя бы одну тему и один уровень сложности.';return false}
+ let pool=(window.QUIZ_QUESTIONS||[]).filter(q=>cats.includes(q.category)&&diffs.includes(q.difficulty));
+ if(!pool.length){$('setupNote').textContent='Для такого сочетания пока нет вопросов.';return false}
+ pool.sort(()=>Math.random()-.5);const count=Number($('questionCount').value);
+ if(pool.length<count){$('setupNote').textContent='В выбранных темах и уровнях доступно только '+pool.length+' вопросов. Выбери меньше вопросов или больше тем.';return false}
+ deck=pool.slice(0,count);config={time:Number($('timeLimit').value),count,category:cats.join(', '),difficulty:diffs.join(', ')};return true;
 }
-function updateScores(){
- document.getElementById('scores').innerHTML='<h2>Таблица игроков</h2>'+roster().map(p=>p.avatar+' '+escapeHtml(p.name)+' — '+p.score+' очк.'+(p.answer!==null&&p.answer!==undefined?' · ответ отправлен':'')).join('<br>');
-}
-function startGame(){
- if(gameStarted)return;
- const list=roster();
- if(!list.length||!list.every(p=>p.ready)){statusEl.textContent='Игра начнётся, когда все игроки нажмут «Готов».';return}
- gameStarted=true;broadcast({type:'game-start',question});showGame();statusEl.textContent='Игра началась!';
+function createRoom(){
+ if(!makeDeck())return;
+ $('setup').style.display='none';$('lobby').style.display='block';phase='lobby';$('status').textContent='Создаём игровую комнату…';
+ if(!window.Peer){$('status').textContent='Не загрузилась библиотека связи. Обнови страницу.';return}
+ peer=new Peer();
+ peer.on('open',id=>{
+  $('qr').innerHTML='';const url=location.origin+location.pathname.replace(/[^/]*$/,'')+'join.html?host='+encodeURIComponent(id);
+  if(window.QRCode)new QRCode($('qr'),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});else $('qr').textContent='QR-код недоступен';
+  $('room').textContent='Код комнаты: '+id;$('status').textContent='Комната открыта. Игроки могут подключаться.';
+ });
+ peer.on('connection',handleConnection);peer.on('error',e=>$('status').textContent='Ошибка соединения: '+e.type);
 }
 function handleConnection(conn){
  connections.add(conn);
  conn.on('data',data=>{
   if(!data||!data.type)return;
   if(data.type==='join'){
-   players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'😎'),ready:false,score:0,answer:null});
-   sendState(conn);updateLobby();broadcast({type:'players',players:roster()});
+   players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),ready:false,score:0,answer:null});
+   send(conn,{type:'state',players:roster(),gameStarted:phase==='game'});updateLobby();broadcast({type:'players',players:roster()});
   }
-  if(data.type==='ready'&&players.has(conn.peer)){
-   players.get(conn.peer).ready=!!data.ready;updateLobby();broadcast({type:'players',players:roster()});
-  }
-  if(data.type==='start'){startGame()}
-  if(data.type==='answer'&&gameStarted&&players.has(conn.peer)){
-   const p=players.get(conn.peer);
-   if(p.answer===null||p.answer===undefined){p.answer=data.answer;p.score+=(data.answer===question.correct?1:0);updateScores();broadcast({type:'players',players:roster()});}
+  if(data.type==='ready'&&players.has(conn.peer)){players.get(conn.peer).ready=!!data.ready;updateLobby();broadcast({type:'players',players:roster()})}
+  if(data.type==='answer'&&phase==='game'&&players.has(conn.peer)){
+   const p=players.get(conn.peer);if(p.answer===null){p.answer=Number(data.answer);broadcast({type:'players',players:roster()});if(roster().every(x=>x.answer!==null))reveal()}
   }
  });
  conn.on('close',()=>{connections.delete(conn);players.delete(conn.peer);updateLobby();broadcast({type:'players',players:roster()})});
  conn.on('error',()=>{connections.delete(conn);players.delete(conn.peer);updateLobby()});
 }
-if(!window.Peer){statusEl.textContent='Не загрузилась библиотека связи. Обновите страницу или проверьте интернет.'}
-else{
- peer=new Peer();
- peer.on('open',id=>{
-  const joinUrl=location.origin+location.pathname.replace(/[^/]*$/,'')+'join.html?host='+encodeURIComponent(id);
-  qrEl.innerHTML='';
-  if(window.QRCode)new QRCode(qrEl,{text:joinUrl,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
-  else qrEl.textContent='QR-библиотека не загрузилась';
-  document.getElementById('room').textContent='Код комнаты: '+id;
-  statusEl.textContent='Комната создана. Покажите QR-код игрокам.';
- });
- peer.on('connection',handleConnection);
- peer.on('error',e=>{statusEl.textContent='Ошибка соединения: '+e.type+'. Перезагрузите страницу.'});
+function start(){
+ if(!roster().length||!roster().every(p=>p.ready))return;
+ $('lobby').style.display='none';$('game').style.display='block';phase='game';roster().forEach(p=>{p.score=0;p.answer=null});round=0;ask();
 }
+function ask(){
+ if(round>=deck.length){finish();return}
+ const q=deck[round];roster().forEach(p=>p.answer=null);seconds=config.time;
+ $('roundInfo').textContent='Вопрос '+(round+1)+' из '+deck.length+' · '+q.category+' · '+q.difficulty;
+ $('question').textContent=q.text;$('answers').innerHTML=q.answers.map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'</div>').join('');
+ $('scores').textContent='Ответили: 0 из '+roster().length;$('timer').textContent=seconds+' сек.';
+ broadcast({type:'question',question:q,round:round+1,total:deck.length,time:config.time});
+ clearInterval(timer);timer=setInterval(()=>{seconds--;$('timer').textContent=seconds+' сек.';if(seconds<=0)reveal()},1000);
+}
+function reveal(){
+ if(phase!=='game'||$('answers').dataset.revealed==='1')return;
+ $('answers').dataset.revealed='1';clearInterval(timer);const q=deck[round];
+ roster().forEach(p=>{if(p.answer===q.correct)p.score+=1});
+ [...$('answers').children].forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else el.classList.add('wrong')});
+ $('timer').textContent='Правильный ответ: '+q.answers[q.correct];
+ $('scores').innerHTML=roster().map(p=>safe(p.avatar)+' '+safe(p.name)+': '+p.score+' очк.').join(' · ');
+ broadcast({type:'reveal',correct:q.correct,answerText:q.answers[q.correct],players:roster()});
+ setTimeout(()=>{round++;$('answers').dataset.revealed='0';ask()},3500);
+}
+function finish(){
+ phase='results';clearInterval(timer);$('game').style.display='none';$('results').style.display='block';
+ const sorted=roster().sort((a,b)=>b.score-a.score);$('finalScores').innerHTML=sorted.map((p,i)=>'<div class="player">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'🎮')+' '+safe(p.name)+'<small>'+p.score+' очков</small></div>').join('');
+ broadcast({type:'game-over',players:sorted});
+}
+$('createRoom').addEventListener('click',createRoom);$('startGame').addEventListener('click',start);
 </script>
-</body>
-</html>
+</body></html>
