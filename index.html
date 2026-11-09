@@ -19,33 +19,52 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 #game,#results,#lobby{display:none}.live-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;margin:16px 0 22px}.live-player{background:#152238;border:2px solid var(--player-color);border-radius:13px;padding:10px;text-align:center;min-width:0}.live-player .who{font-size:17px;font-weight:bold;overflow-wrap:anywhere}.live-player .points{font-size:22px;color:#ffe18a;margin:5px 0}.live-player .picked{font-size:13px;color:#d0dcf5;min-height:30px}.answer-votes{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:9px}.vote-chip{font-size:13px;padding:4px 7px;border-radius:8px;background:#111b2d;border:1px solid var(--player-color)}#explanation{display:none;margin:18px 0 4px;padding:16px;border-radius:14px;background:#142b39;border:1px solid #397c69;color:#d8ffed;font-size:18px;line-height:1.45}.question{font-size:clamp(27px,4vw,46px);text-align:center;line-height:1.25;margin:24px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:14px}.answer{padding:18px;background:#293957;border:2px solid #405273;border-radius:14px;text-align:center;font-size:clamp(19px,2.7vw,28px)}.answer.correct{border-color:#63d99b;background:#1c513f}.answer.wrong{opacity:.55}
 #timer{font-size:clamp(30px,5vw,54px);font-weight:bold;text-align:center;color:#ffda83}#roundInfo{text-align:center;color:#c6d4f4;font-size:18px}#scores{text-align:center;font-size:20px;line-height:1.8;margin-top:20px}
 @media(max-width:600px){body{padding:14px}.answers{grid-template-columns:1fr}.option{font-size:15px}}
+
+/* New catalog navigation */
+.catalog-step{display:none}.catalog-step.active{display:block}
+.catalog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.catalog-card{position:relative;overflow:hidden;min-height:142px;padding:20px;text-align:left;border:1px solid #526b98;border-radius:18px;color:white;background:linear-gradient(145deg,#344e78,#1b2943);cursor:pointer;transition:transform .15s,border-color .15s}
+.catalog-card:hover{transform:translateY(-3px);border-color:#b7caff}
+.catalog-card .emoji{display:block;font-size:38px;margin-bottom:10px}.catalog-card strong{display:block;font-size:22px}.catalog-card small{display:block;color:#c6d4f4;margin-top:6px;font-size:14px}
+.catalog-back{border:1px solid #63799e;background:#263958;color:#e8efff;border-radius:10px;padding:10px 15px;margin:0 0 16px;cursor:pointer}
+.topic-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.topic-card{padding:16px;border:1px solid #526b98;border-radius:13px;background:#263958;color:white;text-align:left;font-size:17px;cursor:pointer}
+.topic-card small{display:block;color:#bdcbea;margin-top:5px}
+.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.level-card{padding:22px 10px;border:1px solid #526b98;border-radius:15px;background:#263958;color:white;font-size:19px;cursor:pointer}
+.level-card small{display:block;margin-top:7px;color:#c6d4f4;font-size:13px}
+.selection-label{text-align:center;color:#c6d4f4;margin:0 0 18px}
 </style>
 </head>
 <body>
 <h1>📺 TV QUIZ</h1><p class="sub">Настрой викторину, подключи игроков и начинай игру.</p><div id="status">Настрой параметры игры ниже.</div>
 <section class="screen panel" id="setup">
-<h2>Настройки игры</h2>
-<div class="field-title">Темы викторины</div>
-<div class="options" id="categories">
-<label class="option"><input type="checkbox" value="Кино" checked> 🎬 Кино</label>
-<label class="option"><input type="checkbox" value="Музыка" checked> 🎵 Музыка</label>
-<label class="option"><input type="checkbox" value="Автомобили" checked> 🚗 Автомобили</label>
-<label class="option"><input type="checkbox" value="География" checked> 🌍 География</label>
-<label class="option"><input type="checkbox" value="Наука" checked> 🔬 Наука</label>
+<div id="catalogHome" class="catalog-step active">
+<h2>Выбери игровую категорию</h2>
+<p class="sub">Сначала выбираем направление. Внутри будут отдельные рубрики и режимы.</p>
+<div class="catalog-grid">
+<button class="catalog-card" data-category="Музыка"><span class="emoji">🎵</span><strong>Музыка</strong><small>Исполнители, группы, жанры и хиты</small></button>
+<button class="catalog-card" data-category="Кино"><span class="emoji">🎬</span><strong>Кино и сериалы</strong><small>Фильмы, актёры, режиссёры и вселенные</small></button>
+<button class="catalog-card" data-category="Автомобили"><span class="emoji">🏎️</span><strong>Автомобили</strong><small>Марки, модели, история и техника</small></button>
+<button class="catalog-card" data-category="География"><span class="emoji">🌍</span><strong>Путешествия и география</strong><small>Страны, города и удивительные места</small></button>
+<button class="catalog-card" data-category="Наука"><span class="emoji">🧪</span><strong>Наука и технологии</strong><small>Космос, открытия и изобретения</small></button>
+</div></div>
+<div id="catalogTopics" class="catalog-step">
+<button class="catalog-back" id="backCategories">← Все категории</button><h2 id="topicHeading">Рубрики</h2><p class="selection-label">Выбери конкретную рубрику</p><div class="topic-list" id="topicList"></div>
 </div>
-<div class="field-title">Сложность</div>
-<div class="options" id="difficulties">
-<label class="option"><input type="checkbox" value="Лёгкий" checked> 🟢 Лёгкая</label>
-<label class="option"><input type="checkbox" value="Средний" checked> 🟡 Средняя</label>
-<label class="option"><input type="checkbox" value="Сложный" checked> 🔴 Сложная</label>
-</div>
-<div class="row">
-<div><div class="field-title">Количество вопросов</div><select id="questionCount"><option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option></select></div>
-<div><div class="field-title">Время на ответ</div><select id="timeLimit"><option value="10">10 секунд</option><option value="15" selected>15 секунд</option><option value="20">20 секунд</option><option value="30">30 секунд</option></select></div>
-</div>
-<button class="primary" id="createRoom">Создать игровую комнату</button>
-<p id="setupNote" class="sub"></p>
-</section>
+<div id="catalogLevels" class="catalog-step">
+<button class="catalog-back" id="backTopics">← К рубрикам</button><h2 id="levelHeading">Уровень сложности</h2><p class="selection-label" id="selectedTopicLabel"></p>
+<div class="level-grid">
+<button class="level-card" data-level="Лёгкий">🟢 Новичок<small>Разогрев и базовые знания</small></button>
+<button class="level-card" data-level="Средний">🟡 Знаток<small>Понадобится вспомнить детали</small></button>
+<button class="level-card" data-level="Сложный">🔴 Эксперт<small>Для тех, кто реально в теме</small></button>
+</div></div>
+<div id="gameSettings" class="catalog-step">
+<button class="catalog-back" id="backLevels">← Сложность</button><h2>Настройки раунда</h2><p class="selection-label" id="finalSelection"></p>
+<div class="row"><div><div class="field-title">Количество вопросов</div><select id="questionCount"><option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option></select></div>
+<div><div class="field-title">Время на ответ</div><select id="timeLimit"><option value="10">10 секунд</option><option value="15" selected>15 секунд</option><option value="20">20 секунд</option><option value="30">30 секунд</option></select></div></div>
+<button class="primary" id="createRoom">Создать игровую комнату</button><p id="setupNote" class="sub"></p>
+</div></section>
 <section class="screen panel" id="lobby">
 <h2>Игровая комната</h2><p class="sub">Отсканируйте QR-код, чтобы присоединиться</p><div id="qr">Создаём QR-код…</div><div id="room"></div>
 <div class="field-title" style="text-align:center">Игроки</div><div id="players"><div class="player">Ждём участников…</div></div>
@@ -60,6 +79,19 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 <script src="questions.js"></script>
 <script>
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
+let selectedCategory='',selectedTopic='',selectedDifficulty='';
+const topics={
+ 'Музыка':['Легендарные исполнители','Музыкальные группы','Русская эстрада','Поп-музыка','Рэп и хип-хоп','Музыкальные инструменты','Угадай хит'],
+ 'Кино':['Культовые фильмы','Актёры и актрисы','Режиссёры','Комедии','Фантастика и фэнтези','Кино 90-х и 2000-х'],
+ 'Автомобили':['Легендарные марки','Модели и поколения','Автомобильная история','Двигатели и техника','Автоспорт'],
+ 'География':['Страны и столицы','Города мира','Природные чудеса','Путешествия'],
+ 'Наука':['Космос','Изобретения','Физика и химия','Человек и природа','Технологии']
+};
+const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪'};
+function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
+document.querySelectorAll('[data-category]').forEach(btn=>btn.addEventListener('click',()=>{selectedCategory=btn.dataset.category;$('topicHeading').textContent=categoryEmoji[selectedCategory]+' '+(selectedCategory==='География'?'Путешествия и география':selectedCategory==='Наука'?'Наука и технологии':selectedCategory);$('topicList').innerHTML=topics[selectedCategory].map(t=>'<button class="topic-card" data-topic="'+safe(t)+'">'+safe(t)+'<small>Открыть рубрику →</small></button>').join('');document.querySelectorAll('[data-topic]').forEach(x=>x.addEventListener('click',()=>{selectedTopic=x.dataset.topic;$('levelHeading').textContent=selectedTopic;$('selectedTopicLabel').textContent='Категория: '+selectedCategory;showStep('catalogLevels')}));showStep('catalogTopics')}));
+$('backCategories').addEventListener('click',()=>showStep('catalogHome'));$('backTopics').addEventListener('click',()=>showStep('catalogTopics'));$('backLevels').addEventListener('click',()=>showStep('catalogLevels'));
+document.querySelectorAll('[data-level]').forEach(btn=>btn.addEventListener('click',()=>{selectedDifficulty=btn.dataset.level;$('finalSelection').textContent=categoryEmoji[selectedCategory]+' '+selectedCategory+' · '+selectedTopic+' · '+selectedDifficulty;$('setupNote').textContent='';showStep('gameSettings')}));
 let peer=null,config=null,deck=[],round=0,seconds=0,timer=null,revealTimeout=null,phase='setup',revealScheduled=false;
 const playerColors=['#ff6b6b','#4da3ff','#f6c453','#57d69a','#c084fc','#ff8c42','#48d1cc','#f472b6'];
 function send(c,d){try{if(c&&c.open)c.send(d)}catch(e){}}
@@ -71,14 +103,11 @@ function updateLobby(){
  const btn=$('startGame');btn.disabled=!list.length||!list.every(p=>p.ready);btn.textContent=btn.disabled?'Ждём, пока все будут готовы':'Начать викторину';if(phase==='game')renderLivePlayers();
 }
 function makeDeck(){
- const cats=[...document.querySelectorAll('#categories input:checked')].map(x=>x.value);
- const diffs=[...document.querySelectorAll('#difficulties input:checked')].map(x=>x.value);
- if(!cats.length||!diffs.length){$('setupNote').textContent='Выбери хотя бы одну тему и один уровень сложности.';return false}
- let pool=(window.QUIZ_QUESTIONS||[]).filter(q=>cats.includes(q.category)&&diffs.includes(q.difficulty));
- if(!pool.length){$('setupNote').textContent='Для такого сочетания пока нет вопросов.';return false}
+ const pool=(window.QUIZ_QUESTIONS||[]).filter(q=>q.category===selectedCategory&&q.difficulty===selectedDifficulty);
+ if(!pool.length){$('setupNote').textContent='В этой рубрике пока готовится отдельная подборка. Сейчас в тестовой базе вопросы хранятся на уровне большой категории, поэтому выбери другую сложность или рубрику.';return false}
  pool.sort(()=>Math.random()-.5);const count=Number($('questionCount').value);
- if(pool.length<count){$('setupNote').textContent='В выбранных темах и уровнях доступно только '+pool.length+' вопросов. Выбери меньше вопросов или больше тем.';return false}
- deck=pool.slice(0,count);config={time:Number($('timeLimit').value),count,category:cats.join(', '),difficulty:diffs.join(', ')};return true;
+ if(pool.length<count){$('setupNote').textContent='В текущей тестовой базе для этой категории и сложности только '+pool.length+' вопрос(а). Поставь '+pool.length+' или меньше. Полные тематические подборки добавим следующим этапом.';return false}
+ deck=pool.slice(0,count);config={time:Number($('timeLimit').value),count,category:selectedCategory+' / '+selectedTopic,difficulty:selectedDifficulty};return true;
 }
 function createRoom(){
  if(!makeDeck())return;
