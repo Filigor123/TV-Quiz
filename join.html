@@ -5,17 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TV Quiz — игрок</title>
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:20px;background:#101522;color:#fff;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center}
-.card{width:100%;max-width:460px;padding:25px 20px;border-radius:22px;background:#1b2740;box-shadow:0 18px 50px #0006}
-h1{text-align:center;color:#9bb3ff;margin:0 0 8px}.subtitle{text-align:center;color:#c5cee2;margin:0 0 24px}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:20px;background:radial-gradient(circle at top,#263d68 0,#101522 55%);color:#fff;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center}
+.card{width:100%;max-width:460px;padding:25px 20px;border:1px solid #354b70;border-radius:24px;background:linear-gradient(160deg,#1d2d49,#151f33);box-shadow:0 18px 50px #0008}
+h1{text-align:center;color:#b9caff;margin:0 0 8px;font-size:30px}.subtitle{text-align:center;color:#c5cee2;margin:0 0 24px}
 label{display:block;margin:18px 0 9px;font-weight:bold}
 input{width:100%;padding:15px;border:2px solid #405273;border-radius:12px;background:#101a2d;color:white;font-size:18px;outline:none}
-input:focus{border-color:#8daaff}.avatars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.avatar{min-height:62px;border:2px solid #405273;border-radius:14px;background:#263653;font-size:32px;cursor:pointer}
-.avatar.selected{border-color:#9bb3ff;background:#405d94;box-shadow:0 0 0 2px #9bb3ff55}
-.action{width:100%;margin-top:20px;padding:16px;border:0;border-radius:13px;background:#668cff;color:white;font-size:20px;font-weight:bold;cursor:pointer}
-.action:disabled{opacity:.45;cursor:not-allowed}
-#message{min-height:24px;margin:14px 0 0;text-align:center;color:#c4d1ff}
+input:focus{border-color:#8daaff}
+.avatars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.avatar{-webkit-appearance:none;appearance:none;touch-action:manipulation;min-height:68px;border:2px solid #405273;border-radius:15px;background:#263653;font-size:36px;cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
+.avatar:active{transform:scale(.94)}
+.avatar.selected{border-color:#b9caff;background:#405d94;box-shadow:0 0 0 3px #9bb3ff55;transform:scale(1.04)}
+.action{width:100%;margin-top:20px;padding:16px;border:0;border-radius:13px;background:linear-gradient(135deg,#779cff,#526fe0);color:white;font-size:20px;font-weight:bold;cursor:pointer;touch-action:manipulation}
+.action:disabled{opacity:.55;cursor:wait}
+#message{min-height:28px;margin:14px 0 0;text-align:center;color:#d7e1ff;line-height:1.4}
 #play{display:none}.question{font-size:25px;line-height:1.3;text-align:center;margin:20px 0}
 .choices{display:grid;gap:10px}.choice{padding:16px;border:2px solid #405273;border-radius:12px;background:#293957;color:#fff;font-size:19px;text-align:left;cursor:pointer}
 .choice:disabled{opacity:.55}.hint{text-align:center;color:#c5cee2}
@@ -51,9 +54,17 @@ input:focus{border-color:#8daaff}.avatars{display:grid;grid-template-columns:rep
 let avatar='😎',peer=null,conn=null,amReady=false,players=[],started=false,answered=false;
 const hostId=new URLSearchParams(location.search).get('host');
 const msg=document.getElementById('message');
-document.querySelectorAll('.avatar').forEach(b=>b.addEventListener('click',()=>{
- document.querySelectorAll('.avatar').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');avatar=b.textContent.trim();
-}));
+const connectBtn=document.getElementById('connectBtn');
+
+function setMessage(text){msg.textContent=text}
+document.getElementById('avatars').addEventListener('click',event=>{
+ const button=event.target.closest('.avatar');
+ if(!button)return;
+ document.querySelectorAll('.avatar').forEach(x=>x.classList.remove('selected'));
+ button.classList.add('selected');
+ avatar=button.textContent.trim();
+ setMessage('Выбран персонаж '+avatar);
+});
 function send(data){if(conn&&conn.open)conn.send(data)}
 function renderPlayers(list){
  players=list||[];
@@ -72,24 +83,46 @@ function startQuestion(q){
   document.getElementById('answerMessage').textContent='Ответ принят. Ждём остальных игроков…';
  }));
 }
-document.getElementById('connectBtn').addEventListener('click',()=>{
- const name=document.getElementById('playerName').value.trim();
- if(!name){msg.textContent='Сначала введи имя.';return}
- if(!hostId){msg.textContent='В QR-коде нет кода комнаты. Открой страницу, отсканировав QR с телевизора.';return}
- if(!window.Peer){msg.textContent='Не загрузилась связь. Проверь интернет и обнови страницу.';return}
- document.getElementById('connectBtn').disabled=true;msg.textContent='Подключаемся к телевизору…';
- peer=new Peer();
- peer.on('open',()=>{conn=peer.connect(hostId,{reliable:true});conn.on('open',()=>{
-  send({type:'join',name,avatar});document.getElementById('profile').style.display='none';document.getElementById('lobby').style.display='block';
-  document.getElementById('welcome').textContent=avatar+' '+name;document.getElementById('connectionState').textContent='Подключение установлено';msg.textContent='';
- });conn.on('data',data=>{
-  if(data.type==='state'){renderPlayers(data.players);if(data.gameStarted&&data.question)startQuestion(data.question)}
-  if(data.type==='players')renderPlayers(data.players);
-  if(data.type==='game-start')startQuestion(data.question);
- });conn.on('close',()=>{msg.textContent='Связь с телевизором потеряна. Обнови страницу и подключись снова.'});conn.on('error',()=>{msg.textContent='Не удалось связаться с телевизором.'});
- });
- });
- peer.on('error',e=>{msg.textContent='Ошибка подключения: '+e.type;document.getElementById('connectBtn').disabled=false});
+function resetConnect(message){
+ setMessage(message);
+ connectBtn.disabled=false;
+ connectBtn.textContent='Повторить подключение';
+}
+connectBtn.addEventListener('click',()=>{
+ try{
+  const name=document.getElementById('playerName').value.trim();
+  if(!name){setMessage('Сначала введи имя.');return}
+  if(!hostId){setMessage('Не найден код комнаты. Вернись к телевизору и отсканируй QR-код ещё раз.');return}
+  if(!window.Peer){setMessage('Не загрузилась библиотека связи. Проверь интернет и обнови страницу.');return}
+  connectBtn.disabled=true;
+  connectBtn.textContent='Подключаемся…';
+  setMessage('Создаём соединение с телевизором…');
+  peer=new Peer();
+  const timeout=setTimeout(()=>{if(!conn||!conn.open){try{peer.destroy()}catch(e){}resetConnect('Телевизор не ответил за 15 секунд. Проверь, что страница с QR-кодом открыта, и попробуй ещё раз.')}},15000);
+  peer.on('open',()=>{
+   setMessage('Нашли сеть. Соединяемся с телевизором…');
+   conn=peer.connect(hostId,{reliable:true});
+   conn.on('open',()=>{
+    clearTimeout(timeout);
+    send({type:'join',name,avatar});
+    document.getElementById('profile').style.display='none';
+    document.getElementById('lobby').style.display='block';
+    document.getElementById('welcome').textContent=avatar+' '+name;
+    document.getElementById('connectionState').textContent='Подключение установлено';
+    setMessage('');
+   });
+   conn.on('data',data=>{
+    if(data.type==='state'){renderPlayers(data.players);if(data.gameStarted&&data.question)startQuestion(data.question)}
+    if(data.type==='players')renderPlayers(data.players);
+    if(data.type==='game-start')startQuestion(data.question);
+   });
+   conn.on('close',()=>{clearTimeout(timeout);resetConnect('Связь с телевизором потеряна. Обнови страницу и подключись снова.')});
+   conn.on('error',()=>{clearTimeout(timeout);resetConnect('Ошибка связи с телевизором. Проверь, что экран TV Quiz всё ещё открыт.')});
+  });
+  peer.on('error',e=>{clearTimeout(timeout);resetConnect('Ошибка подключения: '+(e.type||'неизвестная ошибка')+'. Попробуй ещё раз.')});
+ }catch(error){
+  resetConnect('Ошибка на телефоне: '+error.message);
+ }
 });
 document.getElementById('readyBtn').addEventListener('click',()=>{
  amReady=!amReady;document.getElementById('readyBtn').textContent=amReady?'Не готов':'Готов';send({type:'ready',ready:amReady});
