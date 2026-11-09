@@ -16,7 +16,7 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 #qr{background:#fff;padding:12px;border-radius:14px;width:244px;height:244px;display:flex;align-items:center;justify-content:center;margin:16px auto}
 #room{font-size:14px;color:#aebbd4;text-align:center;word-break:break-all}
 #players{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.player{background:#293957;border-radius:13px;padding:16px;font-size:21px;text-align:center}.player small{display:block;color:#b9c9df;font-size:14px;margin-top:6px}
-#game,#results,#lobby{display:none}.question{font-size:clamp(27px,4vw,46px);text-align:center;line-height:1.25;margin:24px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:14px}.answer{padding:18px;background:#293957;border:2px solid #405273;border-radius:14px;text-align:center;font-size:clamp(19px,2.7vw,28px)}.answer.correct{border-color:#63d99b;background:#1c513f}.answer.wrong{opacity:.55}
+#game,#results,#lobby{display:none}.live-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;margin:16px 0 22px}.live-player{background:#152238;border:2px solid var(--player-color);border-radius:13px;padding:10px;text-align:center;min-width:0}.live-player .who{font-size:17px;font-weight:bold;overflow-wrap:anywhere}.live-player .points{font-size:22px;color:#ffe18a;margin:5px 0}.live-player .picked{font-size:13px;color:#d0dcf5;min-height:30px}.answer-votes{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:9px}.vote-chip{font-size:13px;padding:4px 7px;border-radius:8px;background:#111b2d;border:1px solid var(--player-color)}#explanation{display:none;margin:18px 0 4px;padding:16px;border-radius:14px;background:#142b39;border:1px solid #397c69;color:#d8ffed;font-size:18px;line-height:1.45}.question{font-size:clamp(27px,4vw,46px);text-align:center;line-height:1.25;margin:24px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:14px}.answer{padding:18px;background:#293957;border:2px solid #405273;border-radius:14px;text-align:center;font-size:clamp(19px,2.7vw,28px)}.answer.correct{border-color:#63d99b;background:#1c513f}.answer.wrong{opacity:.55}
 #timer{font-size:clamp(30px,5vw,54px);font-weight:bold;text-align:center;color:#ffda83}#roundInfo{text-align:center;color:#c6d4f4;font-size:18px}#scores{text-align:center;font-size:20px;line-height:1.8;margin-top:20px}
 @media(max-width:600px){body{padding:14px}.answers{grid-template-columns:1fr}.option{font-size:15px}}
 </style>
@@ -52,7 +52,7 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 <button class="primary" id="startGame" disabled>Ждём игроков</button>
 </section>
 <section class="screen panel" id="game">
-<div id="roundInfo"></div><div id="timer"></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div id="scores"></div>
+<div class="live-board" id="livePlayers"></div><div id="roundInfo"></div><div id="timer"></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div id="explanation"></div><div id="scores"></div>
 </section>
 <section class="screen panel" id="results"><h2>🏆 Итоги игры</h2><div id="finalScores" class="scores"></div><button class="primary" onclick="location.reload()">Новая игра</button></section>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
@@ -60,7 +60,8 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 <script src="questions.js"></script>
 <script>
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
-let peer=null,config=null,deck=[],round=0,seconds=0,timer=null,phase='setup';
+let peer=null,config=null,deck=[],round=0,seconds=0,timer=null,revealTimeout=null,phase='setup',revealScheduled=false;
+const playerColors=['#ff6b6b','#4da3ff','#f6c453','#57d69a','#c084fc','#ff8c42','#48d1cc','#f472b6'];
 function send(c,d){try{if(c&&c.open)c.send(d)}catch(e){}}
 function broadcast(d){connections.forEach(c=>send(c,d))}
 function roster(){return [...players.values()]}
@@ -96,42 +97,48 @@ function handleConnection(conn){
  conn.on('data',data=>{
   if(!data||!data.type)return;
   if(data.type==='join'){
-   players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),ready:false,score:0,answer:null});
+   players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),color:playerColors[players.size%playerColors.length],ready:false,score:0,answer:null});
    send(conn,{type:'state',players:roster(),gameStarted:phase==='game'});updateLobby();broadcast({type:'players',players:roster()});
   }
   if(data.type==='ready'&&players.has(conn.peer)){players.get(conn.peer).ready=!!data.ready;updateLobby();broadcast({type:'players',players:roster()})}
   if(data.type==='answer'&&phase==='game'&&players.has(conn.peer)){
-   const p=players.get(conn.peer);if(p.answer===null){p.answer=Number(data.answer);broadcast({type:'players',players:roster()});if(roster().every(x=>x.answer!==null))reveal()}
+   const p=players.get(conn.peer);if(p.answer===null&&!revealScheduled){p.answer=Number(data.answer);renderLivePlayers();broadcast({type:'players',players:roster()});if(roster().length&&roster().every(x=>x.answer!==null)){revealScheduled=true;clearInterval(timer);$('timer').textContent='Ответы приняты';revealTimeout=setTimeout(reveal,2500)}}
   }
  });
  conn.on('close',()=>{connections.delete(conn);players.delete(conn.peer);updateLobby();broadcast({type:'players',players:roster()})});
  conn.on('error',()=>{connections.delete(conn);players.delete(conn.peer);updateLobby()});
+}
+function renderLivePlayers(){
+ $('livePlayers').innerHTML=roster().map(p=>'<div class="live-player" style="--player-color:'+p.color+'"><div class="who">'+safe(p.avatar)+' '+safe(p.name)+'</div><div class="points">'+p.score+' очк.</div><div class="picked">'+(p.answer===null?'Думает…':'Ответ: '+String.fromCharCode(1040+p.answer)+'. '+safe(deck[round]?.answers[p.answer]||''))+'</div></div>').join('');
+ $('scores').textContent='Ответили: '+roster().filter(p=>p.answer!==null).length+' из '+roster().length;
+ $('answers').querySelectorAll('.answer').forEach((el,i)=>{const voters=roster().filter(p=>p.answer===i);const holder=el.querySelector('.answer-votes');if(holder)holder.innerHTML=voters.map(p=>'<span class="vote-chip" style="--player-color:'+p.color+'">'+safe(p.avatar)+' '+safe(p.name)+'</span>').join('')});
 }
 function start(){
  if(!roster().length||!roster().every(p=>p.ready))return;
  $('lobby').style.display='none';$('game').style.display='block';phase='game';roster().forEach(p=>{p.score=0;p.answer=null});round=0;ask();
 }
 function ask(){
+ revealScheduled=false;clearTimeout(revealTimeout);$('explanation').style.display='none';
  if(round>=deck.length){finish();return}
  const q=deck[round];roster().forEach(p=>p.answer=null);seconds=config.time;
  $('roundInfo').textContent='Вопрос '+(round+1)+' из '+deck.length+' · '+q.category+' · '+q.difficulty;
- $('question').textContent=q.text;$('answers').innerHTML=q.answers.map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'</div>').join('');
- $('scores').textContent='Ответили: 0 из '+roster().length;$('timer').textContent=seconds+' сек.';
+ $('question').textContent=q.text;$('answers').innerHTML=q.answers.map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'<div class="answer-votes"></div></div>').join('');
+ $('scores').textContent='Ответили: 0 из '+roster().length;$('timer').textContent=seconds+' сек.';renderLivePlayers();
  broadcast({type:'question',question:q,round:round+1,total:deck.length,time:config.time});
  clearInterval(timer);timer=setInterval(()=>{seconds--;$('timer').textContent=seconds+' сек.';if(seconds<=0)reveal()},1000);
 }
 function reveal(){
  if(phase!=='game'||$('answers').dataset.revealed==='1')return;
- $('answers').dataset.revealed='1';clearInterval(timer);const q=deck[round];
+ $('answers').dataset.revealed='1';clearInterval(timer);clearTimeout(revealTimeout);const q=deck[round];
  roster().forEach(p=>{if(p.answer===q.correct)p.score+=1});
  [...$('answers').children].forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else el.classList.add('wrong')});
  $('timer').textContent='Правильный ответ: '+q.answers[q.correct];
- $('scores').innerHTML=roster().map(p=>safe(p.avatar)+' '+safe(p.name)+': '+p.score+' очк.').join(' · ');
- broadcast({type:'reveal',correct:q.correct,answerText:q.answers[q.correct],players:roster()});
- setTimeout(()=>{round++;$('answers').dataset.revealed='0';ask()},3500);
+ $('explanation').textContent=q.explanation||'Правильный ответ: '+q.answers[q.correct];$('explanation').style.display='block';renderLivePlayers();
+ broadcast({type:'reveal',correct:q.correct,answerText:q.answers[q.correct],explanation:q.explanation||'',players:roster()});
+ revealTimeout=setTimeout(()=>{round++;$('answers').dataset.revealed='0';ask()},5500);
 }
 function finish(){
- phase='results';clearInterval(timer);$('game').style.display='none';$('results').style.display='block';
+ phase='results';clearInterval(timer);clearTimeout(revealTimeout);$('game').style.display='none';$('results').style.display='block';
  const sorted=roster().sort((a,b)=>b.score-a.score);$('finalScores').innerHTML=sorted.map((p,i)=>'<div class="player">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'🎮')+' '+safe(p.name)+'<small>'+p.score+' очков</small></div>').join('');
  broadcast({type:'game-over',players:sorted});
 }
