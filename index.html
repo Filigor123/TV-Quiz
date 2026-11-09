@@ -104,10 +104,11 @@ function updateLobby(){
 }
 function makeDeck(){
  const pool=(window.QUIZ_QUESTIONS||[]).filter(q=>q.category===selectedCategory&&q.difficulty===selectedDifficulty);
- if(!pool.length){$('setupNote').textContent='В этой рубрике пока готовится отдельная подборка. Сейчас в тестовой базе вопросы хранятся на уровне большой категории, поэтому выбери другую сложность или рубрику.';return false}
- pool.sort(()=>Math.random()-.5);const count=Number($('questionCount').value);
- if(pool.length<count){$('setupNote').textContent='В текущей тестовой базе для этой категории и сложности только '+pool.length+' вопрос(а). Поставь '+pool.length+' или меньше. Полные тематические подборки добавим следующим этапом.';return false}
- deck=pool.slice(0,count);config={time:Number($('timeLimit').value),count,category:selectedCategory+' / '+selectedTopic,difficulty:selectedDifficulty};return true;
+ if(!pool.length){$('setupNote').textContent='В этой сложности пока нет вопросов. Банк тематических подборок ещё расширяется.';return false}
+ pool.sort(()=>Math.random()-.5);const requested=Number($('questionCount').value),count=Math.min(requested,pool.length);
+ deck=pool.slice(0,count);config={time:Number($('timeLimit').value),count,category:selectedCategory+' / '+selectedTopic,difficulty:selectedDifficulty};
+ $('setupNote').textContent=count<requested?'В тестовой базе пока '+count+' вопрос(а) для этой категории и сложности. Сейчас сыграем доступные вопросы; отдельные подборки для каждой рубрики добавляются следующим этапом.':'';
+ return true;
 }
 function createRoom(){
  if(!makeDeck())return;
