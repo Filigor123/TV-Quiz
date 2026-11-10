@@ -34,6 +34,31 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 .level-card{padding:22px 10px;border:1px solid #526b98;border-radius:15px;background:#263958;color:white;font-size:19px;cursor:pointer}
 .level-card small{display:block;margin-top:7px;color:#c6d4f4;font-size:13px}
 .selection-label{text-align:center;color:#c6d4f4;margin:0 0 18px}
+
+/* Quiz Station dashboard refresh */
+body{background:#0b1220;color:#edf3ff;padding:22px;gap:0}
+body:before{content:"QUIZ STATION  /  CONTROL PANEL";display:block;width:min(100%,1050px);font-size:12px;letter-spacing:2.5px;color:#83a9ff;font-weight:800;margin:0 auto 4px}
+h1{color:#f4f7ff;text-align:left;width:min(100%,1050px);font-size:clamp(30px,4vw,42px);margin:8px auto 0}
+body>.sub{width:min(100%,1050px);text-align:left;margin:4px auto 0;color:#93a4c2;font-size:15px}
+#status{width:min(100%,1050px);text-align:left;margin:14px auto 0;color:#90b7ff;font-size:14px}
+.screen{margin-top:16px}
+.panel{background:#111c2f;border:1px solid #243653;border-radius:18px;box-shadow:0 14px 38px #0004}
+h2{font-size:24px;text-align:left;color:#f4f7ff;margin-bottom:10px}
+.catalog-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.catalog-card{min-height:132px;border:1px solid #2b4164;border-radius:15px;background:linear-gradient(145deg,#1b2d49,#142238);padding:18px}
+.catalog-card:hover{transform:translateY(-2px);border-color:#6d9bff;background:linear-gradient(145deg,#243e65,#172944)}
+.catalog-card .emoji{font-size:30px;margin-bottom:8px}
+.catalog-card strong{font-size:19px}
+.catalog-card small{color:#a8b8d3}
+.topic-card,.level-card{background:#172741;border-color:#30496f;border-radius:13px}
+.topic-card:hover,.level-card:hover{border-color:#79a2ff;background:#20385c}
+.catalog-back{background:#1a2a43;border-color:#344c70}
+.option{background:#172741}
+select{background:#0d182a;border-color:#30496f}
+button.primary{background:linear-gradient(110deg,#3478f6,#5b8dff);box-shadow:0 7px 20px #2868d344}
+#lobby,#game,#results{background:#111c2f}
+@media(max-width:600px){body{padding:14px}h1{font-size:30px}}
+
 </style>
 </head>
 <body>
@@ -81,11 +106,11 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
 let selectedCategory='',selectedTopic='',selectedDifficulty='';
 const topics={
- 'Музыка':['Легендарные исполнители','Музыкальные группы','Русская эстрада','Поп-музыка','Рэп и хип-хоп','Музыкальные инструменты','Угадай хит'],
- 'Кино':['Культовые фильмы','Актёры и актрисы','Режиссёры','Комедии','Фантастика и фэнтези','Кино 90-х и 2000-х'],
- 'Автомобили':['Легендарные марки','Модели и поколения','Автомобильная история','Двигатели и техника','Автоспорт'],
- 'География':['Страны и столицы','Города мира','Природные чудеса','Путешествия'],
- 'Наука':['Космос','Изобретения','Физика и химия','Человек и природа','Технологии']
+ 'Музыка':['Музыкальные группы','Исполнители и хиты'],
+ 'Кино':['Культовые фильмы','Актёры и режиссёры'],
+ 'Автомобили':['Марки и модели','Двигатели и техника'],
+ 'География':['Страны и столицы','Города и природа'],
+ 'Наука':['Космос','Физика и изобретения']
 };
 const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪'};
 function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
@@ -103,11 +128,11 @@ function updateLobby(){
  const btn=$('startGame');btn.disabled=!list.length||!list.every(p=>p.ready);btn.textContent=btn.disabled?'Ждём, пока все будут готовы':'Начать викторину';if(phase==='game')renderLivePlayers();
 }
 function makeDeck(){
- const pool=(window.QUIZ_QUESTIONS||[]).filter(q=>q.category===selectedCategory&&q.difficulty===selectedDifficulty);
- if(!pool.length){$('setupNote').textContent='В этой сложности пока нет вопросов. Банк тематических подборок ещё расширяется.';return false}
+ const pool=(window.QUIZ_QUESTIONS||[]).filter(q=>q.category===selectedCategory&&q.topic===selectedTopic&&q.difficulty===selectedDifficulty);
+ if(!pool.length){$('setupNote').textContent='Для этой рубрики и сложности пока нет вопросов. Выбери другой уровень.';return false}
  pool.sort(()=>Math.random()-.5);const requested=Number($('questionCount').value),count=Math.min(requested,pool.length);
  deck=pool.slice(0,count);config={time:Number($('timeLimit').value),count,category:selectedCategory+' / '+selectedTopic,difficulty:selectedDifficulty};
- $('setupNote').textContent=count<requested?'В тестовой базе пока '+count+' вопрос(а) для этой категории и сложности. Сейчас сыграем доступные вопросы; отдельные подборки для каждой рубрики добавляются следующим этапом.':'';
+ $('setupNote').textContent=count<requested?'В этой рубрике доступно '+count+' вопрос(а). Запускаем все доступные вопросы.':'';
  return true;
 }
 function createRoom(){
