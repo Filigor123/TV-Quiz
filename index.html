@@ -217,6 +217,7 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
 <script src="audio.js"></script>
 <script src="slang-quiz.js"></script>
 <script src="audio-quiz.js"></script>
+<script src="facts-quiz.js"></script>
 <script>
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
 let currentQuestionText='';
@@ -239,7 +240,7 @@ const topics={
  'География':['Страны и столицы','Города и природа'],
  'Наука':['Космос','Физика и изобретения','Логика и числа']
 };
-const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Мемасики':'😂','Сленг':'💬','Звуки':'🔊'};
+const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Эрудиция':'🧠','Мемасики':'😂','Сленг':'💬','Звуки':'🔊'};
 function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
 const quizLevels=[
  {label:'Лёгкий',legacy:'Лёгкий',color:'easy'},
@@ -262,6 +263,8 @@ const questionShelves=[
  {name:'Эрудиция',icon:'✦',categories:['Автомобили','География','Наука']}
 ].map(shelf=>({...shelf,items:shelf.categories.flatMap(category=>topics[category].map(topic=>({id:topicCovers[topic],category,topic,title:topic,desc:topicDescriptions[topic],cover:topicCovers[topic]})))}));
 questionShelves[2].items.push({id:'slang-chat',category:window.QUIZ_SLENG.category,topic:window.QUIZ_SLENG.topic,title:window.QUIZ_SLENG.title,desc:window.QUIZ_SLENG.description,cover:window.QUIZ_SLENG.cover,multiRound:true});
+const factsQuizCard={id:'abbreviation-pilot',category:window.QUIZ_FACTS.category,topic:window.QUIZ_FACTS.topic,title:window.QUIZ_FACTS.title,desc:window.QUIZ_FACTS.description,cover:window.QUIZ_FACTS.cover,multiQuiz:window.QUIZ_FACTS};
+questionShelves[2].items.push(factsQuizCard);
 // Reserved media asset shape: {type:'image'|'audio'|'video',src,startSeconds?,endSeconds?}.
 const audioQuizCard={id:'audio-recognition',category:window.QUIZ_AUDIO.category,topic:window.QUIZ_AUDIO.topic,title:window.QUIZ_AUDIO.title,desc:window.QUIZ_AUDIO.description,cover:window.QUIZ_AUDIO.cover,multiQuiz:window.QUIZ_AUDIO};
 const mediaQuizPreview={id:'media-placeholder',category:'Мемасики',topic:'Мем-квизы',title:'Коллекция готовится',desc:'Появится после подготовки материалов',cover:'media-placeholder',media:{assets:[],segments:[]}};

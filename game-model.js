@@ -25,7 +25,8 @@
     if (!question || typeof question !== 'object') return null;
     const type = question.type === 'closest' ? 'closest'
       : question.type === 'media-choice' ? 'media-choice'
-      : question.type === 'free-text' ? 'free-text' : 'choice';
+      : question.type === 'free-text' ? 'free-text'
+      : question.type === 'true-false' ? 'true-false' : 'choice';
     const normalized = { ...question, type };
     if (type === 'free-text') return normalized;
     if (type !== 'closest') {
