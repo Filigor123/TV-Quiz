@@ -59,33 +59,67 @@ button.primary{background:linear-gradient(110deg,#3478f6,#5b8dff);box-shadow:0 7
 #lobby,#game,#results{background:#111c2f}
 @media(max-width:600px){body{padding:14px}h1{font-size:30px}}
 
+/* TV catalog: dark aurora backdrop, wide art cards and five explicit levels. */
+:root{--tv-ink:#f4f8ff;--tv-muted:#aabbd4;--tv-line:#53708e}
+html{scroll-behavior:smooth;scroll-padding:3vh}
+body{min-height:100vh;padding:clamp(22px,3.6vh,48px) clamp(22px,4.4vw,76px) 7vh;background:#06101d;color:var(--tv-ink);font-family:Arial,"Segoe UI",sans-serif;position:relative;isolation:isolate}
+body:before{position:fixed;z-index:-2;inset:-18%;width:136%;height:136%;border-radius:0;background:radial-gradient(ellipse at 12% 22%,#07506a8a 0,transparent 30%),radial-gradient(ellipse at 88% 18%,#a64b183b 0,transparent 29%),radial-gradient(ellipse at 48% 78%,#05264d 0,transparent 42%),linear-gradient(155deg,#071222,#03101d 58%,#071522);animation:aurora-drift 28s ease-in-out infinite alternate}
+@keyframes aurora-drift{from{transform:translate3d(-1.5%,0,0) scale(1)}to{transform:translate3d(1.5%,1%,0) scale(1.04)}}
+h1{width:min(100%,1740px);color:#f8fbff;font-size:clamp(30px,3.25vw,54px);letter-spacing:.01em;margin:0 auto;text-shadow:0 3px 24px #0008}
+body>.sub{width:min(100%,1740px);margin:3px auto 0;color:#c2d0e4;font-size:clamp(15px,1.3vw,21px)}
+#status{width:min(100%,1740px);color:#d5e5fa;background:#091a2bc9;border-color:#34506b;border-radius:12px}#status:empty{display:none}
+.screen{width:min(100%,1740px);margin-top:clamp(14px,2.2vh,28px)}
+.panel{background:#071626c9;border:1px solid #3a5875;border-radius:24px;padding:clamp(20px,2.3vw,38px);box-shadow:0 25px 80px #0007,inset 0 1px #ffffff0a;backdrop-filter:blur(10px)}
+.hero{min-height:0;padding:0 0 clamp(20px,3vh,34px);margin:0 0 clamp(24px,3.5vh,42px);background:none;border-bottom:1px solid #35506b;border-radius:0;box-shadow:none}
+.hero:after{content:none}.hero-kicker{color:#a6c8e8;letter-spacing:.26em;font-size:clamp(11px,.9vw,15px)}
+.hero h2{max-width:100%;margin:0;font-size:clamp(34px,4.1vw,68px);line-height:1.04;letter-spacing:.025em;text-transform:uppercase;color:#f7f9ff}
+.hero-lead{max-width:920px;margin:10px 0 0;color:#bac9dc;font-size:clamp(15px,1.2vw,20px)}
+.hero-pills{display:none}
+.store-head{margin:0 0 clamp(18px,2.8vh,34px)}.store-head h2{font-size:clamp(21px,1.9vw,31px);color:#eff5ff;letter-spacing:.02em}.store-head p{font-size:clamp(13px,1vw,17px);color:#aabbd0}
+.shelf{margin-bottom:clamp(25px,4vh,46px);--shelf-color:#50c7f2;--shelf-pale:#27acd533}
+.shelf:nth-of-type(2){--shelf-color:#fa9d52;--shelf-pale:#ff6c2640}.shelf:nth-of-type(3){--shelf-color:#53dfc3;--shelf-pale:#22c7ad38}.shelf:nth-of-type(4){--shelf-color:#6da3ff;--shelf-pale:#5984ff3b}.shelf:nth-of-type(5){--shelf-color:#d295ff;--shelf-pale:#a64eff3a}
+.shelf-heading{margin-bottom:clamp(10px,1.5vh,17px)}.shelf-heading h3{display:flex;align-items:center;gap:.35em;font-size:clamp(22px,2vw,34px);color:#eff5ff;letter-spacing:.025em}.shelf-heading h3>span{font-size:.9em;filter:drop-shadow(0 0 8px var(--shelf-color))}.shelf-heading>span{font-size:clamp(12px,.9vw,15px);color:#9fb1c8}
+.shelf-track{gap:clamp(10px,1vw,18px);padding:4px 5px 15px;scrollbar-width:thin;scrollbar-color:#49627e #0c1928;overscroll-behavior-x:contain}
+.catalog-card{--card-glow:var(--shelf-color);flex:0 0 clamp(300px,27.4vw,510px);min-height:clamp(144px,20.5vh,245px);padding:clamp(17px,1.5vw,26px);border:1px solid #55708b;border-radius:19px;color:#f7faff;background:radial-gradient(ellipse at 72% 35%,var(--shelf-pale),transparent 43%),linear-gradient(128deg,#10243a,#091725 66%);box-shadow:inset 0 1px #ffffff15,0 12px 28px #0005;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;isolation:isolate}
+.catalog-card:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#06101de8 0%,#06101db0 41%,#06101d0c 100%);pointer-events:none}
+.catalog-card:hover,.catalog-card:focus-visible{z-index:2;transform:scale(1.035);border-color:#f0f8ff;box-shadow:0 0 0 1px #ffffff90,0 0 25px color-mix(in srgb,var(--card-glow),transparent 42%),0 18px 42px #0008}
+.quiz-card{background:radial-gradient(ellipse at 76% 28%,color-mix(in srgb,var(--shelf-color),transparent 37%),transparent 39%),linear-gradient(145deg,#132a43,#091422 72%)}
+.card-copy{max-width:79%;margin-top:auto}.card-eyebrow{color:#a8c2df;font-size:clamp(10px,.75vw,13px);letter-spacing:.15em}
+.catalog-card strong{font-size:clamp(20px,1.8vw,30px);line-height:1.08;letter-spacing:.005em;text-transform:uppercase;color:#fff;text-shadow:0 2px 13px #000b}
+.catalog-card small{color:#d0dceb;font-size:clamp(12px,.95vw,16px);line-height:1.35;text-shadow:0 2px 7px #0009}
+.card-art{z-index:-1;width:65%;height:100%;right:-2%;opacity:.96;mix-blend-mode:screen}.card-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#08152490,transparent 68%),linear-gradient(0deg,#071322a8,transparent 52%)}
+.card-art svg{width:100%;height:94%;max-height:none;filter:drop-shadow(0 0 14px color-mix(in srgb,var(--shelf-color),transparent 38%))}
+.card-art svg circle:first-child{fill:var(--shelf-pale);opacity:.88}.card-art svg g{stroke-width:4}
+.level-chip{position:absolute;top:clamp(13px,1vw,19px);right:clamp(13px,1vw,19px);z-index:3;max-width:60%;padding:7px 11px;border:1px solid currentColor;border-radius:999px;background:#07101dcf;color:#b7f2bb;font-size:clamp(11px,.85vw,14px);font-weight:800;letter-spacing:.05em;text-transform:uppercase;box-shadow:0 3px 14px #0008}
+.level-chip[data-level="Средний"]{color:#ffe071}.level-chip[data-level="Сложный"]{color:#ff8e83}.level-chip[data-level="Эксперт"]{color:#db9cff}.level-chip[data-level="Экстрим"]{color:#77dfff}
+.level-legend{display:flex;justify-content:flex-end;align-items:center;gap:clamp(8px,1.5vw,22px);flex-wrap:wrap;margin:-8px 0 clamp(19px,3vh,34px);color:#e5ebf5;font-size:clamp(11px,.95vw,16px);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.level-legend span{display:flex;align-items:center;gap:7px}.level-legend i{width:clamp(11px,.95vw,16px);height:clamp(11px,.95vw,16px);display:inline-block;border-radius:50%;background:#72e27c;box-shadow:0 0 13px #72e27c99}.level-legend span:nth-child(2) i{background:#ffd54f;box-shadow:0 0 13px #ffd54f99}.level-legend span:nth-child(3) i{background:#ff6868;box-shadow:0 0 13px #ff686899}.level-legend span:nth-child(4) i{background:#c779f2;box-shadow:0 0 13px #c779f299}.level-legend span:nth-child(5) i{background:#55d8f2;box-shadow:0 0 13px #55d8f299}
+.quiz-meta{position:relative;z-index:2;margin:12px 0 0!important;padding:5px 9px!important;border:1px solid #ffffff32!important;border-radius:7px!important;background:#07101d9c!important;color:#dbe7f8!important;font-size:clamp(10px,.76vw,13px)!important}
+.catalog-card.unavailable-card,.catalog-card.unavailable-card:hover{cursor:not-allowed;transform:none;border-color:#33465b;background:linear-gradient(135deg,#0d1b2a,#09121d);box-shadow:inset 0 1px #ffffff08;filter:saturate(.45);opacity:.72}
+.unavailable-card:before{background:#050b13a8}.unavailable-card .card-art{opacity:.38}.unavailable-card .level-chip{color:#bac4d0;background:#131d28;border-color:#526174}
+.upcoming-card{color:#dce5f2;background:linear-gradient(135deg,#102137,#0b1726);border-color:#344d67}.upcoming-card:hover{transform:scale(1.01);border-color:#5e7894;background:linear-gradient(135deg,#12243a,#0b1726)}
+.coming{background:#1a293a;color:#b5c2d2;border:1px solid #344b64}
+.catalog-card:focus-visible,.audio-controls button:focus-visible,button.primary:focus-visible{outline:4px solid #f6faff;outline-offset:4px}
+#lobby,#game,#results{color:#eff5ff;background:#071626;border-color:#34506b}
+@media(min-width:1500px){.catalog-card{flex-basis:clamp(400px,27.4vw,560px)}}
+@media(max-width:700px){body{padding:17px 14px 40px}.screen{width:100%}.panel{padding:17px}.hero h2{font-size:34px}.hero-lead{font-size:14px}.store-head{align-items:start}.shelf-heading h3{font-size:22px}.catalog-card{flex-basis:min(82vw,370px);min-height:205px}.level-legend{justify-content:flex-start;gap:8px 12px}.card-art{width:67%}}
+@media(max-height:900px) and (min-width:701px){.catalog-card{min-height:160px}.shelf{margin-bottom:clamp(15px,2vh,24px)}.hero{padding-bottom:18px;margin-bottom:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+.catalog-settings{max-width:760px;margin:0 auto}.catalog-settings h2{text-align:left;margin:0 0 8px}.catalog-settings .selection-label{color:var(--tv-muted);font-size:clamp(15px,1.2vw,20px);margin:0 0 24px}.settings-row{display:flex;gap:18px;flex-wrap:wrap}.settings-row>label{display:flex;flex:1;flex-direction:column;gap:8px;min-width:210px;color:#e1eaf6;font-weight:700}.settings-row select{width:100%;background:#0b1a2a;color:#f5f8ff;border-color:#45617e}.catalog-settings .catalog-back{background:#102338;color:#e8efff;border-color:#45617e}
+
 </style>
 </head>
 <body>
-<h1>📺 TV QUIZ</h1><p class="sub">Настрой викторину, подключи игроков и начинай игру.</p><div id="status">Настрой параметры игры ниже.</div>
+<h1>📺 TV QUIZ</h1><p class="sub">Настрой викторину, подключи игроков и начинай игру.</p><div id="status" aria-live="polite"></div>
 <section class="screen panel" id="setup">
 <div id="catalogHome" class="catalog-step active">
-<h2>Выбери игровую категорию</h2>
-<p class="sub">Сначала выбираем направление. Внутри будут отдельные рубрики и режимы.</p>
-<div class="catalog-grid">
-<button class="catalog-card" data-category="Музыка"><span class="emoji">🎵</span><strong>Музыка</strong><small>Исполнители, группы, жанры и хиты</small></button>
-<button class="catalog-card" data-category="Кино"><span class="emoji">🎬</span><strong>Кино и сериалы</strong><small>Фильмы, актёры, режиссёры и вселенные</small></button>
-<button class="catalog-card" data-category="Автомобили"><span class="emoji">🏎️</span><strong>Автомобили</strong><small>Марки, модели, история и техника</small></button>
-<button class="catalog-card" data-category="География"><span class="emoji">🌍</span><strong>Путешествия и география</strong><small>Страны, города и удивительные места</small></button>
-<button class="catalog-card" data-category="Наука"><span class="emoji">🧪</span><strong>Наука и технологии</strong><small>Космос, открытия и изобретения</small></button>
-</div></div>
-<div id="catalogTopics" class="catalog-step">
-<button class="catalog-back" id="backCategories">← Все категории</button><h2 id="topicHeading">Рубрики</h2><p class="selection-label">Выбери конкретную рубрику</p><div class="topic-list" id="topicList"></div>
+<div class="hero"><div class="hero-copy"><div class="hero-kicker">TV QUIZ · ВЕЧЕР ИГР</div><h2>Вечер игр</h2><p class="hero-lead">Выбери квиз на большом экране, подключи друзей по QR-коду и играй с телефона.</p></div></div>
+<h3 class="section-title">Выбери тему и уровень</h3><p class="sub left">Листай тематические полки и выбери квиз для компании.</p>
+<div class="level-legend" aria-label="Уровни сложности"><span><i></i>Лёгкий</span><span><i></i>Средний</span><span><i></i>Сложный</span><span><i></i>Эксперт</span><span><i></i>Экстрим</span></div>
+<div class="quiz-grid" id="quizCatalog"></div>
 </div>
-<div id="catalogLevels" class="catalog-step">
-<button class="catalog-back" id="backTopics">← К рубрикам</button><h2 id="levelHeading">Уровень сложности</h2><p class="selection-label" id="selectedTopicLabel"></p>
-<div class="level-grid">
-<button class="level-card" data-level="Лёгкий">🟢 Новичок<small>Разогрев и базовые знания</small></button>
-<button class="level-card" data-level="Средний">🟡 Знаток<small>Понадобится вспомнить детали</small></button>
-<button class="level-card" data-level="Сложный">🔴 Эксперт<small>Для тех, кто реально в теме</small></button>
-</div></div>
 <div id="gameSettings" class="catalog-step">
-<button class="catalog-back" id="backLevels">← Сложность</button><h2>Настройки раунда</h2><p class="selection-label" id="finalSelection"></p>
+<button class="catalog-back" id="backCatalog">← К каталогу</button><h2>Настройки раунда</h2><p class="selection-label" id="finalSelection"></p>
 <div class="row"><div><div class="field-title">Количество вопросов</div><select id="questionCount"><option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option></select></div>
 <div><div class="field-title">Время на ответ</div><select id="timeLimit"><option value="10">10 секунд</option><option value="15" selected>15 секунд</option><option value="20">20 секунд</option><option value="30">30 секунд</option></select></div></div>
 <button class="primary" id="createRoom">Создать игровую комнату</button><p id="setupNote" class="sub"></p>
@@ -112,11 +146,63 @@ const topics={
  'География':['Страны и столицы','Города и природа'],
  'Наука':['Космос','Физика и изобретения']
 };
-const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪'};
+const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Мемасики':'😂'};
 function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
-document.querySelectorAll('[data-category]').forEach(btn=>btn.addEventListener('click',()=>{selectedCategory=btn.dataset.category;$('topicHeading').textContent=categoryEmoji[selectedCategory]+' '+(selectedCategory==='География'?'Путешествия и география':selectedCategory==='Наука'?'Наука и технологии':selectedCategory);$('topicList').innerHTML=topics[selectedCategory].map(t=>'<button class="topic-card" data-topic="'+safe(t)+'">'+safe(t)+'<small>Открыть рубрику →</small></button>').join('');document.querySelectorAll('[data-topic]').forEach(x=>x.addEventListener('click',()=>{selectedTopic=x.dataset.topic;$('levelHeading').textContent=selectedTopic;$('selectedTopicLabel').textContent='Категория: '+selectedCategory;showStep('catalogLevels')}));showStep('catalogTopics')}));
-$('backCategories').addEventListener('click',()=>showStep('catalogHome'));$('backTopics').addEventListener('click',()=>showStep('catalogTopics'));$('backLevels').addEventListener('click',()=>showStep('catalogLevels'));
-document.querySelectorAll('[data-level]').forEach(btn=>btn.addEventListener('click',()=>{selectedDifficulty=btn.dataset.level;$('finalSelection').textContent=categoryEmoji[selectedCategory]+' '+selectedCategory+' · '+selectedTopic+' · '+selectedDifficulty;$('setupNote').textContent='';showStep('gameSettings')}));
+const quizLevels=[
+ {label:'Лёгкий',legacy:'Лёгкий',color:'easy'},
+ {label:'Средний',legacy:'Средний',color:'medium'},
+ {label:'Сложный',legacy:'Сложный',color:'hard'},
+ {label:'Эксперт',legacy:null,color:'expert'},
+ {label:'Экстрим',legacy:null,color:'extreme'}
+];
+const topicDescriptions={
+ 'Музыкальные группы':'Группы и исполнители разных эпох','Исполнители и хиты':'Голоса, песни и музыкальные альбомы',
+ 'Культовые фильмы':'Герои, сцены и фильмы','Актёры и режиссёры':'Лица большого кино и авторы картин',
+ 'Марки и модели':'Автомобильные бренды и модели','Двигатели и техника':'Устройство автомобилей и инженерия',
+ 'Страны и столицы':'Страны и главные города','Города и природа':'Места и природные достопримечательности',
+ 'Космос':'Планеты, звёзды и открытия','Физика и изобретения':'Законы природы и изобретения'
+};
+const topicEmoji={'Музыкальные группы':'🎸','Исполнители и хиты':'🎤','Культовые фильмы':'🎞️','Актёры и режиссёры':'🎭','Марки и модели':'🏎️','Двигатели и техника':'⚙️','Страны и столицы':'🗺️','Города и природа':'🌄','Космос':'🚀','Физика и изобретения':'🧪'};
+const questionShelves=Object.entries(topics).map(([name,names])=>({name,icon:categoryEmoji[name],items:names.map(topic=>({category:name,topic,title:topic,desc:topicDescriptions[topic],emoji:topicEmoji[topic]}))}));
+// Reserved media asset shape: {type:'image'|'audio'|'video',src,startSeconds?,endSeconds?}.
+const mediaQuizPreview={category:'Мемасики',topic:'Мем-квизы',title:'Квизы о мемах',desc:'Появятся после подготовки материалов',emoji:'😂',media:{assets:[],segments:[]}};
+const shelves=[...questionShelves,{name:'Мемасики',icon:categoryEmoji['Мемасики'],items:[mediaQuizPreview]}];
+const quizzes=shelves.flatMap(shelf=>shelf.items);
+function artSvg(emoji){return '<svg viewBox="0 0 180 140" aria-hidden="true"><circle cx="112" cy="42" r="60" fill="var(--shelf-pale)"/><path d="M18 117C62 75 97 146 166 82" fill="none" stroke="var(--shelf-color)" stroke-width="5" stroke-linecap="round"/><text x="91" y="96" text-anchor="middle" font-size="78">'+safe(emoji)+'</text></svg>'}
+function readCatalogList(key){try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch(e){return []}}
+function saveCatalogReturn(btn){try{localStorage.setItem('tvquiz.return-focus',btn.dataset.cardId);localStorage.setItem('tvquiz.return-y',String(window.scrollY));localStorage.setItem('tvquiz.return-x',JSON.stringify([...document.querySelectorAll('.shelf-track')].map(track=>track.scrollLeft)))}catch(e){}}
+function restoreCatalogReturn(){try{const cardId=localStorage.getItem('tvquiz.return-focus');if(!cardId)return;const positions=JSON.parse(localStorage.getItem('tvquiz.return-x')||'[]');requestAnimationFrame(()=>{document.querySelectorAll('.shelf-track').forEach((track,index)=>track.scrollLeft=positions[index]||0);window.scrollTo(0,Number(localStorage.getItem('tvquiz.return-y'))||0);document.querySelector('[data-card-id="'+CSS.escape(cardId)+'"]')?.focus({preventScroll:true})})}catch(e){}}
+function rememberCompletedQuiz(){const key=[selectedCategory,selectedTopic,selectedDifficulty].join('|');try{const done=readCatalogList('tvquiz.completed');if(!done.includes(key))done.push(key);localStorage.setItem('tvquiz.completed',JSON.stringify(done))}catch(e){}}
+function renderCatalog(){
+ const questions=window.QUIZ_QUESTIONS||[],done=readCatalogList('tvquiz.completed');
+ $('quizCatalog').innerHTML=shelves.map((shelf,index)=>'<section class="shelf" data-shelf="'+index+'" aria-label="'+safe(shelf.name)+'"><div class="shelf-heading"><h3><span aria-hidden="true">'+shelf.icon+'</span> '+safe(shelf.name)+'</h3><span>'+shelf.items.length+' квиза</span></div><div class="shelf-track">'+shelf.items.flatMap(q=>quizLevels.map(level=>{
+  const count=level.legacy?questions.filter(item=>item.category===q.category&&item.topic===q.topic&&item.difficulty===level.legacy).length:0;
+  const available=!q.media&&count>0,key=[q.category,q.topic,level.legacy||level.label].join('|'),completed=done.includes(key),cardId=q.category+'-'+q.topic+'-'+level.color;
+  const unavailableText=q.media?'Нет подготовленного контента':level.legacy?'Пока нет вопросов этого уровня':'Скоро · нет вопросов';
+  return '<button type="button" class="catalog-card quiz-card '+(available?'':'unavailable-card')+'" data-qi="'+quizzes.indexOf(q)+'" data-level-key="'+level.color+'" data-card-id="'+safe(cardId)+'" '+(available?'':'disabled aria-disabled="true"')+' aria-label="'+safe(q.title+', '+level.label+(available?', '+count+' вопросов':' — пока недоступен'))+'"><span class="level-chip" data-level="'+safe(level.label)+'">'+safe(level.label)+'</span><span class="card-copy"><span class="card-eyebrow">'+safe(q.category)+' · квиз</span><strong>'+safe(q.title)+(completed?' ✓':'')+'</strong><small>'+safe(q.desc)+'</small></span><span class="card-art">'+artSvg(q.emoji)+'</span><span class="quiz-meta">'+(available?count+' вопросов'+(completed?' · пройден':''):unavailableText)+'</span></button>'
+ })).join('')+'</div></section>').join('');
+ document.querySelectorAll('[data-qi]:not(:disabled)').forEach(btn=>btn.addEventListener('click',()=>{
+  const q=quizzes[Number(btn.dataset.qi)],level=quizLevels.find(item=>item.color===btn.dataset.levelKey);
+  selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=level.legacy;
+  $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+level.label;
+  saveCatalogReturn(btn);showStep('gameSettings');$('createRoom').focus({preventScroll:true});
+ }));
+ restoreCatalogReturn();
+}
+document.querySelector('#catalogHome').addEventListener('keydown',event=>{
+ const current=event.target.closest('.catalog-card[data-qi]:not(:disabled)');
+ if(!current||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
+ const rows=[...document.querySelectorAll('.shelf')],row=current.closest('.shelf'),cards=[...row.querySelectorAll('.catalog-card[data-qi]:not(:disabled)')];
+ if(event.key==='ArrowLeft'||event.key==='ArrowRight'){
+  const next=cards[cards.indexOf(current)+(event.key==='ArrowRight'?1:-1)];if(next){event.preventDefault();next.focus();next.scrollIntoView({block:'nearest',inline:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}return;
+ }
+ const index=rows.indexOf(row),targetRow=rows[index+(event.key==='ArrowDown'?1:-1)];if(!targetRow)return;
+ const rect=current.getBoundingClientRect(),center=rect.left+rect.width/2;
+ const target=[...targetRow.querySelectorAll('.catalog-card[data-qi]:not(:disabled)')].sort((a,b)=>Math.abs(a.getBoundingClientRect().left+a.getBoundingClientRect().width/2-center)-Math.abs(b.getBoundingClientRect().left+b.getBoundingClientRect().width/2-center))[0];
+ if(target){event.preventDefault();target.focus();target.scrollIntoView({block:'nearest',inline:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
+});
+renderCatalog();
+$('backCatalog').addEventListener('click',()=>{showStep('catalogHome');restoreCatalogReturn()});
 let peer=null,config=null,deck=[],round=0,seconds=0,timer=null,revealTimeout=null,phase='setup',revealScheduled=false;
 const playerColors=['#ff6b6b','#4da3ff','#f6c453','#57d69a','#c084fc','#ff8c42','#48d1cc','#f472b6'];
 function send(c,d){try{if(c&&c.open)c.send(d)}catch(e){}}
@@ -193,6 +279,7 @@ function reveal(){
  revealTimeout=setTimeout(()=>{round++;$('answers').dataset.revealed='0';ask()},5500);
 }
 function finish(){
+ rememberCompletedQuiz();
  phase='results';clearInterval(timer);clearTimeout(revealTimeout);$('game').style.display='none';$('results').style.display='block';
  const sorted=roster().sort((a,b)=>b.score-a.score);$('finalScores').innerHTML=sorted.map((p,i)=>'<div class="player">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'🎮')+' '+safe(p.name)+'<small>'+p.score+' очков</small></div>').join('');
  broadcast({type:'game-over',players:sorted});
