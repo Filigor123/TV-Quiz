@@ -16,6 +16,9 @@ input:focus{border-color:#8daaff}
 .avatar{-webkit-appearance:none;appearance:none;touch-action:manipulation;min-height:108px;border:2px solid #405273;border-radius:16px;background:linear-gradient(155deg,#344c73,#202e48);font-size:39px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#fff;transition:transform .12s,border-color .12s,background .12s}.avatar span{font-size:12px;font-weight:bold;letter-spacing:.2px;color:#dce7ff}
 .avatar:active{transform:scale(.94)}
 .avatar.selected{border-color:#b9caff;background:linear-gradient(155deg,#526fa5,#354d78);box-shadow:0 0 0 3px #9bb3ff55;transform:scale(1.04)}
+.avatar.local-avatar{background:#684344;border-color:#8a5a59}.avatar.local-avatar:nth-child(3n+2){background:#3b6572}.avatar.local-avatar:nth-child(3n){background:#514d76}.avatar.local-avatar:nth-child(4n){background:#774c61}.avatar.local-avatar:nth-child(5n){background:#375a79}.avatar.local-avatar:nth-child(7n){background:#74612f}
+.avatar.local-avatar.selected{border-color:#ff785f;box-shadow:0 0 0 3px #ff785f55,0 8px 18px #0002;transform:translateY(-2px) scale(1.03)}
+.avatar.local-avatar span{font-size:11px}.extra-avatars{margin-top:14px;color:#c5cee2}.extra-avatars summary{cursor:pointer;text-align:center;padding:8px}.extra-avatars .avatars{margin-top:8px}
 .action{width:100%;margin-top:20px;padding:16px;border:0;border-radius:13px;background:linear-gradient(135deg,#779cff,#526fe0);color:white;font-size:20px;font-weight:bold;cursor:pointer;touch-action:manipulation}
 .action:disabled{opacity:.55;cursor:wait}
 #message{min-height:28px;margin:14px 0 0;text-align:center;color:#d7e1ff;line-height:1.4}
@@ -23,6 +26,8 @@ input:focus{border-color:#8daaff}
 .choices{display:grid;gap:10px}.choice{padding:16px;border:2px solid #405273;border-radius:12px;background:#293957;color:#fff;font-size:19px;text-align:left;cursor:pointer}
 .closest-form{display:grid;gap:10px;margin-top:16px}.closest-form[hidden]{display:none}.closest-form input{width:100%;padding:16px;border:2px solid #405273;border-radius:12px;background:#101a2d;color:#fff;font-size:21px}.closest-form .unit-label{text-align:center;color:#c5cee2}
 .choice:disabled{opacity:1}.choice.correct{border-color:#45d483;background:#174d37;color:#d9ffea}.choice.wrong{border-color:#ff6262;background:#54252e;color:#ffe1e1}.hint{text-align:center;color:#c5cee2}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #a9c4ff;outline-offset:3px}
+@media(max-width:420px){body{padding:12px}.card{padding:22px 16px;border-radius:16px}.avatars{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.avatar{min-height:92px;font-size:40px;border-radius:16px;padding:7px 4px}.avatar span{font-size:11px}.question{font-size:23px}.choice{font-size:18px}}
 </style>
 </head>
 <body>
@@ -46,6 +51,20 @@ input:focus{border-color:#8daaff}
 <button class="avatar" type="button" data-avatar="🧑‍🚒">🧑‍🚒<span>Пожарный</span></button>
 <button class="avatar" type="button" data-avatar="👽">👽<span>Пришелец</span></button>
 </div>
+<details class="extra-avatars"><summary>Дополнительные аватары</summary><div class="avatars">
+<button class="avatar local-avatar" type="button" data-avatar="🤡" aria-label="Клоун">🤡<span>Клоун</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🤪" aria-label="Шалун">🤪<span>Шалун</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="💩" aria-label="Пиксель">💩<span>Пиксель</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🐸" aria-label="Лягушка">🐸<span>Лягушка</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🐒" aria-label="Обезьяна">🐒<span>Обезьяна</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🐙" aria-label="Осьминог">🐙<span>Осьминог</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="👹" aria-label="Огр">👹<span>Огр</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🦷" aria-label="Зуб">🦷<span>Зуб</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🥴" aria-label="Кружится голова">🥴<span>Дурашка</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🦆" aria-label="Утка">🦆<span>Утка</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🤢" aria-label="Зелёный">🤢<span>Зелёный</span></button>
+<button class="avatar local-avatar" type="button" data-avatar="🤡" aria-label="Клоун 2">🤡<span>Шутник</span></button>
+</div></details>
 <button class="action" id="connectBtn">Подключиться</button>
 </section>
 <section id="lobby" style="display:none">

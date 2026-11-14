@@ -83,6 +83,7 @@
   function answerDistance(question, answer) {
     const q = normalizeQuestion(question);
     if (!q || q.type !== 'closest') return null;
+    if (answer === null || answer === undefined) return null;
     if (q.answerMode === 'date') {
       const target = parseDate(q.correctValue);
       const value = parseDate(typeof answer === 'object' ? answer.value : answer);
