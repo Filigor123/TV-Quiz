@@ -216,6 +216,7 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
 <script src="game-model.js"></script>
 <script src="audio.js"></script>
 <script src="slang-quiz.js"></script>
+<script src="audio-quiz.js"></script>
 <script>
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
 let currentQuestionText='';
@@ -230,7 +231,7 @@ $('speakQuestionBtn').addEventListener('click',async()=>{
  $('speechStatus').textContent='Читаю вопрос…';const spoken=await QuizAudio.speakQuestion(questionText);if(questionText!==currentQuestionText)return;
  $('speechStatus').textContent=spoken?'Озвучивание завершено.':'Не удалось озвучить. Вопрос остаётся на экране.';
 });
-let selectedCategory='',selectedTopic='',selectedDifficulty='';
+let selectedCategory='',selectedTopic='',selectedDifficulty='',selectedMultiQuiz=null,answerWindowOpen=false;
 const topics={
  'Музыка':['Музыкальные группы','Исполнители и хиты'],
  'Кино':['Культовые фильмы','Актёры и режиссёры'],
@@ -238,7 +239,7 @@ const topics={
  'География':['Страны и столицы','Города и природа'],
  'Наука':['Космос','Физика и изобретения','Логика и числа']
 };
-const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Мемасики':'😂','Сленг':'💬'};
+const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Мемасики':'😂','Сленг':'💬','Звуки':'🔊'};
 function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
 const quizLevels=[
  {label:'Лёгкий',legacy:'Лёгкий',color:'easy'},
@@ -262,8 +263,9 @@ const questionShelves=[
 ].map(shelf=>({...shelf,items:shelf.categories.flatMap(category=>topics[category].map(topic=>({id:topicCovers[topic],category,topic,title:topic,desc:topicDescriptions[topic],cover:topicCovers[topic]})))}));
 questionShelves[2].items.push({id:'slang-chat',category:window.QUIZ_SLENG.category,topic:window.QUIZ_SLENG.topic,title:window.QUIZ_SLENG.title,desc:window.QUIZ_SLENG.description,cover:window.QUIZ_SLENG.cover,multiRound:true});
 // Reserved media asset shape: {type:'image'|'audio'|'video',src,startSeconds?,endSeconds?}.
+const audioQuizCard={id:'audio-recognition',category:window.QUIZ_AUDIO.category,topic:window.QUIZ_AUDIO.topic,title:window.QUIZ_AUDIO.title,desc:window.QUIZ_AUDIO.description,cover:window.QUIZ_AUDIO.cover,multiQuiz:window.QUIZ_AUDIO};
 const mediaQuizPreview={id:'media-placeholder',category:'Мемасики',topic:'Мем-квизы',title:'Коллекция готовится',desc:'Появится после подготовки материалов',cover:'media-placeholder',media:{assets:[],segments:[]}};
-const shelves=[...questionShelves,{name:'Мемасики',icon:'◇',categories:['Мемасики'],items:[mediaQuizPreview]}];
+const shelves=[...questionShelves,{name:'Звуки',icon:'♫',categories:['Звуки'],items:[audioQuizCard]},{name:'Мемасики',icon:'◇',categories:['Мемасики'],items:[mediaQuizPreview]}];
 const quizzes=shelves.flatMap(shelf=>shelf.items);
 function artSvg(cover,suffix){
  const art={
@@ -292,18 +294,19 @@ function restoreCatalogReturn(){try{const cardId=localStorage.getItem('tvquiz.re
 function rememberCompletedQuiz(){const key=[selectedCategory,selectedTopic,selectedDifficulty].join('|');try{const done=readCatalogList('tvquiz.completed');if(!done.includes(key))done.push(key);localStorage.setItem('tvquiz.completed',JSON.stringify(done))}catch(e){}}
 function renderCatalog(){
  const questions=window.QUIZ_QUESTIONS||[],done=readCatalogList('tvquiz.completed');
- $('quizCatalog').innerHTML=shelves.map((shelf,index)=>'<section class="shelf" data-shelf="'+index+'" aria-label="'+safe(shelf.name)+'"><div class="shelf-heading"><h3><span aria-hidden="true">'+shelf.icon+'</span> '+safe(shelf.name)+'</h3><span>'+quizCountLabel(shelf.items.length)+'</span></div><div class="shelf-track">'+shelf.items.flatMap(q=>(q.media?[{label:'Скоро',legacy:null,color:'soon'}]:q.multiRound?[{label:'3 раунда',legacy:'multi',color:'medium'}]:quizLevels).map(level=>{
-  const count=q.multiRound?window.QUIZ_SLENG.rounds.reduce((sum,round)=>sum+round.questions.length,0):level.legacy?questions.filter(item=>item.category===q.category&&item.topic===q.topic&&item.difficulty===level.legacy).length:0;
-  const available=!q.media&&(q.multiRound||count>0),key=[q.category,q.topic,level.legacy||level.label].join('|'),completed=done.includes(key),cardId=q.category+'-'+q.topic+'-'+level.color;
+ $('quizCatalog').innerHTML=shelves.map((shelf,index)=>'<section class="shelf" data-shelf="'+index+'" aria-label="'+safe(shelf.name)+'"><div class="shelf-heading"><h3><span aria-hidden="true">'+shelf.icon+'</span> '+safe(shelf.name)+'</h3><span>'+quizCountLabel(shelf.items.length)+'</span></div><div class="shelf-track">'+shelf.items.flatMap(q=>(q.media?[{label:'Скоро',legacy:null,color:'soon'}]:(q.multiRound||q.multiQuiz)?[{label:'3 раунда',legacy:'multi',color:'medium'}]:quizLevels).map(level=>{
+  const count=q.multiRound?window.QUIZ_SLENG.rounds.reduce((sum,round)=>sum+round.questions.length,0):q.multiQuiz?q.multiQuiz.rounds.reduce((sum,round)=>sum+round.questions.length,0):level.legacy?questions.filter(item=>item.category===q.category&&item.topic===q.topic&&item.difficulty===level.legacy).length:0;
+  const available=!q.media&&(q.multiRound||q.multiQuiz||count>0),key=[q.category,q.topic,level.legacy||level.label].join('|'),completed=done.includes(key),cardId=q.category+'-'+q.topic+'-'+level.color;
   const unavailableText=q.media?'Нет подготовленного контента':level.legacy?'Пока нет вопросов этого уровня':'Скоро · нет вопросов';
   return '<button type="button" class="catalog-card quiz-card '+(available?'':'unavailable-card')+'" data-qi="'+quizzes.indexOf(q)+'" data-level-key="'+level.color+'" data-card-id="'+safe(cardId)+'" '+(available?'':'disabled aria-disabled="true"')+' aria-label="'+safe(q.title+', '+level.label+(available?', '+count+' вопросов':' — пока недоступен'))+'"><span class="level-chip" data-level="'+safe(level.label)+'">'+safe(level.label)+'</span><span class="card-copy"><span class="card-eyebrow">'+safe(q.category)+' · квиз</span><strong>'+safe(q.title)+(completed?' ✓':'')+'</strong><small>'+safe(q.desc)+'</small></span><span class="card-art">'+artSvg(q.cover,level.color)+'</span><span class="quiz-meta">'+(available?count+' вопросов'+(completed?' · пройден':''):unavailableText)+'</span></button>'
  })).join('')+'</div></section>').join('');
  document.querySelectorAll('[data-qi]:not(:disabled)').forEach(btn=>btn.addEventListener('click',()=>{
   const q=quizzes[Number(btn.dataset.qi)],level=quizLevels.find(item=>item.color===btn.dataset.levelKey);
-   selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=q.multiRound?'multi':level.legacy;
-   $('questionCount').previousElementSibling.textContent=q.multiRound?'Вопросов в каждом раунде':'Количество вопросов';
-   $('questionCount').innerHTML=q.multiRound?'<option value="5">5 на раунд · 15 всего</option><option value="10" selected>10 на раунд · 30 всего</option>':'<option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option>';
-   $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+(q.multiRound?'3 раунда':level.label);
+   selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=(q.multiRound||q.multiQuiz)?'multi':level.legacy;selectedMultiQuiz=q.multiQuiz||null;
+   const multi=q.multiRound||q.multiQuiz;
+   $('questionCount').previousElementSibling.textContent=multi?'Вопросов в каждом раунде':'Количество вопросов';
+   $('questionCount').innerHTML=multi?'<option value="5" selected>5 на раунд · 15 всего</option>':'<option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option>';
+   $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+(multi?'3 раунда':level.label);
   saveCatalogReturn(btn);showStep('gameSettings');$('createRoom').focus({preventScroll:true});
  }));
  restoreCatalogReturn();
@@ -367,13 +370,14 @@ function updateLobby(){
 }
 function makeDeck(){
  if(selectedDifficulty==='multi'){
-  const rounds=window.QUIZ_SLENG.rounds,perRound=Math.min(Number($('questionCount').value),...rounds.map(item=>item.questions.length));
+  const quiz=selectedMultiQuiz||window.QUIZ_SLENG,rounds=quiz.rounds,perRound=Math.min(Number($('questionCount').value),...rounds.map(item=>item.questions.length));
   deck=rounds.flatMap((item,roundIndex)=>item.questions.slice(0,perRound).map((q,index)=>{
-   const question={...q,type:item.type,category:window.QUIZ_SLENG.category,topic:window.QUIZ_SLENG.topic,difficulty:item.title,roundTitle:item.title,roundIndex,roundQuestionNumber:index+1,allowWager:roundIndex===1};
+   const question={...q,type:item.type,category:quiz.category,topic:quiz.topic,difficulty:item.title,roundTitle:item.title,roundIndex,roundQuestionNumber:index+1,allowWager:roundIndex===1};
+   if(question.media){question.media={...question.media,timerAfterPlayback:true,challengeSeconds:roundIndex===2?3:undefined,revealEndSeconds:question.media.endSeconds};if(roundIndex===2)question.media.endSeconds=question.media.challengeSeconds;}
    if(question.answers){const choices=question.answers.map((answer,originalIndex)=>({answer,correct:originalIndex===question.correct}));for(let i=choices.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[choices[i],choices[j]]=[choices[j],choices[i]]}question.answers=choices.map(choice=>choice.answer);question.correct=choices.findIndex(choice=>choice.correct)}
    return QuizGameModel.normalizeQuestion(question);
   }));
-  config={time:Number($('timeLimit').value),count:deck.length,perRound,category:window.QUIZ_SLENG.title,difficulty:'3 раунда'};$('setupNote').textContent='Свободный ответ засчитывается по заранее подготовленным вариантам. За каждый верный ответ — 1 очко.';return true;
+  config={time:Number($('timeLimit').value),count:deck.length,perRound,category:quiz.title,difficulty:'3 раунда'};$('setupNote').textContent=selectedMultiQuiz?'Аудиофрагмент звучит на экране ведущего; таймер ответов начнётся после прослушивания. На втором раунде действует ставка.':'Свободный ответ засчитывается по заранее подготовленным вариантам. За каждый верный ответ — 1 очко.';return true;
  }
  const pool=(window.QUIZ_QUESTIONS||[]).filter(q=>q.category===selectedCategory&&q.topic===selectedTopic&&q.difficulty===selectedDifficulty);
  if(!pool.length){$('setupNote').textContent='Для этой рубрики и сложности пока нет вопросов. Выбери другой уровень.';return false}
@@ -410,11 +414,11 @@ function handleConnection(conn){
   if(data.type==='join'){
    if(!players.has(conn.peer))players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),color:playerColors[players.size%playerColors.length],ready:false,score:0,answer:null,wagerUsed:false,currentWager:false});
    const state={type:'state',players:publicRoster(),gameStarted:phase==='game'};
-   if(phase==='game'&&deck[round])state.question={question:QuizGameModel.toPlayerQuestion(deck[round]),round:round+1,total:deck.length,time:seconds||config.time};
+   if(phase==='game'&&deck[round])state.question={question:QuizGameModel.toPlayerQuestion(deck[round]),round:round+1,total:deck.length,time:seconds||config.time,answerOpen:answerWindowOpen};
    if(phase==='game')send(conn,{type:'wager-status',available:!players.get(conn.peer).wagerUsed});send(conn,state);updateLobby();broadcast({type:'players',players:publicRoster()});
   }
   if(data.type==='ready'&&players.has(conn.peer)){players.get(conn.peer).ready=!!data.ready;updateLobby();broadcast({type:'players',players:publicRoster()})}
-  if(data.type==='answer'&&phase==='game'&&players.has(conn.peer)){
+  if(data.type==='answer'&&phase==='game'&&answerWindowOpen&&players.has(conn.peer)){
     const p=players.get(conn.peer),q=deck[round];if(p.answer===null&&!revealScheduled&&q){
      const wagerIsValid=data.wager===undefined||typeof data.wager==='boolean';
      const wagerValid=data.wager!==true||QuizGameModel.canUseWager(q,p.wagerUsed,data.wager);
@@ -451,22 +455,25 @@ function ask(){
  $('answers').dataset.revealed='0';$('hostMedia').replaceChildren();
  $('roundInfo').textContent=(q.roundTitle?q.roundTitle+' · вопрос '+q.roundQuestionNumber+' из '+config.perRound+' · ':q.type==='closest'?'Кто ближе? · ':'Вопрос '+(round+1)+' из '+deck.length+' · ')+q.category+' · '+q.difficulty+(q.allowWager?' · во втором раунде ставка доступна один раз':'');
  $('question').textContent=q.text;
+ answerWindowOpen=!q.media?.timerAfterPlayback;
  if(q.type==='closest')$('answers').innerHTML='<div class="answer">Ответы будут показаны после таймера</div>';
   else $('answers').innerHTML=(q.answers||[]).map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'<div class="answer-votes"></div></div>').join('');
  if(q.media?.src){
+   if(q.media.timerAfterPlayback)QuizAudio.stopMusic();
    const media=document.createElement(q.media.type==='image'?'img':q.media.type==='video'?'video':'audio');media.alt=q.media.type==='image'?q.media.alt||'Изображение к вопросу':'';
    media.addEventListener('error',()=>{if(phase!=='game'||deck[round]!==q||$('answers').dataset.revealed==='1')return;q.mediaLoadFailed=true;$('timer').textContent='Медиа не загрузилось. Вопрос пропущен без очков.';reveal()},{once:true});media.src=q.media.src;
-  if(q.media.type!=='image'){media.controls=true;media.preload='metadata';media.addEventListener('loadedmetadata',()=>{media.currentTime=Math.min(q.media.start||0,media.duration||0);if(q.media.end!==null&&q.media.end<media.duration)media.addEventListener('timeupdate',()=>{if(media.currentTime<q.media.start)media.currentTime=q.media.start;if(media.currentTime>=q.media.end){media.pause();media.currentTime=q.media.start}})},{once:true});if(q.media.type==='video')media.playsInline=true}
+  if(q.media.type!=='image'){media.controls=true;media.preload='metadata';media.addEventListener('loadedmetadata',()=>{media.currentTime=Math.min(q.media.startSeconds||q.media.start||0,media.duration||0);if(q.media.end!==null&&q.media.end<media.duration)media.addEventListener('timeupdate',()=>{if(media.currentTime<q.media.start)media.currentTime=q.media.start;if(media.currentTime>=q.media.end){media.pause();media.currentTime=q.media.start}})},{once:true});if(q.media.type==='video')media.playsInline=true}
   $('hostMedia').append(media);
+  if(q.media.timerAfterPlayback&&q.media.type==='audio'){media.controls=false;let clipEnd=q.media.endSeconds;const openAnswers=()=>{if(answerWindowOpen||phase!=='game'||deck[round]!==q)return;answerWindowOpen=true;media.controls=true;$('timer').textContent=seconds+' сек.';broadcast({type:'answer-open',time:seconds});if(QuizAudio.getSettings().music)void QuizAudio.startMusic();clearInterval(timer);timer=setInterval(()=>{seconds--;$('timer').textContent=seconds+' сек.';if(seconds<=0)reveal()},1000)};media.addEventListener('timeupdate',()=>{if(clipEnd&&media.currentTime>=clipEnd){media.pause();if(q.media.revealEndSeconds)media.currentTime=0;openAnswers()} });media.addEventListener('ended',openAnswers,{once:true});media.addEventListener('loadedmetadata',()=>{clipEnd=Math.min(clipEnd||media.duration,media.duration);media.currentTime=q.media.startSeconds||0;media.play().catch(()=>{const button=document.createElement('button');button.type='button';button.className='audio-action';button.textContent='Воспроизвести фрагмент и открыть ответы';button.addEventListener('click',()=>{button.remove();media.play().catch(()=>{q.mediaLoadFailed=true;reveal()})},{once:true});$('hostMedia').append(button)})},{once:true});}
  }
- $('scores').textContent='Ответили: 0 из '+roster().length;$('timer').textContent=seconds+' сек.';renderLivePlayers();
- broadcast({type:'question',question:QuizGameModel.toPlayerQuestion(q),round:round+1,total:deck.length,time:config.time});broadcastWagerStatuses();
- clearInterval(timer);timer=setInterval(()=>{seconds--;$('timer').textContent=seconds+' сек.';if(seconds<=0)reveal()},1000);
+ $('scores').textContent='Ответили: 0 из '+roster().length;$('timer').textContent=q.media?.timerAfterPlayback?'Слушаем фрагмент…':seconds+' сек.';renderLivePlayers();
+ broadcast({type:'question',question:QuizGameModel.toPlayerQuestion(q),round:round+1,total:deck.length,time:config.time,answerOpen:answerWindowOpen});broadcastWagerStatuses();
+ clearInterval(timer);if(answerWindowOpen)timer=setInterval(()=>{seconds--;$('timer').textContent=seconds+' сек.';if(seconds<=0)reveal()},1000);
 }
 function reveal(){
  if(phase!=='game'||$('answers').dataset.revealed==='1')return;
- QuizAudio.stopSpeech();QuizAudio.playReveal();
- $('answers').dataset.revealed='1';clearInterval(timer);clearTimeout(revealTimeout);const q=deck[round];
+ QuizAudio.stopSpeech();
+ $('answers').dataset.revealed='1';clearInterval(timer);clearTimeout(revealTimeout);const q=deck[round];if(q.media?.timerAfterPlayback)QuizAudio.stopMusic();QuizAudio.playReveal();
  let revealData;
  if(q.type==='closest'){
   const winners=QuizGameModel.closestWinners(q,roster());roster().forEach(p=>{if(winners.includes(p.id))p.score+=1});
@@ -478,14 +485,14 @@ function reveal(){
    $('timer').textContent='Медиа не загрузилось. Вопрос пропущен без очков.';
    revealData={type:'reveal',skipped:true,players:publicRoster()};
   }else{
-   const isCorrect=p=>q.type==='free-text'?window.QUIZ_SLENG.isFreeTextCorrect(q,p.answer):p.answer===q.correct;
+   const isCorrect=p=>q.type==='free-text'?QuizGameModel.isFreeTextCorrect(q,p.answer):p.answer===q.correct;
    roster().forEach(p=>{p.isCorrect=p.answer!==null&&isCorrect(p);p.awarded=QuizGameModel.answerScore(p.isCorrect,p.currentWager);p.score+=p.awarded});
   [...$('answers').children].forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else el.classList.add('wrong')});
    const answerText=q.type==='free-text'?q.correctAnswer:q.answers[q.correct];
    $('timer').textContent='Правильный ответ: '+answerText;
    revealData={type:'reveal',freeText:q.type==='free-text',correct:q.correct,answerText,explanation:q.explanation||'',players:publicRoster(true)};
  }
- const activeMedia=$('hostMedia').querySelector('audio,video');if(activeMedia)activeMedia.pause();
+ const activeMedia=$('hostMedia').querySelector('audio,video');if(activeMedia){activeMedia.pause();if(q.media?.revealEndSeconds){activeMedia.controls=true;activeMedia.currentTime=q.media.startSeconds||0;activeMedia.play().catch(()=>{});const stopAt=Math.min(q.media.revealEndSeconds,activeMedia.duration||q.media.revealEndSeconds);activeMedia.ontimeupdate=()=>{if(activeMedia.currentTime>=stopAt)activeMedia.pause()}}}
   $('explanation').textContent=q.explanation||(q.type==='closest'?'Минимальное абсолютное отклонение получает 1 очко; при ничьей очко получают все лидеры.':'Правильный ответ: '+(q.type==='free-text'?q.correctAnswer:q.answers[q.correct]));$('explanation').style.display='block';renderLivePlayers();
   connections.forEach(conn=>{const payload={...revealData};if(revealData.freeText)payload.isCorrect=players.get(conn.peer)?.isCorrect===true;send(conn,payload)});
  revealTimeout=setTimeout(()=>{round++;$('answers').dataset.revealed='0';ask()},5500);
