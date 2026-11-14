@@ -107,6 +107,28 @@
     return scored.filter((entry) => Math.abs(entry.distance - best) < 1e-9).map((entry) => entry.player.id);
   }
 
+  function canUseWager(question, wagerUsed, requested) {
+    return Boolean(requested === true && wagerUsed !== true && question && question.roundIndex === 1);
+  }
+
+  function answerScore(isCorrect, wagered) {
+    if (wagered) return isCorrect ? 2 : -1;
+    return isCorrect ? 1 : 0;
+  }
+
+  function toPublicRoster(players, revealWagers = false) {
+    return players.map((player) => {
+      const { answer, wagerUsed, currentWager, awarded, isCorrect, ...publicPlayer } = player;
+      if (!revealWagers) return publicPlayer;
+      return {
+        ...publicPlayer,
+        wager: currentWager === true,
+        awarded: Number.isFinite(awarded) ? awarded : 0,
+        isCorrect: isCorrect === true,
+      };
+    });
+  }
+
   function toPlayerQuestion(question) {
     const q = normalizeQuestion(question);
     if (!q) return null;
@@ -126,6 +148,9 @@
     unitOptions,
     answerDistance,
     closestWinners,
+    canUseWager,
+    answerScore,
+    toPublicRoster,
     toPlayerQuestion,
   });
 })();
