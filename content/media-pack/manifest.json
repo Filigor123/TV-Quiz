@@ -1,0 +1,2290 @@
+{
+  "schemaVersion": 1,
+  "preparedAt": "2026-11-14",
+  "purpose": "Content handoff for issue #13; NOT connected to gameplay",
+  "items": [
+    {
+      "id": "sound-001",
+      "category": "Откуда этот звук?",
+      "topic": "Телепередачи",
+      "type": "audio",
+      "prompt": "Назовите передачу или киножурнал по музыке.",
+      "answer": "Поле чудес",
+      "options": [
+        "Поле чудес",
+        "Своя игра",
+        "Сто к одному",
+        "Угадай мелодию"
+      ],
+      "acceptedAnswers": [
+        "Поле чудес"
+      ],
+      "explanation": "Правильный ответ: Поле чудес.",
+      "sourcePage": "https://promosounds.ru/zastavki-teleperedach/zvuki-i-melodii-teleperedachi-pole-chudes/",
+      "downloadUrl": "https://promosounds.ru/wp-content/uploads/2019/02/muzyka-v-pole-chudes.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 9,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/sound-001.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 77.139575,
+      "clipDurationSeconds": 9.024,
+      "sha256": "2bd75f84aca0d1aab9a8b8099fdc4af51791ea898d5f18bca3f22cdac72faaa6",
+      "bytes": 144812,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "sound-002",
+      "category": "Откуда этот звук?",
+      "topic": "Телепередачи",
+      "type": "audio",
+      "prompt": "Назовите передачу или киножурнал по музыке.",
+      "answer": "Угадай мелодию",
+      "options": [
+        "Угадай мелодию",
+        "Два рояля",
+        "Песня года",
+        "Поле чудес"
+      ],
+      "acceptedAnswers": [
+        "Угадай мелодию"
+      ],
+      "explanation": "Правильный ответ: Угадай мелодию.",
+      "sourcePage": "https://zvukipro.com/teleshow/716-zvuki-iz-teleperedachi-ugadaj-melodiju.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2019-05/1557758204_opening2013.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/sound-002.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 21.133042,
+      "clipDurationSeconds": 8.04,
+      "sha256": "1f74bbda01f82f78cd3a491958a03234df49d076ecef78069dba6f1f0f5fc84a",
+      "bytes": 129068,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "sound-003",
+      "category": "Откуда этот звук?",
+      "topic": "Телепередачи",
+      "type": "audio",
+      "prompt": "Назовите передачу или киножурнал по музыке.",
+      "answer": "Зов джунглей",
+      "options": [
+        "Зов джунглей",
+        "Звёздный час",
+        "Утренняя звезда",
+        "Денди — Новая реальность"
+      ],
+      "acceptedAnswers": [
+        "Зов джунглей"
+      ],
+      "explanation": "Правильный ответ: Зов джунглей.",
+      "sourcePage": "https://zvukipro.com/teleshow/2452-zvuki-i-muzyka-iz-teleperedachi-zov-dzhunglej.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2021-06/1624005910_zastavka-zov-dzhunglej.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/sound-003.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Есть риск произнесённого названия; перед интеграцией Валере прослушать и сдвинуть границы на инструментальный участок. Не считать текущую нарезку одобренной.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 29.892063,
+      "clipDurationSeconds": 8.04,
+      "sha256": "0ecfff212206db3936f13b380dd4a5507409adfd822f20d5b23c9c2a59c44d8d",
+      "bytes": 129068,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "sound-004",
+      "category": "Откуда этот звук?",
+      "topic": "Телепередачи",
+      "type": "audio",
+      "prompt": "Назовите передачу или киножурнал по музыке.",
+      "answer": "В мире животных",
+      "options": [
+        "В мире животных",
+        "Клуб путешественников",
+        "Вокруг света",
+        "Очевидное — невероятное"
+      ],
+      "acceptedAnswers": [
+        "В мире животных"
+      ],
+      "explanation": "Правильный ответ: В мире животных.",
+      "sourcePage": "https://zvukipro.com/teleshow/3173-muzyka-iz-teleperedachi-v-mire-zhivotnyh.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2022-10/1666003020_v-mire-zhivotnyh.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/sound-004.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 69.903673,
+      "clipDurationSeconds": 10.032,
+      "sha256": "cfeb6a5ab50c72ff47d8dcc5f0d9a69f84fb9ed96e4e78bb1d67be8d774ab719",
+      "bytes": 160940,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "sound-005",
+      "category": "Откуда этот звук?",
+      "topic": "Телепередачи",
+      "type": "audio",
+      "prompt": "Назовите передачу или киножурнал по музыке.",
+      "answer": "Ералаш",
+      "options": [
+        "Ералаш",
+        "Фитиль",
+        "Каламбур",
+        "Городок"
+      ],
+      "acceptedAnswers": [
+        "Ералаш"
+      ],
+      "explanation": "Правильный ответ: Ералаш.",
+      "sourcePage": "https://zvukipro.com/teleshow/935-zvuki-iz-teleperedachi-eralash.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2019-07/1564122718_eralash_minus.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/sound-005.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 29.64898,
+      "clipDurationSeconds": 8.04,
+      "sha256": "1156af128a6c7ac2afa76717b4a6dc6a4e89614b24eb1beb363e617e3bd7b893",
+      "bytes": 129068,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "sound-009",
+      "category": "Откуда этот звук?",
+      "topic": "Техника",
+      "type": "audio",
+      "prompt": "Назовите операционную систему по звуку запуска.",
+      "answer": "Windows XP",
+      "options": [
+        "Windows XP",
+        "Windows 95",
+        "Windows 7",
+        "macOS"
+      ],
+      "acceptedAnswers": [
+        "Windows XP"
+      ],
+      "explanation": "Правильный ответ: Windows XP.",
+      "sourcePage": "https://zvukipro.com/program/2141-zvuki-windows-xp.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2021-02/1612332547_windows-xp-startup.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/sound-009.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 4.884898,
+      "clipDurationSeconds": 4.824,
+      "sha256": "8451754eeffc4e1872521913cbdb2f7e8b335398d97b7bfd291d2f6ba9be9577",
+      "bytes": 77612,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "sound-008",
+      "category": "Откуда этот звук?",
+      "topic": "Техника",
+      "type": "audio",
+      "prompt": "Телефоны какой марки использовали эту мелодию звонка?",
+      "answer": "Nokia",
+      "options": [
+        "Nokia",
+        "Siemens",
+        "Motorola",
+        "Sony Ericsson"
+      ],
+      "acceptedAnswers": [
+        "Nokia",
+        "Нокиа"
+      ],
+      "explanation": "Правильный ответ: Nokia.",
+      "sourcePage": "https://zvukipro.com/situacii/717-zvuki-nokia.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2019-05/1557817225_nokia-tune.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/sound-008.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 5.694688,
+      "clipDurationSeconds": 5.736,
+      "sha256": "429642d36c937ec864dc0518675eb8b3fd7fc807f2ea1d92381dc14a8fa8faf1",
+      "bytes": 92204,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-001",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Кино",
+      "options": [
+        "Кино",
+        "ДДТ",
+        "Алиса",
+        "Наутилус Помпилиус"
+      ],
+      "acceptedAnswers": [
+        "Кино",
+        "Kino",
+        "Виктор Цой",
+        "Цой"
+      ],
+      "explanation": "Запись: Kino — Группа крови. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D0%B0-%D0%BA%D1%80%D0%BE%D0%B2%D0%B8/1333010977?i=1333011553&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b8/93/9e/b8939e79-2152-223e-7983-64059ac86998/mzaf_17538330426059398011.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-001.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Группа крови",
+      "sourceDurationSeconds": 30.016009,
+      "clipDurationSeconds": 9.984,
+      "sha256": "ddac0362a0ddbf4bc9047fc511f8b2bfc69bbe2934c8d21597de44c90204a668",
+      "bytes": 160172,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-002",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Руки Вверх!",
+      "options": [
+        "Руки Вверх!",
+        "Иванушки International",
+        "Дискотека Авария",
+        "Отпетые мошенники"
+      ],
+      "acceptedAnswers": [
+        "Руки Вверх!",
+        "Руки вверх",
+        "Ruki Vverkh"
+      ],
+      "explanation": "Запись: Ruki Vverkh — Крошка моя. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/%D0%BA%D1%80%D0%BE%D1%88%D0%BA%D0%B0-%D0%BC%D0%BE%D1%8F/6824969670?i=6824969671&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a8/b5/78/a8b578cb-890a-0d16-36c0-d37889bd6884/mzaf_15065480111231795238.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-002.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Крошка моя",
+      "sourceDurationSeconds": 30.016009,
+      "clipDurationSeconds": 9.984,
+      "sha256": "5c23efb02fabebfcea5e4540f6b087f8d7f2d7d90a70372e0f25067eb2f4672d",
+      "bytes": 160172,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-003",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Иванушки International",
+      "options": [
+        "Иванушки International",
+        "Руки Вверх!",
+        "На-На",
+        "Чай вдвоём"
+      ],
+      "acceptedAnswers": [
+        "Иванушки International",
+        "Иванушки",
+        "Иванушки Интернешнл"
+      ],
+      "explanation": "Запись: Ivanushki International — Тополиный пух. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/%D1%82%D0%BE%D0%BF%D0%BE%D0%BB%D0%B8%D0%BD%D1%8B%D0%B9-%D0%BF%D1%83%D1%85/1605635508?i=1605635524&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/a8/9b/7b/a89b7b6d-38cd-1dc2-1fe1-eef41d9cdde7/mzaf_13703680820254011863.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-003.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Тополиный пух",
+      "sourceDurationSeconds": 30.000181,
+      "clipDurationSeconds": 9.984,
+      "sha256": "e3965cefee27920b55a0ee3df140b635df5c51262de19b1b84901f4c8ac138b3",
+      "bytes": 160172,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-004",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Звери",
+      "options": [
+        "Звери",
+        "Би-2",
+        "Сплин",
+        "Мумий Тролль"
+      ],
+      "acceptedAnswers": [
+        "Звери",
+        "Zveri"
+      ],
+      "explanation": "Запись: Zveri — Районы-кварталы. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%D1%8B-%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B0%D0%BB%D1%8B/1723039258?i=1723039276&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/a2/24/7e/a2247e32-8e31-c504-832c-9bb8b725e22f/mzaf_9696280451842699100.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-004.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Районы-кварталы",
+      "sourceDurationSeconds": 30.000998,
+      "clipDurationSeconds": 10.008,
+      "sha256": "5a3aac0d5310787f00112f5fdfd54a2eeec9803d30b6e93a149bcc4faa644445",
+      "bytes": 160556,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-005",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "t.A.T.u.",
+      "options": [
+        "t.A.T.u.",
+        "ВИА Гра",
+        "Serebro",
+        "Reflex"
+      ],
+      "acceptedAnswers": [
+        "t.A.T.u.",
+        "Тату",
+        "Tatu"
+      ],
+      "explanation": "Запись: t.A.T.u. — All the Things She Said. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/all-the-things-she-said/1454026496?i=1454026498&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/04/ef/b7/04efb7c0-63b8-0164-cdd9-f7d7a93c1372/mzaf_15885597228946383675.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-005.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "All the Things She Said",
+      "sourceDurationSeconds": 30.01,
+      "clipDurationSeconds": 10.008,
+      "sha256": "1e165ec8248eb47a3ca01258a81782ca0c7548d0bb842aeae9be3c28c5357ed9",
+      "bytes": 160556,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-006",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "ABBA",
+      "options": [
+        "ABBA",
+        "Boney M.",
+        "Ace of Base",
+        "Eurythmics"
+      ],
+      "acceptedAnswers": [
+        "ABBA",
+        "ABBA"
+      ],
+      "explanation": "Запись: ABBA — Dancing Queen. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/dancing-queen/1422648512?i=1422648513&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ec/b1/63/ecb163bc-aff2-4dd2-d40b-c044f0b9fa4d/mzaf_4358783485405794088.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-006.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Dancing Queen",
+      "sourceDurationSeconds": 30.008005,
+      "clipDurationSeconds": 10.008,
+      "sha256": "02f3bf1f3ae64bd319b132f187bfe97aa91628ef0a698a0711dbe61e6dcbe14a",
+      "bytes": 160556,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-007",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Queen",
+      "options": [
+        "Queen",
+        "AC/DC",
+        "Kiss",
+        "Aerosmith"
+      ],
+      "acceptedAnswers": [
+        "Queen",
+        "Queen"
+      ],
+      "explanation": "Запись: Queen — We Will Rock You. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/we-will-rock-you/6781080679?i=6781080737&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/28/62/97/2862970f-14bb-0e63-64b4-bf6fe00cdc0e/mzaf_1237273429870231608.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-007.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "We Will Rock You",
+      "sourceDurationSeconds": 30.019002,
+      "clipDurationSeconds": 9.984,
+      "sha256": "c6afcf30c55059c9c41766fbe949e05bb67ae56c11c6600caa1371fe9cf52f1e",
+      "bytes": 160172,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-008",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Daft Punk",
+      "options": [
+        "Daft Punk",
+        "The Chemical Brothers",
+        "Justice",
+        "The Prodigy"
+      ],
+      "acceptedAnswers": [
+        "Daft Punk",
+        "Дафт Панк"
+      ],
+      "explanation": "Запись: Daft Punk, Pharrell Williams & Nile Rodgers — Get Lucky. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/get-lucky/617154241?i=617154366&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/57/a5/85/57a585aa-f1bc-7619-881b-f8a04a5541d5/mzaf_6906185026678279401.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-008.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Get Lucky",
+      "sourceDurationSeconds": 30.019002,
+      "clipDurationSeconds": 9.984,
+      "sha256": "42b4b9dcec366c14ef7c52bbb70a469ac748e0b8ea1229a54b6994101ce7e9b7",
+      "bytes": 160172,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-009",
+      "category": "Музыка",
+      "topic": "Исполнители и хиты",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Britney Spears",
+      "options": [
+        "Britney Spears",
+        "Christina Aguilera",
+        "Madonna",
+        "Kylie Minogue"
+      ],
+      "acceptedAnswers": [
+        "Britney Spears",
+        "Бритни Спирс"
+      ],
+      "explanation": "Запись: Britney Spears — Toxic. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/toxic/251947909?i=251948354&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ae/c4/7f/aec47f56-842d-49b4-558b-7a7523fd6728/mzaf_6693111381462300599.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-009.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Toxic",
+      "sourceDurationSeconds": 30.019002,
+      "clipDurationSeconds": 9.984,
+      "sha256": "c73ec19864d9ae8fcc8a087c52d78de3008d338a2d9dd00f31382ef77867f021",
+      "bytes": 160172,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-010",
+      "category": "Музыка",
+      "topic": "Исполнители и хиты",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Michael Jackson",
+      "options": [
+        "Michael Jackson",
+        "Prince",
+        "Stevie Wonder",
+        "Lionel Richie"
+      ],
+      "acceptedAnswers": [
+        "Michael Jackson",
+        "Майкл Джексон"
+      ],
+      "explanation": "Запись: Michael Jackson — Billie Jean. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/billie-jean/269572838?i=269573364&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/dc/bc/8a/dcbc8a3e-4ce1-c00d-cc02-eda2212053c7/mzaf_8347559338388601510.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-010.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Billie Jean",
+      "sourceDurationSeconds": 30.019002,
+      "clipDurationSeconds": 9.984,
+      "sha256": "eb466379cee3f59a417ae9c3977ab3dbb951cd6fa845739b913e3ff072cb9f8d",
+      "bytes": 160172,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-011",
+      "category": "Музыка",
+      "topic": "Музыкальные группы",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "a-ha",
+      "options": [
+        "a-ha",
+        "Duran Duran",
+        "Depeche Mode",
+        "Pet Shop Boys"
+      ],
+      "acceptedAnswers": [
+        "a-ha",
+        "А-ха",
+        "Aha"
+      ],
+      "explanation": "Запись: a-ha — Take On Me. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/take-on-me/380907762?i=380907765&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/f2/03/4f/f2034f41-707f-7111-bc63-e5d3cf7f2240/mzaf_17215043934336702540.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-011.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Take On Me",
+      "sourceDurationSeconds": 30.003991,
+      "clipDurationSeconds": 10.008,
+      "sha256": "2dbf0649a541ff96e9034b1b74b8d4947cd3cf9129094e117215e2ffea68b501",
+      "bytes": 160556,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "music-012",
+      "category": "Музыка",
+      "topic": "Исполнители и хиты",
+      "type": "audio",
+      "prompt": "Кто исполняет этот фрагмент?",
+      "answer": "Rick Astley",
+      "options": [
+        "Rick Astley",
+        "George Michael",
+        "Billy Idol",
+        "Phil Collins"
+      ],
+      "acceptedAnswers": [
+        "Rick Astley",
+        "Рик Эстли"
+      ],
+      "explanation": "Запись: Rick Astley — Never Gonna Give You Up. Использован фрагмент магазинного превью; не интро полной песни.",
+      "sourcePage": "https://music.apple.com/us/album/never-gonna-give-you-up/1559885420?i=1559885421&uo=4",
+      "downloadUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/62/ff/3a/62ff3abe-bc6d-a7d0-31b0-71cbec9aaa24/mzaf_13802296211720217737.plus.aac.p.m4a",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 10,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/music-012.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Начало отсчитывается от превью, НЕ от полной песни. Не задавать вопрос «с первых нот». Не включать кавер/ремикс при замене источника.",
+      "roundSuggestion": 1,
+      "recordingTitle": "Never Gonna Give You Up",
+      "sourceDurationSeconds": 30.000998,
+      "clipDurationSeconds": 10.008,
+      "sha256": "354e6ac6a380bfadcf45e210b1a0f21512d90638e649b40dbdff5d8f3f1bdd24",
+      "bytes": 160556,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "meme-a01",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "audio",
+      "prompt": "Какое междометие звучит в этом мемном эффекте?",
+      "answer": "Bruh",
+      "options": [
+        "Bruh",
+        "Wow",
+        "Oof",
+        "Sus"
+      ],
+      "acceptedAnswers": [
+        "Bruh"
+      ],
+      "explanation": "Правильный ответ: Bruh.",
+      "sourcePage": "https://zvukipro.com/smeshnie/529-zvuki-mem.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2021-08/1628665025_bruh-sound-effect-2.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/meme-a01.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 1.227755,
+      "clipDurationSeconds": 1.224,
+      "sha256": "a60f2565250c7c4f173a9fcfba59c4202284c5c780c6a415481e888f1b12dcc0",
+      "bytes": 20012,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "meme-a02",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "audio",
+      "prompt": "Как называют эту барабанную отбивку после шутки?",
+      "answer": "Бадум-тсс",
+      "options": [
+        "Бадум-тсс",
+        "Аплодисменты",
+        "Сверчки",
+        "Сирена"
+      ],
+      "acceptedAnswers": [
+        "Бадум-тсс"
+      ],
+      "explanation": "Правильный ответ: Бадум-тсс.",
+      "sourcePage": "https://zvukipro.com/smeshnie/529-zvuki-mem.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2019-02/1550838220_badumtss.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/meme-a02.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 1.880875,
+      "clipDurationSeconds": 1.92,
+      "sha256": "1d7d06b7988d72fa3b5635828bd0fb61488318e0187d7902f9c3cd2375d40527",
+      "bytes": 31148,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "meme-a03",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "audio",
+      "prompt": "Какая известная мемная реплика звучит?",
+      "answer": "Omae wa mou shindeiru",
+      "options": [
+        "Omae wa mou shindeiru",
+        "Nani sore",
+        "Yare yare daze",
+        "Dattebayo"
+      ],
+      "acceptedAnswers": [
+        "Omae wa mou shindeiru"
+      ],
+      "explanation": "Правильный ответ: Omae wa mou shindeiru.",
+      "sourcePage": "https://zvukipro.com/smeshnie/529-zvuki-mem.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2019-02/1550838482_omae-wa-mou-shindeiru.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/meme-a03.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 2.88,
+      "clipDurationSeconds": 2.904,
+      "sha256": "bb1e45aec068578a69e4ce5f3cbf804d47fa30dd1bec8af7794c0686972216ea",
+      "bytes": 46892,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "meme-a04",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "audio",
+      "prompt": "С какой мемной концовкой ассоциируется этот музыкальный фрагмент?",
+      "answer": "To Be Continued",
+      "options": [
+        "To Be Continued",
+        "Directed by Robert B. Weide",
+        "Coffin Dance",
+        "Rickroll"
+      ],
+      "acceptedAnswers": [
+        "To Be Continued"
+      ],
+      "explanation": "Правильный ответ: To Be Continued.",
+      "sourcePage": "https://zvukipro.com/smeshnie/529-zvuki-mem.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2019-02/1550842567_yes-roundabout.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/meme-a04.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 8.045688,
+      "clipDurationSeconds": 7.992,
+      "sha256": "0fda58dd924026ad2cff856835024abc83d3212ae1c27ce7a8371ff56d82bacb",
+      "bytes": 128300,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "meme-a05",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "audio",
+      "prompt": "Какая мемная фраза звучит?",
+      "answer": "Ты втираешь мне какую-то дичь",
+      "options": [
+        "Ты втираешь мне какую-то дичь",
+        "Это фиаско, братан",
+        "Совпадение? Не думаю",
+        "Ничего непонятно"
+      ],
+      "acceptedAnswers": [
+        "Ты втираешь мне какую-то дичь"
+      ],
+      "explanation": "Правильный ответ: Ты втираешь мне какую-то дичь.",
+      "sourcePage": "https://zvukipro.com/smeshnie/529-zvuki-mem.html",
+      "downloadUrl": "https://zvukipro.com/uploads/files/2025-05/1746270615_ty-vtiraesh-mne-kakuju-to-dich.mp3",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "audio",
+        "src": "assets/quiz-media/meme-a05.mp3",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 2.612245,
+      "clipDurationSeconds": 2.64,
+      "sha256": "403fc1733d1b4b4ae71ae07e278be62b093aa4b76b5109f487489c56442f1aa3",
+      "bytes": 42668,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "film-i01",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "image",
+      "prompt": "Из какого фильма этот кадр?",
+      "answer": "Иван Васильевич меняет профессию",
+      "options": [
+        "Иван Васильевич меняет профессию",
+        "Операция «Ы»",
+        "Кавказская пленница",
+        "Бриллиантовая рука"
+      ],
+      "acceptedAnswers": [
+        "Иван Васильевич меняет профессию"
+      ],
+      "explanation": "Правильный ответ: Иван Васильевич меняет профессию.",
+      "sourcePage": "https://mosfilm.ru/cinema/films/ivan-vasilevich-menyaet-professiyu/",
+      "downloadUrl": "https://mosfilm.ru/upload/iblock/c55/hiea7ntn7ckp1jx4ttsyae14jn65o0ma/Ivan-Vasilevich.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/film-i01.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "resolve": "mosfilm",
+      "dimensions": [
+        1200,
+        900
+      ],
+      "sha256": "44a27017e181ba1ed37ab97935cadf5e4f63ba0e624f24a0ff1c7bc51df48c1e",
+      "bytes": 258159,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game; inspected contact sheet: real scene, no title"
+    },
+    {
+      "id": "film-i02",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "image",
+      "prompt": "Из какого фильма этот кадр?",
+      "answer": "Бриллиантовая рука",
+      "options": [
+        "Бриллиантовая рука",
+        "Джентльмены удачи",
+        "Берегись автомобиля",
+        "Афоня"
+      ],
+      "acceptedAnswers": [
+        "Бриллиантовая рука"
+      ],
+      "explanation": "Правильный ответ: Бриллиантовая рука.",
+      "sourcePage": "https://mosfilm.ru/cinema/films/brilliantovaya-ruka/",
+      "downloadUrl": "https://mosfilm.ru/upload/iblock/1ea/hqu0j2qt8i2yt1xetvj1rj0yqqhjnf74/Brilliantovaya-ruka.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/film-i02.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "resolve": "mosfilm",
+      "dimensions": [
+        1200,
+        900
+      ],
+      "sha256": "07bedd5d7e14c449786bab478635a304f068fcf236b61d12056d6547c2c62167",
+      "bytes": 186958,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game; inspected contact sheet: real scene, no title"
+    },
+    {
+      "id": "film-i03",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "image",
+      "prompt": "Из какого фильма этот кадр?",
+      "answer": "Кавказская пленница",
+      "options": [
+        "Кавказская пленница",
+        "Спортлото-82",
+        "Операция «Ы»",
+        "Иван Васильевич меняет профессию"
+      ],
+      "acceptedAnswers": [
+        "Кавказская пленница"
+      ],
+      "explanation": "Правильный ответ: Кавказская пленница.",
+      "sourcePage": "https://mosfilm.ru/cinema/films/kavkazskaya-plennitsa-ili-novye-priklyucheniya-shurika/",
+      "downloadUrl": "https://mosfilm.ru/upload/iblock/ce3/hcm4koaa57j7gdxczdjco7yld90uxqlf/Plennitsa.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/film-i03.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "resolve": "mosfilm",
+      "dimensions": [
+        1200,
+        900
+      ],
+      "sha256": "7e4e71c6f060d36f7f805c38450db848f424decb44e23f395c0ddde02468b987",
+      "bytes": 139811,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game; inspected contact sheet: real scene, no title"
+    },
+    {
+      "id": "film-i04",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "image",
+      "prompt": "Из какого фильма этот кадр?",
+      "answer": "Джентльмены удачи",
+      "options": [
+        "Джентльмены удачи",
+        "Афоня",
+        "Мимино",
+        "Двенадцать стульев"
+      ],
+      "acceptedAnswers": [
+        "Джентльмены удачи"
+      ],
+      "explanation": "Правильный ответ: Джентльмены удачи.",
+      "sourcePage": "https://mosfilm.ru/cinema/films/dzhentlmeny-udachi/",
+      "downloadUrl": "https://mosfilm.ru/upload/iblock/59f/5fuc6wf25wsn7u6co1xkx8j0o0ucjgl0/Dzhentlmeny_min.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/film-i04.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "resolve": "mosfilm",
+      "dimensions": [
+        1200,
+        900
+      ],
+      "sha256": "c969e02515a11dc4e1bb78b897c3ebc24fe0ae61ca2830bbc00fe6a795c9e47c",
+      "bytes": 172263,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game; inspected contact sheet: real scene, no title"
+    },
+    {
+      "id": "film-i05",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "image",
+      "prompt": "Из какого фильма этот кадр?",
+      "answer": "Любовь и голуби",
+      "options": [
+        "Любовь и голуби",
+        "Москва слезам не верит",
+        "Служебный роман",
+        "Ирония судьбы"
+      ],
+      "acceptedAnswers": [
+        "Любовь и голуби"
+      ],
+      "explanation": "Правильный ответ: Любовь и голуби.",
+      "sourcePage": "https://mosfilm.ru/cinema/films/lyubov-i-golubi/",
+      "downloadUrl": "https://mosfilm.ru/upload/iblock/b86/d48kr1otg424phhr39rjasf1im72fily/Lyubov-i-golubi_min.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/film-i05.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "resolve": "mosfilm",
+      "dimensions": [
+        1200,
+        900
+      ],
+      "sha256": "27f2147d331280d3b999bd25e4615cadd44fee680823996df4ff0b9e023a9478",
+      "bytes": 140155,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game; inspected contact sheet: real scene, no title"
+    },
+    {
+      "id": "film-i06",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "image",
+      "prompt": "Из какого фильма этот кадр?",
+      "answer": "Москва слезам не верит",
+      "options": [
+        "Москва слезам не верит",
+        "Любовь и голуби",
+        "Самая обаятельная и привлекательная",
+        "Карнавал"
+      ],
+      "acceptedAnswers": [
+        "Москва слезам не верит"
+      ],
+      "explanation": "Правильный ответ: Москва слезам не верит.",
+      "sourcePage": "https://mosfilm.ru/cinema/films/moskva-slezam-ne-verit/",
+      "downloadUrl": "https://mosfilm.ru/upload/iblock/2e4/t588axkhtqgi05wjkcr9iqb63ycty4oh/Moskva_min.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/film-i06.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "resolve": "mosfilm",
+      "dimensions": [
+        1200,
+        900
+      ],
+      "sha256": "37136c3d496277fbecc7be4c3cbe51964b774c842834b7f5dd986e0ad8a9c587",
+      "bytes": 227647,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game; inspected contact sheet: real scene, no title"
+    },
+    {
+      "id": "film-i07",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "image",
+      "prompt": "Из какого фильма этот кадр?",
+      "answer": "Служебный роман",
+      "options": [
+        "Служебный роман",
+        "Гараж",
+        "Ирония судьбы",
+        "Вокзал для двоих"
+      ],
+      "acceptedAnswers": [
+        "Служебный роман"
+      ],
+      "explanation": "Правильный ответ: Служебный роман.",
+      "sourcePage": "https://mosfilm.ru/cinema/films/sluzhebnyy-roman/",
+      "downloadUrl": "https://mosfilm.ru/upload/iblock/318/ysy2ikmnez4ukiuoekknl93rqmv3juyd/Sluzhebnyi_-roman_min.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/film-i07.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "resolve": "mosfilm",
+      "dimensions": [
+        1200,
+        900
+      ],
+      "sha256": "fd705efa58784fd18123b2292216c39d91a443bee3dc1b3ef48002e1c8c56eaf",
+      "bytes": 221693,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game; inspected contact sheet: real scene, no title"
+    },
+    {
+      "id": "film-i08",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "image",
+      "prompt": "Из какого фильма этот кадр?",
+      "answer": "Мимино",
+      "options": [
+        "Мимино",
+        "Афоня",
+        "Кин-дза-дза!",
+        "Не горюй!"
+      ],
+      "acceptedAnswers": [
+        "Мимино"
+      ],
+      "explanation": "Правильный ответ: Мимино.",
+      "sourcePage": "https://mosfilm.ru/cinema/films/mimino/",
+      "downloadUrl": "https://mosfilm.ru/upload/iblock/342/iyx5z35f78xl4e1r8fmk76teqhwvq8rm/adca22562b0ab6ae499b4bdb37d7b116.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "rejected_asset",
+      "media": null,
+      "editorialStatus": "rejected",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "resolve": "mosfilm",
+      "acquisitionError": "Visual inspection: official page background is a poster containing the title. Need a real film frame."
+    },
+    {
+      "id": "film-v01",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "video",
+      "prompt": "Из какого фильма эта сцена?",
+      "answer": "Джентльмены удачи",
+      "options": [
+        "Джентльмены удачи",
+        "Бриллиантовая рука",
+        "Афоня",
+        "Мимино"
+      ],
+      "acceptedAnswers": [
+        "Джентльмены удачи"
+      ],
+      "explanation": "Сцена «Куда пошёл?»; публикация канала «Киноконцерн Мосфильм».",
+      "sourcePage": "https://rutube.ru/video/9ae1034e76b7883f4ae21b65053eff47/",
+      "downloadUrl": null,
+      "sourceStartSeconds": 2,
+      "requestedDurationSeconds": 12,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "video",
+        "src": "assets/quiz-media/film-v01.mp4",
+        "startSeconds": 0
+      },
+      "editorialStatus": "frame_checked_audio_pending",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceDurationSeconds": 25.147211,
+      "clipDurationSeconds": 12.0,
+      "sha256": "9f655c5fe1d0705f4d4ce96d377406da1c261e9b9081ee423f8ce1b7911e3517",
+      "bytes": 1644809,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "meme-i01",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Как обычно называют этот мем?",
+      "answer": "Дрейк: нет / да",
+      "options": [
+        "Дрейк: нет / да",
+        "Удивлённый Пикачу",
+        "Две кнопки",
+        "Отвлёкшийся парень"
+      ],
+      "acceptedAnswers": [
+        "Дрейк: нет / да",
+        "Drake Hotline Bling"
+      ],
+      "explanation": "Правильный ответ: Дрейк: нет / да.",
+      "sourcePage": "https://imgflip.com/memetemplates",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceCatalog": "https://api.imgflip.com/get_memes",
+      "sourceTemplateName": "Drake Hotline Bling",
+      "sourceStatus": "catalog_only; direct asset unavailable (API HTTP 403)",
+      "acquisitionError": "cannot identify image file '/tmp/meme-i01.jpg'"
+    },
+    {
+      "id": "meme-i02",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Как обычно называют этот мем?",
+      "answer": "Отвлёкшийся парень",
+      "options": [
+        "Отвлёкшийся парень",
+        "Дрейк",
+        "Девушка-катастрофа",
+        "Две кнопки"
+      ],
+      "acceptedAnswers": [
+        "Отвлёкшийся парень",
+        "Distracted Boyfriend"
+      ],
+      "explanation": "Правильный ответ: Отвлёкшийся парень.",
+      "sourcePage": "https://www.meme-arsenal.com/en/create/chose?sort=latest&tag=guy+looks+back+at+girl+meme+template&type=all",
+      "downloadUrl": "https://images.meme-arsenal.com/5cd375baba04fc1b0902270460ee74f4.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/meme-i02.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceCatalog": "https://api.imgflip.com/get_memes",
+      "sourceTemplateName": "Distracted Boyfriend",
+      "sourceStatus": "direct image obtained after search fallback",
+      "sha256": "f9a343d131d1dd5359446d3bba0d266343618007c30126c4fab1a0cfeeb23028",
+      "bytes": 62529,
+      "dimensions": [
+        720,
+        480
+      ],
+      "technicalCheck": "Pillow decoded; metadata stripped"
+    },
+    {
+      "id": "meme-i03",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Как обычно называют этот мем?",
+      "answer": "Две кнопки",
+      "options": [
+        "Две кнопки",
+        "Скрывающий боль Гарольд",
+        "Дрейк",
+        "Женщина кричит на кота"
+      ],
+      "acceptedAnswers": [
+        "Две кнопки",
+        "Two Buttons"
+      ],
+      "explanation": "Правильный ответ: Две кнопки.",
+      "sourcePage": "https://www.meme-arsenal.com/en/create/template/11617571",
+      "downloadUrl": "https://images.meme-arsenal.com/743dc8b9dff3fdab478af161e87b5afa.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/meme-i03.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceCatalog": "https://api.imgflip.com/get_memes",
+      "sourceTemplateName": "Two Buttons",
+      "sourceStatus": "direct image obtained after search fallback",
+      "sha256": "f7ac8666e37cd93a32aa627812d89048eb44048456e7e7688f902b324d2414e6",
+      "bytes": 88356,
+      "dimensions": [
+        893,
+        893
+      ],
+      "technicalCheck": "Pillow decoded; metadata stripped"
+    },
+    {
+      "id": "meme-i04",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Как обычно называют этот мем?",
+      "answer": "Девочка-катастрофа",
+      "options": [
+        "Девочка-катастрофа",
+        "Успешный ребёнок",
+        "Скептический ребёнок",
+        "Плачущая девочка"
+      ],
+      "acceptedAnswers": [
+        "Девочка-катастрофа",
+        "Disaster Girl"
+      ],
+      "explanation": "Правильный ответ: Девочка-катастрофа.",
+      "sourcePage": "https://imgflip.com/memetemplates",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceCatalog": "https://api.imgflip.com/get_memes",
+      "sourceTemplateName": "Disaster Girl",
+      "sourceStatus": "catalog_only; direct asset unavailable (API HTTP 403)"
+    },
+    {
+      "id": "meme-i05",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Как обычно называют этот мем?",
+      "answer": "Скрывающий боль Гарольд",
+      "options": [
+        "Скрывающий боль Гарольд",
+        "Дрейк",
+        "Гигачад",
+        "Грустный Киану"
+      ],
+      "acceptedAnswers": [
+        "Скрывающий боль Гарольд",
+        "Hide the Pain Harold"
+      ],
+      "explanation": "Правильный ответ: Скрывающий боль Гарольд.",
+      "sourcePage": "https://img-webcalypt.ru/tools/meme-generator/31474",
+      "downloadUrl": "https://img-webcalypt.ru/uploads/admin/images/meme-templates/QxKsIv5sMwptuXjV1pvhvRzT0O10lR77.jpeg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/meme-i05.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceCatalog": "https://api.imgflip.com/get_memes",
+      "sourceTemplateName": "Hide the Pain Harold",
+      "sourceStatus": "direct image obtained after search fallback",
+      "sha256": "939fa3c5744e28c13bbd09d93ba037e222e4104c4bf8b79dda34aba2d1fce20a",
+      "bytes": 58746,
+      "dimensions": [
+        807,
+        538
+      ],
+      "technicalCheck": "Pillow decoded; metadata stripped"
+    },
+    {
+      "id": "meme-i06",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Как обычно называют этот мем?",
+      "answer": "Женщина кричит на кота",
+      "options": [
+        "Женщина кричит на кота",
+        "Кот за ноутбуком",
+        "Наташа, мы всё уронили",
+        "Вы продоёте рыбов"
+      ],
+      "acceptedAnswers": [
+        "Женщина кричит на кота",
+        "Woman Yelling At Cat"
+      ],
+      "explanation": "Правильный ответ: Женщина кричит на кота.",
+      "sourcePage": "https://www.pinterest.com/pin/woman-yelling-at-cat-blank-meme-template--74027987616078228/",
+      "downloadUrl": "https://i.pinimg.com/736x/d4/3f/2a/d43f2aeaa5c6d4095344c2818ae1d1d6.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/meme-i06.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "image_checked",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceCatalog": "https://api.imgflip.com/get_memes",
+      "sourceTemplateName": "Woman Yelling At Cat",
+      "sourceStatus": "direct image obtained after search fallback",
+      "sha256": "9e039a7360c00000d55b640f393aa22c0137c0ac7f9e84a2c86b964235ca7739",
+      "bytes": 43435,
+      "dimensions": [
+        680,
+        438
+      ],
+      "technicalCheck": "Pillow decoded; metadata stripped"
+    },
+    {
+      "id": "meme-i07",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Как обычно называют этот мем?",
+      "answer": "Успешный ребёнок",
+      "options": [
+        "Успешный ребёнок",
+        "Скептический ребёнок",
+        "Девочка-катастрофа",
+        "Плачущий ребёнок"
+      ],
+      "acceptedAnswers": [
+        "Успешный ребёнок",
+        "Success Kid"
+      ],
+      "explanation": "Правильный ответ: Успешный ребёнок.",
+      "sourcePage": "https://imgflip.com/memetemplates",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceCatalog": "https://api.imgflip.com/get_memes",
+      "sourceTemplateName": "Success Kid",
+      "sourceStatus": "catalog_only; direct asset unavailable (API HTTP 403)"
+    },
+    {
+      "id": "meme-i08",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Как обычно называют этот мем?",
+      "answer": "Ждущий скелет",
+      "options": [
+        "Ждущий скелет",
+        "Ждун",
+        "Грустный Киану",
+        "Скрывающий боль Гарольд"
+      ],
+      "acceptedAnswers": [
+        "Ждущий скелет",
+        "Waiting Skeleton"
+      ],
+      "explanation": "Правильный ответ: Ждущий скелет.",
+      "sourcePage": "https://imgflip.com/memetemplates",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "sourceCatalog": "https://api.imgflip.com/get_memes",
+      "sourceTemplateName": "Waiting Skeleton",
+      "sourceStatus": "catalog_only; direct asset unavailable (API HTTP 403)"
+    },
+    {
+      "id": "geo-01",
+      "category": "География",
+      "topic": "Страны и столицы",
+      "type": "image",
+      "prompt": "Флаг какой страны на экране?",
+      "answer": "Бразилия",
+      "options": [
+        "Бразилия",
+        "Аргентина",
+        "Португалия",
+        "Мексика"
+      ],
+      "acceptedAnswers": [
+        "Бразилия"
+      ],
+      "explanation": "Правильный ответ: Бразилия.",
+      "sourcePage": "https://flagpedia.net/brazil",
+      "downloadUrl": "https://flagcdn.com/w640/br.png",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Флаг; проверить условия изображения/CDN; источник flagcdn/flagpedia",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/geo-01.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "dimensions": [
+        640,
+        448
+      ],
+      "sha256": "2049f8cda41796716ef33023a0bc1620613f6ff3700d88ebe8c2bbdf37ae7b20",
+      "bytes": 23260,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "geo-02",
+      "category": "География",
+      "topic": "Страны и столицы",
+      "type": "image",
+      "prompt": "Флаг какой страны на экране?",
+      "answer": "Япония",
+      "options": [
+        "Япония",
+        "Бангладеш",
+        "Китай",
+        "Южная Корея"
+      ],
+      "acceptedAnswers": [
+        "Япония"
+      ],
+      "explanation": "Правильный ответ: Япония.",
+      "sourcePage": "https://flagpedia.net/japan",
+      "downloadUrl": "https://flagcdn.com/w640/jp.png",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Флаг; проверить условия изображения/CDN; источник flagcdn/flagpedia",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/geo-02.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "dimensions": [
+        640,
+        427
+      ],
+      "sha256": "ac024beb7bd3b67b8d5e7b2571a99f1e1420a11750e07073f5ca4079059f8b65",
+      "bytes": 9474,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "geo-03",
+      "category": "География",
+      "topic": "Страны и столицы",
+      "type": "image",
+      "prompt": "Флаг какой страны на экране?",
+      "answer": "Канада",
+      "options": [
+        "Канада",
+        "США",
+        "Австралия",
+        "Новая Зеландия"
+      ],
+      "acceptedAnswers": [
+        "Канада"
+      ],
+      "explanation": "Правильный ответ: Канада.",
+      "sourcePage": "https://flagpedia.net/canada",
+      "downloadUrl": "https://flagcdn.com/w640/ca.png",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Флаг; проверить условия изображения/CDN; источник flagcdn/flagpedia",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/geo-03.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "dimensions": [
+        640,
+        320
+      ],
+      "sha256": "d75fa9d6f16ac6b492635377e8b8c0ea8d999691078eadc9e1881731de02a8e1",
+      "bytes": 10908,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "geo-04",
+      "category": "География",
+      "topic": "Страны и столицы",
+      "type": "image",
+      "prompt": "Флаг какой страны на экране?",
+      "answer": "ЮАР",
+      "options": [
+        "ЮАР",
+        "Кения",
+        "Нигерия",
+        "Гана"
+      ],
+      "acceptedAnswers": [
+        "ЮАР"
+      ],
+      "explanation": "Правильный ответ: ЮАР.",
+      "sourcePage": "https://flagpedia.net/south-africa",
+      "downloadUrl": "https://flagcdn.com/w640/za.png",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Флаг; проверить условия изображения/CDN; источник flagcdn/flagpedia",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/geo-04.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "dimensions": [
+        640,
+        427
+      ],
+      "sha256": "e159ba731c1e3b479de190fa9b40b949a97823fa3dc762bae0e882a4fae9b7b7",
+      "bytes": 22182,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "geo-05",
+      "category": "География",
+      "topic": "Страны и столицы",
+      "type": "image",
+      "prompt": "Флаг какой страны на экране?",
+      "answer": "Греция",
+      "options": [
+        "Греция",
+        "Финляндия",
+        "Израиль",
+        "Уругвай"
+      ],
+      "acceptedAnswers": [
+        "Греция"
+      ],
+      "explanation": "Правильный ответ: Греция.",
+      "sourcePage": "https://flagpedia.net/greece",
+      "downloadUrl": "https://flagcdn.com/w640/gr.png",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Флаг; проверить условия изображения/CDN; источник flagcdn/flagpedia",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/geo-05.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "dimensions": [
+        640,
+        427
+      ],
+      "sha256": "5eb23421282025379392b707a4feee6d9ca10852cdd46e081efc89e36f6e359b",
+      "bytes": 19702,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "geo-06",
+      "category": "География",
+      "topic": "Страны и столицы",
+      "type": "image",
+      "prompt": "Флаг какой страны на экране?",
+      "answer": "Швейцария",
+      "options": [
+        "Швейцария",
+        "Дания",
+        "Австрия",
+        "Швеция"
+      ],
+      "acceptedAnswers": [
+        "Швейцария"
+      ],
+      "explanation": "Правильный ответ: Швейцария.",
+      "sourcePage": "https://flagpedia.net/switzerland",
+      "downloadUrl": "https://flagcdn.com/w640/ch.png",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Флаг; проверить условия изображения/CDN; источник flagcdn/flagpedia",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/geo-06.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "dimensions": [
+        640,
+        640
+      ],
+      "sha256": "737068bf5e5fedcbbdd055d6ab4985fdf73b033593af2a94b0eecb979843bfe3",
+      "bytes": 11723,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "science-i01",
+      "category": "Наука",
+      "topic": "Космос",
+      "type": "image",
+      "prompt": "Какая планета изображена?",
+      "answer": "Венера",
+      "options": [
+        "Венера",
+        "Марс",
+        "Юпитер",
+        "Меркурий"
+      ],
+      "acceptedAnswers": [
+        "Венера"
+      ],
+      "explanation": "Глобальное изображение Венеры на основе данных Magellan; это радарное представление поверхности, не фото в видимом свете.",
+      "sourcePage": "https://photojournal.jpl.nasa.gov/catalog/PIA01492",
+      "downloadUrl": "https://images-assets.nasa.gov/image/PIA01492/PIA01492~orig.jpg",
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "NASA/JPL; проверить указанную в карточке атрибуцию и исключения",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/science-i01.jpg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "needs_review",
+      "cutNotes": "Удалить титры/название и метаданные; не показывать ответ до раскрытия.",
+      "roundSuggestion": 1,
+      "dimensions": [
+        901,
+        900
+      ],
+      "sha256": "544a7cfad3249843b909f5a86d5ebd1f77766ae2abab38a98edfd1552e5081ee",
+      "bytes": 70679,
+      "technicalCheck": "decoded with Pillow/FFmpeg; metadata stripped; not played in game"
+    },
+    {
+      "id": "sound-006",
+      "category": "Откуда этот звук?",
+      "topic": "Реклама",
+      "type": "audio",
+      "prompt": "Назовите бренд или устройство по звуку.",
+      "answer": "Mentos",
+      "options": [
+        "Mentos",
+        "Dirol",
+        "Orbit",
+        "Tic Tac"
+      ],
+      "acceptedAnswers": [
+        "Mentos"
+      ],
+      "explanation": "Правильный ответ: Mentos.",
+      "sourcePage": "https://muizre.ru/dir/146-1-0-698",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Найден источник/поиск, прямой файл и конкретная запись не получены. Подобрать 3–8 секунд без названия бренда. Не включать в игру до получения файла.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "sound-007",
+      "category": "Откуда этот звук?",
+      "topic": "Реклама",
+      "type": "audio",
+      "prompt": "Назовите бренд или устройство по звуку.",
+      "answer": "Intel",
+      "options": [
+        "Intel",
+        "AMD",
+        "Microsoft",
+        "IBM"
+      ],
+      "acceptedAnswers": [
+        "Intel"
+      ],
+      "explanation": "Правильный ответ: Intel.",
+      "sourcePage": "https://brandsounds.soundbranding.de/wordpress/the-intel-sound-logo/",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Найден источник/поиск, прямой файл и конкретная запись не получены. Подобрать 3–8 секунд без названия бренда. Не включать в игру до получения файла.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "sound-010",
+      "category": "Откуда этот звук?",
+      "topic": "Техника",
+      "type": "audio",
+      "prompt": "Назовите бренд или устройство по звуку.",
+      "answer": "PlayStation первого поколения",
+      "options": [
+        "PlayStation первого поколения",
+        "PlayStation 2",
+        "Sega Mega Drive",
+        "Nintendo GameCube"
+      ],
+      "acceptedAnswers": [
+        "PlayStation первого поколения"
+      ],
+      "explanation": "Правильный ответ: PlayStation первого поколения.",
+      "sourcePage": "https://www.myinstants.com/en/search/?name=Ps+startup",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Найден источник/поиск, прямой файл и конкретная запись не получены. Подобрать 3–8 секунд без названия бренда. Не включать в игру до получения файла.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "meme-ru01",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "video",
+      "prompt": "Как обычно называют героя этого видео?",
+      "answer": "Идущий к реке",
+      "options": [
+        "Идущий к реке",
+        "Свидетель из Фрязино",
+        "Повар, который спрашивает",
+        "Сергей Дружко"
+      ],
+      "acceptedAnswers": [
+        "Идущий к реке"
+      ],
+      "explanation": "Правильный ответ: Идущий к реке.",
+      "sourcePage": "https://t.me/s/serzh_dur_dachnik?before=543",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Найти исходный монолог, взять 6–10 секунд до явного названия; исходные таймкоды пока неизвестны.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "meme-ru02",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Какую фразу обычно произносят коты на этой картинке?",
+      "answer": "Наташа, мы всё уронили",
+      "options": [
+        "Наташа, мы всё уронили",
+        "Вы продоёте рыбов",
+        "Неси черешню",
+        "Это фиаско, братан"
+      ],
+      "acceptedAnswers": [
+        "Наташа, мы всё уронили"
+      ],
+      "explanation": "Правильный ответ: Наташа, мы всё уронили.",
+      "sourcePage": "https://www.memify.ru/base/natasha-wake-up",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Скачать шаблон без реплик. Закрыть только пользовательские подписи, не водяные знаки/авторство.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "meme-ru03",
+      "category": "Мемасики",
+      "topic": "Мем-квизы",
+      "type": "image",
+      "prompt": "Какую фразу обычно говорят коты продавцу?",
+      "answer": "Вы продоёте рыбов",
+      "options": [
+        "Вы продоёте рыбов",
+        "Наташа, мы всё уронили",
+        "Неси черешню",
+        "Пацаны вообще ребята"
+      ],
+      "acceptedAnswers": [
+        "Вы продоёте рыбов"
+      ],
+      "explanation": "Правильный ответ: Вы продоёте рыбов.",
+      "sourcePage": "https://memepedia.world/vy-prodaete-rybov/",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Извлечь исходное фото без реплик, не картинку с готовым ответом.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "auto-i01",
+      "category": "Автомобили",
+      "topic": "Марки и модели",
+      "type": "image",
+      "prompt": "Какое поколение Volkswagen Transporter показано?",
+      "answer": "T4",
+      "options": [
+        "T4",
+        "T3",
+        "T5",
+        "T6"
+      ],
+      "acceptedAnswers": [
+        "T4"
+      ],
+      "explanation": "Правильный ответ: T4.",
+      "sourcePage": "https://commons.wikimedia.org/wiki/Category:Volkswagen_T4",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Выбрать фото передней части T4, без видимой подписи поколения; не смешать с T5.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "auto-i02",
+      "category": "Автомобили",
+      "topic": "Двигатели и техника",
+      "type": "image",
+      "prompt": "Как называется выделенная цветом деталь, на которую указывает стрелка?",
+      "answer": "Поршень",
+      "options": [
+        "Поршень",
+        "Шатун",
+        "Коленвал",
+        "Распредвал"
+      ],
+      "acceptedAnswers": [
+        "Поршень"
+      ],
+      "explanation": "Собственная схематическая иллюстрация. Правильный ответ: Поршень.",
+      "sourcePage": "scripts/content design: original SVG in repository",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Original procedural vector illustration created for this project",
+      "status": "file_prepared",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/auto-i02.svg",
+        "startSeconds": 0
+      },
+      "editorialStatus": "diagram_checked",
+      "cutNotes": "Не содержит текстового ответа; схема условная, не фотография.",
+      "roundSuggestion": 1,
+      "sha256": "9cac4f1672df752b058914dcda0c47ccf3b24d1b6120a47f25ee675558ffa004",
+      "bytes": 738
+    },
+    {
+      "id": "geo-i07",
+      "category": "География",
+      "topic": "Города и природа",
+      "type": "image",
+      "prompt": "В каком городе находится показанная башня?",
+      "answer": "Париж",
+      "options": [
+        "Париж",
+        "Лион",
+        "Марсель",
+        "Брюссель"
+      ],
+      "acceptedAnswers": [
+        "Париж"
+      ],
+      "explanation": "Правильный ответ: Париж.",
+      "sourcePage": "https://commons.wikimedia.org/wiki/Category:Eiffel_Tower",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Дневной вид, без надписей Paris; проверить лицензию конкретной фотографии.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "science-i02",
+      "category": "Наука",
+      "topic": "Физика и изобретения",
+      "type": "image",
+      "prompt": "Как называется этот прибор?",
+      "answer": "Маятник Ньютона",
+      "options": [
+        "Маятник Ньютона",
+        "Маятник Фуко",
+        "Гироскоп",
+        "Барометр"
+      ],
+      "acceptedAnswers": [
+        "Маятник Ньютона"
+      ],
+      "explanation": "Правильный ответ: Маятник Ньютона.",
+      "sourcePage": "https://commons.wikimedia.org/wiki/Category:Newton%27s_cradle",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Выбрать 6–8 секунд движения без подписей; снять/получить конкретный файл.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "film-v02",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "video",
+      "prompt": "Из какого фильма эта сцена?",
+      "answer": "Иван Васильевич меняет профессию",
+      "options": [
+        "Иван Васильевич меняет профессию",
+        "Бриллиантовая рука",
+        "Операция «Ы»",
+        "Кавказская пленница"
+      ],
+      "acceptedAnswers": [
+        "Иван Васильевич меняет профессию"
+      ],
+      "explanation": "Правильный ответ: Иван Васильевич меняет профессию.",
+      "sourcePage": "https://www.youtube.com/watch?v=nKyQI54CX_k",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Официальный фрагмент «Наверное, врёт». Выбрать 2–14 секунд после просмотра, таймкоды предварительные.",
+      "roundSuggestion": 1,
+      "acquisitionError": "YouTube metadata available, downloadable format not available via yt-dlp in this environment."
+    },
+    {
+      "id": "film-v03",
+      "category": "Кино",
+      "topic": "Культовые фильмы",
+      "type": "video",
+      "prompt": "Из какого фильма эта сцена?",
+      "answer": "Любовь и голуби",
+      "options": [
+        "Любовь и голуби",
+        "Служебный роман",
+        "Москва слезам не верит",
+        "Вокзал для двоих"
+      ],
+      "acceptedAnswers": [
+        "Любовь и голуби"
+      ],
+      "explanation": "Правильный ответ: Любовь и голуби.",
+      "sourcePage": "https://rutube.ru/video/68781d890618ea50933ec020fd5060bf/",
+      "downloadUrl": null,
+      "sourceStartSeconds": 0,
+      "requestedDurationSeconds": 8,
+      "rightsStatus": "Не проверено; источник не подтверждает право распространения",
+      "status": "source_only",
+      "media": null,
+      "editorialStatus": "needs_review",
+      "cutNotes": "Сцена с Василием и Надей, без титров и названия; не скачивать в git полный фильм; таймкоды подобрать.",
+      "roundSuggestion": 1
+    },
+    {
+      "id": "science-i03",
+      "category": "Наука",
+      "topic": "Физика и изобретения",
+      "type": "image",
+      "prompt": "Как называется показанный простой механизм?",
+      "answer": "Рычаг",
+      "options": [
+        "Рычаг",
+        "Ворот",
+        "Наклонная плоскость",
+        "Блок"
+      ],
+      "acceptedAnswers": [
+        "Рычаг"
+      ],
+      "explanation": "Собственная схематическая иллюстрация. Правильный ответ: Рычаг.",
+      "sourcePage": "scripts/content design: original SVG in repository",
+      "downloadUrl": null,
+      "status": "file_prepared",
+      "editorialStatus": "diagram_checked",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/science-i03.svg",
+        "startSeconds": 0
+      },
+      "sha256": "e97ff83b361ea92fde9fbff298b348cd3571064d06a4663b9646a8cf885de741",
+      "bytes": 496,
+      "rightsStatus": "Original procedural vector illustration created for this project",
+      "roundSuggestion": 1,
+      "cutNotes": "Не содержит текстового ответа; схема условная, не фотография."
+    }
+  ],
+  "accompaniment": [
+    {
+      "role": "answer_background_loop",
+      "src": "assets/quiz-media/bed-01.mp3",
+      "durationSeconds": 20.04,
+      "sha256": "df2db1a67d9ba5b3f39ea37d2c23e7ddd0f61508317b519ecf64da353fc5ef53",
+      "rightsStatus": "Original procedural synthesis; no borrowed samples",
+      "source": "scripts/build_quiz_audio.py",
+      "status": "file_prepared",
+      "listeningReview": "pending",
+      "gainSuggestion": 0.18
+    },
+    {
+      "role": "last_seconds_tick",
+      "src": "assets/quiz-media/cue-01.mp3",
+      "durationSeconds": 0.288,
+      "sha256": "efc10d10802695d6439975463d5218a7633dec134a44ee970ae4bb7060f97cf9",
+      "rightsStatus": "Original procedural synthesis; no borrowed samples",
+      "source": "scripts/build_quiz_audio.py",
+      "status": "file_prepared",
+      "listeningReview": "pending",
+      "gainSuggestion": 0.5
+    },
+    {
+      "role": "correct_answer",
+      "src": "assets/quiz-media/cue-02.mp3",
+      "durationSeconds": 1.032,
+      "sha256": "16181395d62db1c42df832fcfe3c2b59a509d8f0ba26f175a281a715ebb9833d",
+      "rightsStatus": "Original procedural synthesis; no borrowed samples",
+      "source": "scripts/build_quiz_audio.py",
+      "status": "file_prepared",
+      "listeningReview": "pending",
+      "gainSuggestion": 0.5
+    },
+    {
+      "role": "wrong_answer",
+      "src": "assets/quiz-media/cue-03.mp3",
+      "durationSeconds": 0.84,
+      "sha256": "5c5f39529e751d82c02d3bc4cc5a78c7e1886358c797514cf31b241e1780cede",
+      "rightsStatus": "Original procedural synthesis; no borrowed samples",
+      "source": "scripts/build_quiz_audio.py",
+      "status": "file_prepared",
+      "listeningReview": "pending",
+      "gainSuggestion": 0.5
+    },
+    {
+      "role": "round_transition",
+      "src": "assets/quiz-media/cue-04.mp3",
+      "durationSeconds": 1.536,
+      "sha256": "40a6f70b7e3bf7a623e60f7a1bd48a820c175640382b2a42dca9afab0b76ae93",
+      "rightsStatus": "Original procedural synthesis; no borrowed samples",
+      "source": "scripts/build_quiz_audio.py",
+      "status": "file_prepared",
+      "listeningReview": "pending",
+      "gainSuggestion": 0.5
+    },
+    {
+      "role": "game_end",
+      "src": "assets/quiz-media/cue-05.mp3",
+      "durationSeconds": 2.424,
+      "sha256": "ebf1c9c45e2d16704bfb6f3ab602a56a3af3392886eee930cd613ca69b8c8fa2",
+      "rightsStatus": "Original procedural synthesis; no borrowed samples",
+      "source": "scripts/build_quiz_audio.py",
+      "status": "file_prepared",
+      "listeningReview": "pending",
+      "gainSuggestion": 0.5
+    }
+  ]
+}

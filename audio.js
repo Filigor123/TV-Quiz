@@ -14,6 +14,9 @@
       { frequency: 587.33, offset: 0, duration: 0.14, volume: 0.045 },
       { frequency: 698.46, offset: 0.12, duration: 0.19, volume: 0.05 },
     ],
+    tick: [
+      { frequency: 880, offset: 0, duration: 0.07, volume: 0.025 },
+    ],
     correct: [
       { frequency: 659.25, offset: 0, duration: 0.16, volume: 0.055 },
       { frequency: 880, offset: 0.1, duration: 0.23, volume: 0.065 },
@@ -44,7 +47,7 @@
   const MUSIC_DURATION_SECONDS = MUSIC_SECTION_SECONDS * MUSIC_CHORDS.length;
 
   function loadSettings() {
-    const defaults = { effects: true, music: false };
+    const defaults = { effects: true, music: false, speech: true, voiceURI: '' };
 
     try {
       const stored = JSON.parse(window.localStorage.getItem(SETTINGS_KEY) || 'null');
@@ -52,6 +55,8 @@
       return {
         effects: typeof stored.effects === 'boolean' ? stored.effects : defaults.effects,
         music: typeof stored.music === 'boolean' ? stored.music : defaults.music,
+        speech: typeof stored.speech === 'boolean' ? stored.speech : defaults.speech,
+        voiceURI: typeof stored.voiceURI === 'string' ? stored.voiceURI : defaults.voiceURI,
       };
     } catch (_) {
       return defaults;
@@ -68,8 +73,11 @@
   let musicStartPromise = null;
   let musicRequestId = 0;
   let userGestureGranted = false;
+  let musicDucked = false;
+  let musicDuckGain = 0.06;
   let currentUtterance = null;
   let currentSpeechResolve = null;
+  let currentSpeechTimeout = null;
 
   function saveSettings() {
     try {
@@ -90,7 +98,7 @@
       effectsBus.connect(context.destination);
 
       musicBus = context.createGain();
-      musicBus.gain.value = 1;
+      musicBus.gain.value = musicDucked ? musicDuckGain : 1;
       musicBus.connect(context.destination);
       return context;
     } catch (_) {
@@ -141,8 +149,28 @@
   function setMusicEnabled(enabled) {
     settings.music = Boolean(enabled);
     saveSettings();
+    setBusEnabled(musicBus, settings.music, musicDucked ? musicDuckGain : 1);
     if (!settings.music) stopMusic();
     return settings.music;
+  }
+
+  function setMusicDucked(ducked, gain = 0.06) {
+    musicDucked = Boolean(ducked);
+    musicDuckGain = Number.isFinite(Number(gain)) ? Math.max(0, Math.min(0.06, Number(gain))) : 0.06;
+    setBusEnabled(musicBus, settings.music, musicDucked ? musicDuckGain : 1);
+    return musicDucked;
+  }
+
+  function setSpeechEnabled(enabled) {
+    settings.speech = Boolean(enabled);
+    saveSettings();
+    return settings.speech;
+  }
+
+  function setSpeechVoice(voiceURI) {
+    settings.voiceURI = String(voiceURI || '');
+    saveSettings();
+    return settings.voiceURI;
   }
 
   function scheduleTone(audioContext, note) {
@@ -287,6 +315,15 @@
       && typeof window.SpeechSynthesisUtterance !== 'undefined';
   }
 
+  function getSpeechVoices() {
+    if (!speechSupported()) return [];
+    try {
+      return window.speechSynthesis.getVoices().filter((voice) => /^ru([_-]|$)/i.test(voice.lang));
+    } catch (_) {
+      return [];
+    }
+  }
+
   function stopSpeech() {
     if (speechSupported()) {
       try {
@@ -298,6 +335,8 @@
 
     if (currentSpeechResolve) {
       const resolve = currentSpeechResolve;
+      if (currentSpeechTimeout !== null) window.clearTimeout(currentSpeechTimeout);
+      currentSpeechTimeout = null;
       currentUtterance = null;
       currentSpeechResolve = null;
       resolve(false);
@@ -316,8 +355,13 @@
     return new Promise((resolve) => {
       try {
         const utterance = new window.SpeechSynthesisUtterance(text.trim());
-        const voices = window.speechSynthesis.getVoices();
-        const russianVoice = voices.find((voice) => /^ru([_-]|$)/i.test(voice.lang));
+        const voices = getSpeechVoices();
+        const russianVoice = voices.find((voice) => voice.voiceURI === settings.voiceURI)
+          || voices.find((voice) => /^ru([_-]|$)/i.test(voice.lang));
+        if (!russianVoice) {
+          resolve(false);
+          return;
+        }
         utterance.lang = 'ru-RU';
         utterance.rate = 0.96;
         utterance.pitch = 1;
@@ -327,12 +371,19 @@
         currentSpeechResolve = resolve;
         const finish = (spoken) => {
           if (currentUtterance !== utterance) return;
+          if (currentSpeechTimeout !== null) window.clearTimeout(currentSpeechTimeout);
+          currentSpeechTimeout = null;
           currentUtterance = null;
           currentSpeechResolve = null;
           resolve(spoken);
         };
         utterance.onend = () => finish(true);
         utterance.onerror = () => finish(false);
+        currentSpeechTimeout = window.setTimeout(() => {
+          if (currentUtterance !== utterance) return;
+          try { window.speechSynthesis.cancel(); } catch (_) { /* Best effort. */ }
+          finish(false);
+        }, 30000);
         window.speechSynthesis.speak(utterance);
       } catch (_) {
         currentUtterance = null;
@@ -347,6 +398,7 @@
     play,
     playStart: () => play('start'),
     playQuestion: () => play('question'),
+    playTick: () => play('tick'),
     playCorrect: () => play('correct'),
     playWrong: () => play('wrong'),
     playReveal: () => play('reveal'),
@@ -355,8 +407,12 @@
     stopMusic,
     setEffectsEnabled,
     setMusicEnabled,
-    getSettings: () => ({ effects: settings.effects, music: settings.music }),
+    setMusicDucked,
+    getSettings: () => ({ effects: settings.effects, music: settings.music, speech: settings.speech, voiceURI: settings.voiceURI }),
+    setSpeechEnabled,
+    setSpeechVoice,
     isSpeechSupported: speechSupported,
+    getSpeechVoices,
     speakQuestion,
     stopSpeech,
   });
