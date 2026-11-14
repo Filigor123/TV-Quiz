@@ -74,6 +74,7 @@
   let musicRequestId = 0;
   let userGestureGranted = false;
   let musicDucked = false;
+  let musicDuckGain = 0.06;
   let currentUtterance = null;
   let currentSpeechResolve = null;
   let currentSpeechTimeout = null;
@@ -97,7 +98,7 @@
       effectsBus.connect(context.destination);
 
       musicBus = context.createGain();
-      musicBus.gain.value = musicDucked ? 0.06 : 1;
+      musicBus.gain.value = musicDucked ? musicDuckGain : 1;
       musicBus.connect(context.destination);
       return context;
     } catch (_) {
@@ -148,14 +149,15 @@
   function setMusicEnabled(enabled) {
     settings.music = Boolean(enabled);
     saveSettings();
-    setBusEnabled(musicBus, settings.music, musicDucked ? 0.06 : 1);
+    setBusEnabled(musicBus, settings.music, musicDucked ? musicDuckGain : 1);
     if (!settings.music) stopMusic();
     return settings.music;
   }
 
-  function setMusicDucked(ducked) {
+  function setMusicDucked(ducked, gain = 0.06) {
     musicDucked = Boolean(ducked);
-    setBusEnabled(musicBus, settings.music, musicDucked ? 0.06 : 1);
+    musicDuckGain = Number.isFinite(Number(gain)) ? Math.max(0, Math.min(0.06, Number(gain))) : 0.06;
+    setBusEnabled(musicBus, settings.music, musicDucked ? musicDuckGain : 1);
     return musicDucked;
   }
 
