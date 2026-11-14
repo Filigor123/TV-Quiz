@@ -408,7 +408,7 @@ function handleConnection(conn){
  conn.on('data',data=>{
   if(!data||!data.type)return;
   if(data.type==='join'){
-   players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),color:playerColors[players.size%playerColors.length],ready:false,score:0,answer:null,wagerUsed:false,currentWager:false});
+   if(!players.has(conn.peer))players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),color:playerColors[players.size%playerColors.length],ready:false,score:0,answer:null,wagerUsed:false,currentWager:false});
    const state={type:'state',players:publicRoster(),gameStarted:phase==='game'};
    if(phase==='game'&&deck[round])state.question={question:QuizGameModel.toPlayerQuestion(deck[round]),round:round+1,total:deck.length,time:seconds||config.time};
    if(phase==='game')send(conn,{type:'wager-status',available:!players.get(conn.peer).wagerUsed});send(conn,state);updateLobby();broadcast({type:'players',players:publicRoster()});
