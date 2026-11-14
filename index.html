@@ -236,7 +236,7 @@ const topics={
  'Кино':['Культовые фильмы','Актёры и режиссёры'],
  'Автомобили':['Марки и модели','Двигатели и техника'],
  'География':['Страны и столицы','Города и природа'],
- 'Наука':['Космос','Физика и изобретения']
+ 'Наука':['Космос','Физика и изобретения','Логика и числа']
 };
 const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Мемасики':'😂','Сленг':'💬'};
 function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
@@ -252,9 +252,9 @@ const topicDescriptions={
  'Культовые фильмы':'Герои, сцены и фильмы','Актёры и режиссёры':'Лица большого кино и авторы картин',
  'Марки и модели':'Автомобильные бренды и модели','Двигатели и техника':'Устройство автомобилей и инженерия',
  'Страны и столицы':'Страны и главные города','Города и природа':'Места и природные достопримечательности',
- 'Космос':'Планеты, звёзды и открытия','Физика и изобретения':'Законы природы и изобретения'
+ 'Космос':'Планеты, звёзды и открытия','Физика и изобретения':'Законы природы и изобретения','Логика и числа':'Задачи на числа, закономерности и внимательность'
 };
-const topicCovers={'Музыкальные группы':'music-groups','Исполнители и хиты':'music-hits','Культовые фильмы':'film-cinema','Актёры и режиссёры':'film-makers','Марки и модели':'auto-cars','Двигатели и техника':'auto-engine','Страны и столицы':'geo-globe','Города и природа':'geo-mountains','Космос':'science-space','Физика и изобретения':'science-atom'};
+const topicCovers={'Музыкальные группы':'music-groups','Исполнители и хиты':'music-hits','Культовые фильмы':'film-cinema','Актёры и режиссёры':'film-makers','Марки и модели':'auto-cars','Двигатели и техника':'auto-engine','Страны и столицы':'geo-globe','Города и природа':'geo-mountains','Космос':'science-space','Физика и изобретения':'science-atom','Логика и числа':'logic-numbers'};
 const questionShelves=[
  {name:'Музыка',icon:'♫',categories:['Музыка']},
  {name:'Кино',icon:'▣',categories:['Кино']},
@@ -267,6 +267,7 @@ const shelves=[...questionShelves,{name:'Мемасики',icon:'◇',categories
 const quizzes=shelves.flatMap(shelf=>shelf.items);
 function artSvg(cover,suffix){
  const art={
+  'logic-numbers':['#193453','#63e6d1','<path d="M330 72H490V232H330Z" fill="#10233d" stroke="#baf4ff" stroke-width="7"/><path d="M363 105H457M363 151H457M363 197H457M394 105V197M426 105V197" stroke="#73dce4" stroke-width="6"/><circle cx="410" cy="151" r="14" fill="#ffd36c"/><path d="M84 205L154 84L224 205ZM109 164H200M126 134H182" fill="none" stroke="#ffd36c" stroke-width="8" stroke-linejoin="round"/><circle cx="154" cy="226" r="10" fill="#ff78bc"/>'],
   'slang-chat':['#25183e','#d9a2ff','<path d="M78 64H368Q391 64 391 87V177Q391 200 368 200H226L169 239V200H78Q55 200 55 177V87Q55 64 78 64Z" fill="#352353" stroke="#e4c6ff" stroke-width="6"/><path d="M191 122H479Q502 122 502 145V224Q502 247 479 247H439V280L393 247H191Q168 247 168 224V145Q168 122 191 122Z" fill="#173b4a" stroke="#92f0d5" stroke-width="6"/><circle cx="114" cy="132" r="9" fill="#ffd788"/><circle cx="147" cy="132" r="9" fill="#ffd788"/><circle cx="180" cy="132" r="9" fill="#ffd788"/><path d="M215 174H407" stroke="#a6ffe2" stroke-width="8" stroke-linecap="round"/><path d="M215 204H349" stroke="#77d8c2" stroke-width="8" stroke-linecap="round" opacity=".7"/>'],
   'music-groups':['#112e66','#f431a4','<path d="M0 228 Q95 168 190 222T380 212T560 198V300H0Z" fill="#090d25"/><circle cx="400" cy="152" r="112" fill="url(#disc)"/><circle cx="400" cy="152" r="81" fill="none" stroke="#d8e8ff" stroke-opacity=".65" stroke-width="3"/><circle cx="400" cy="152" r="48" fill="none" stroke="#d8e8ff" stroke-opacity=".45" stroke-width="2"/><circle cx="400" cy="152" r="21" fill="#ff5fc4"/><path d="M382 38Q408 15 435 40L474 110Q480 125 462 137L449 144L392 65Z" fill="#10192f" stroke="#9bdcf7" stroke-width="6"/><path d="M388 62L451 143M401 49L464 130M414 39L471 112" stroke="#fa5cae" stroke-width="5"/><path d="M0 54L89 35M29 92L106 69M84 127L142 101" stroke="#69ebff" stroke-width="5" stroke-linecap="round" opacity=".85"/>'],
   'music-hits':['#41123d','#ff983c','<path d="M0 222Q125 173 250 220T560 195V300H0Z" fill="#210d2b"/><path d="M300 38Q318 26 338 39L360 59L346 177Q369 193 362 220Q352 250 315 244Q279 237 286 211Q290 190 316 183L325 81L293 101L291 75Z" fill="url(#silver)" stroke="#fff3da" stroke-width="5"/><path d="M310 91L342 86M307 112L339 107M305 133L336 128M302 154L333 149" stroke="#7f4773" stroke-width="4"/><path d="M0 25L100 120M560 25L460 120M70 0L143 116M492 0L420 112" stroke="#ffb75d" stroke-width="5" opacity=".8"/><circle cx="105" cy="62" r="31" fill="#ffc466" opacity=".88"/><circle cx="467" cy="71" r="38" fill="#ff4d83" opacity=".72"/><path d="M0 247L70 221L122 249L180 216L242 251L305 219L365 254L434 215L492 249L560 220V300H0Z" fill="#090b1b"/>'],
@@ -442,6 +443,7 @@ function ask(){
  revealScheduled=false;clearTimeout(revealTimeout);$('explanation').style.display='none';
  if(round>=deck.length){finish();return}
  const q=deck[round];roster().forEach(p=>p.answer=null);seconds=config.time;
+  q.mediaLoadFailed=false;
  currentQuestionText=q.text||'';QuizAudio.playQuestion();
  $('answers').dataset.revealed='0';$('hostMedia').replaceChildren();
   $('roundInfo').textContent=(q.roundTitle?q.roundTitle+' · вопрос '+q.roundQuestionNumber+' из '+config.perRound+' · ':q.type==='closest'?'Кто ближе? · ':'Вопрос '+(round+1)+' из '+deck.length+' · ')+q.category+' · '+q.difficulty;
@@ -449,7 +451,8 @@ function ask(){
  if(q.type==='closest')$('answers').innerHTML='<div class="answer">Ответы будут показаны после таймера</div>';
   else $('answers').innerHTML=(q.answers||[]).map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'<div class="answer-votes"></div></div>').join('');
  if(q.media?.src){
-  const media=document.createElement(q.media.type==='image'?'img':q.media.type==='video'?'video':'audio');media.src=q.media.src;media.alt=q.media.type==='image'?'Изображение к вопросу':'';
+   const media=document.createElement(q.media.type==='image'?'img':q.media.type==='video'?'video':'audio');media.alt=q.media.type==='image'?q.media.alt||'Изображение к вопросу':'';
+   media.addEventListener('error',()=>{if(phase!=='game'||deck[round]!==q||$('answers').dataset.revealed==='1')return;q.mediaLoadFailed=true;$('timer').textContent='Медиа не загрузилось. Вопрос пропущен без очков.';reveal()},{once:true});media.src=q.media.src;
   if(q.media.type!=='image'){media.controls=true;media.preload='metadata';media.addEventListener('loadedmetadata',()=>{media.currentTime=Math.min(q.media.start||0,media.duration||0);if(q.media.end!==null&&q.media.end<media.duration)media.addEventListener('timeupdate',()=>{if(media.currentTime<q.media.start)media.currentTime=q.media.start;if(media.currentTime>=q.media.end){media.pause();media.currentTime=q.media.start}})},{once:true});if(q.media.type==='video')media.playsInline=true}
   $('hostMedia').append(media);
  }
@@ -468,7 +471,10 @@ function reveal(){
   $('answers').innerHTML='<div class="answer">Правильное значение: '+safe(target)+'</div>';
   $('timer').textContent='Ближе всех: '+(winners.length?roster().filter(p=>winners.includes(p.id)).map(p=>safe(p.name)).join(', '):'нет верных ответов');
   revealData={type:'reveal',closest:true,target,winners,players:publicRoster()};
- }else{
+  }else if(q.mediaLoadFailed){
+   $('timer').textContent='Медиа не загрузилось. Вопрос пропущен без очков.';
+   revealData={type:'reveal',skipped:true,players:publicRoster()};
+  }else{
    const isCorrect=p=>q.type==='free-text'?window.QUIZ_SLENG.isFreeTextCorrect(q,p.answer):p.answer===q.correct;
    roster().forEach(p=>{p.isCorrect=isCorrect(p);if(p.isCorrect)p.score+=1});
   [...$('answers').children].forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else el.classList.add('wrong')});
