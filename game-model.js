@@ -116,6 +116,39 @@
     return isCorrect ? 1 : 0;
   }
 
+  function isFreeTextCorrect(question, answer) {
+    if (typeof answer !== 'string' || !question) return false;
+    const normalize = (value) => String(value).normalize('NFKC').toLocaleLowerCase('ru-RU').replace(/ё/g, 'е').replace(/[’'`]/g, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim().replace(/\s+/g, ' ');
+    const submitted = normalize(answer);
+    const accepted = [question.correctAnswer, ...(question.acceptableAnswers || [])].filter(Boolean).map(normalize);
+    if (!submitted) return false;
+    if (accepted.includes(submitted)) return true;
+    if (question.allowTypos !== true) return false;
+    const distance = (left, right) => {
+      const matrix = Array.from({ length: left.length + 1 }, () => Array(right.length + 1).fill(0));
+      for (let i = 0; i <= left.length; i++) matrix[i][0] = i;
+      for (let j = 0; j <= right.length; j++) matrix[0][j] = j;
+      for (let i = 1; i <= left.length; i++) {
+        for (let j = 1; j <= right.length; j++) {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j - 1] + (left[i - 1] === right[j - 1] ? 0 : 1),
+          );
+          if (i > 1 && j > 1 && left[i - 1] === right[j - 2] && left[i - 2] === right[j - 1]) {
+            matrix[i][j] = Math.min(matrix[i][j], matrix[i - 2][j - 2] + 1);
+          }
+        }
+      }
+      return matrix[left.length][right.length];
+    };
+    return accepted.some((candidate) => {
+      const threshold = candidate.length >= 12 ? 2 : candidate.length >= 5 ? 1 : 0;
+      return threshold > 0 && Math.abs(candidate.length - submitted.length) <= threshold
+        && distance(submitted, candidate) <= threshold;
+    });
+  }
+
   function toPublicRoster(players, revealWagers = false) {
     return players.map((player) => {
       const { answer, wagerUsed, currentWager, awarded, isCorrect, ...publicPlayer } = player;
@@ -132,7 +165,7 @@
   function toPlayerQuestion(question) {
     const q = normalizeQuestion(question);
     if (!q) return null;
-    const { correct, correctValue, correctAnswer, acceptableAnswers, explanation, source, ...publicQuestion } = q;
+    const { correct, correctValue, correctAnswer, acceptableAnswers, allowTypos, explanation, source, ...publicQuestion } = q;
     if (publicQuestion.media) {
       const { src, file, objectUrl, ...publicMedia } = publicQuestion.media;
       publicQuestion.media = publicMedia;
@@ -150,6 +183,7 @@
     closestWinners,
     canUseWager,
     answerScore,
+    isFreeTextCorrect,
     toPublicRoster,
     toPlayerQuestion,
   });
