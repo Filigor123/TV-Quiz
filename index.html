@@ -18,6 +18,9 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 #players{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.player{background:#293957;border-radius:13px;padding:16px;font-size:21px;text-align:center}.player small{display:block;color:#b9c9df;font-size:14px;margin-top:6px}
 #game,#results,#lobby{display:none}.live-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;margin:16px 0 22px}.live-player{background:#152238;border:2px solid var(--player-color);border-radius:13px;padding:10px;text-align:center;min-width:0}.live-player .who{font-size:17px;font-weight:bold;overflow-wrap:anywhere}.live-player .points{font-size:22px;color:#ffe18a;margin:5px 0}.live-player .picked{font-size:13px;color:#d0dcf5;min-height:30px}.answer-votes{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:9px}.vote-chip{font-size:13px;padding:4px 7px;border-radius:8px;background:#111b2d;border:1px solid var(--player-color)}#explanation{display:none;margin:18px 0 4px;padding:16px;border-radius:14px;background:#142b39;border:1px solid #397c69;color:#d8ffed;font-size:18px;line-height:1.45}.question{font-size:clamp(27px,4vw,46px);text-align:center;line-height:1.25;margin:24px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:14px}.answer{padding:18px;background:#293957;border:2px solid #405273;border-radius:14px;text-align:center;font-size:clamp(19px,2.7vw,28px)}.answer.correct{border-color:#63d99b;background:#1c513f}.answer.wrong{opacity:.55}
 #timer{font-size:clamp(30px,5vw,54px);font-weight:bold;text-align:center;color:#ffda83}#roundInfo{text-align:center;color:#c6d4f4;font-size:18px}#scores{text-align:center;font-size:20px;line-height:1.8;margin-top:20px}
+.custom-round{margin-top:22px;padding:18px;border:1px solid #34496c;border-radius:16px;background:#142238}
+[hidden]{display:none!important}
+.custom-round h3{margin:0 0 8px}.custom-round p{color:#b9c9df}.custom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.custom-field label{display:block;margin:10px 0 6px;font-weight:bold;color:#dce7ff}.custom-field input,.custom-field select{width:100%;min-width:0;padding:11px;border:1px solid #52698f;border-radius:10px;background:#101a2d;color:#fff;font-size:16px}.custom-choice-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.custom-choice-fields input{width:100%;padding:11px;border:1px solid #52698f;border-radius:10px;background:#101a2d;color:#fff;font-size:16px}.custom-note{font-size:13px;color:#aebbd4!important}.host-media{max-width:min(100%,800px);margin:16px auto;display:grid;place-items:center}.host-media img,.host-media video{display:block;max-width:100%;max-height:55vh;border-radius:14px}.host-media audio{width:min(100%,650px)}.closest-answer{margin-top:10px;color:#d0dcf5}
 @media(max-width:600px){body{padding:14px}.answers{grid-template-columns:1fr}.option{font-size:15px}}
 
 /* New catalog navigation */
@@ -73,9 +76,39 @@ button.primary{background:linear-gradient(110deg,#3478f6,#5b8dff);box-shadow:0 7
 <button class="catalog-card" data-category="Автомобили"><span class="emoji">🏎️</span><strong>Автомобили</strong><small>Марки, модели, история и техника</small></button>
 <button class="catalog-card" data-category="География"><span class="emoji">🌍</span><strong>Путешествия и география</strong><small>Страны, города и удивительные места</small></button>
 <button class="catalog-card" data-category="Наука"><span class="emoji">🧪</span><strong>Наука и технологии</strong><small>Космос, открытия и изобретения</small></button>
-</div></div>
+</div>
+<button class="primary" id="customRoundOpen" type="button">Создать свой медиа-вопрос или «Кто ближе?»</button>
+</div>
 <div id="catalogTopics" class="catalog-step">
 <button class="catalog-back" id="backCategories">← Все категории</button><h2 id="topicHeading">Рубрики</h2><p class="selection-label">Выбери конкретную рубрику</p><div class="topic-list" id="topicList"></div>
+</div>
+<div id="customRoundStep" class="catalog-step">
+<button class="catalog-back" id="backCustomRound" type="button">← К категориям</button>
+<section class="custom-round" aria-labelledby="customRoundTitle">
+<h2 id="customRoundTitle">Свой медиа-вопрос или «Кто ближе?»</h2>
+<p id="customStatus" class="custom-note" aria-live="polite">Файл загружается только в эту комнату и не отправляется в репозиторий. Для аудио и видео можно указать фрагмент.</p>
+<div class="custom-grid">
+ <div class="custom-field"><label for="customType">Тип раунда</label><select id="customType"><option value="image">Изображение</option><option value="audio">Аудио</option><option value="video">Видео</option><option value="closest">Кто ближе? — число или дата</option></select></div>
+ <div class="custom-field"><label for="customCategory">Категория</label><select id="customCategory"><option>Музыка</option><option>Кино</option><option>Мемы</option><option>Звуки</option><option>Эрудиция</option></select></div>
+ <div class="custom-field"><label for="customTime">Время на ответ</label><select id="customTime"><option value="10">10 секунд</option><option value="15" selected>15 секунд</option><option value="20">20 секунд</option><option value="30">30 секунд</option></select></div>
+</div>
+<div class="custom-field"><label for="customQuestion">Текст вопроса</label><input id="customQuestion" maxlength="240" placeholder="Например: Какой фильм звучит в этом фрагменте?"></div>
+<div id="customMediaFields" class="custom-grid">
+ <div class="custom-field"><label for="customFile">Файл изображения, аудио или видео</label><input id="customFile" type="file" accept="image/*,audio/*,video/*"></div>
+ <div class="custom-field"><label for="customStart">Начало фрагмента, сек.</label><input id="customStart" type="number" min="0" step="0.1" value="0"></div>
+ <div class="custom-field"><label for="customEnd">Конец фрагмента, сек. (необязательно)</label><input id="customEnd" type="number" min="0" step="0.1" placeholder="До конца файла"></div>
+</div>
+<div id="customChoiceFields" class="custom-choice-fields">
+ <input id="customAnswer0" maxlength="100" aria-label="Вариант ответа А" placeholder="Вариант А"><input id="customAnswer1" maxlength="100" aria-label="Вариант ответа Б" placeholder="Вариант Б"><input id="customAnswer2" maxlength="100" aria-label="Вариант ответа В" placeholder="Вариант В"><input id="customAnswer3" maxlength="100" aria-label="Вариант ответа Г" placeholder="Вариант Г">
+ <div class="custom-field"><label for="customCorrect">Правильный вариант</label><select id="customCorrect"><option value="0">А</option><option value="1">Б</option><option value="2">В</option><option value="3">Г</option></select></div>
+</div>
+<div id="customClosestFields" class="custom-grid" hidden>
+ <div class="custom-field"><label for="closestMode">Что вводят игроки</label><select id="closestMode"><option value="number">Число</option><option value="date">Дату</option></select></div>
+ <div class="custom-field"><label for="closestTarget">Правильное значение</label><input id="closestTarget" placeholder="Например: -12,5 или 1969-07-20"></div>
+ <div class="custom-field"><label for="closestUnit">Единица измерения (если нужна)</label><input id="closestUnit" maxlength="12" placeholder="км, кг, м"></div>
+</div>
+<button class="primary" id="createCustomRoom" type="button">Создать комнату с этим вопросом</button>
+</section>
 </div>
 <div id="catalogLevels" class="catalog-step">
 <button class="catalog-back" id="backTopics">← К рубрикам</button><h2 id="levelHeading">Уровень сложности</h2><p class="selection-label" id="selectedTopicLabel"></p>
@@ -96,12 +129,13 @@ button.primary{background:linear-gradient(110deg,#3478f6,#5b8dff);box-shadow:0 7
 <button class="primary" id="startGame" disabled>Ждём игроков</button>
 </section>
 <section class="screen panel" id="game">
-<div class="live-board" id="livePlayers"></div><div id="roundInfo"></div><div id="timer"></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div id="explanation"></div><div id="scores"></div>
+<div class="live-board" id="livePlayers"></div><div id="roundInfo"></div><div id="timer"></div><div id="hostMedia" class="host-media"></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div id="explanation"></div><div id="scores"></div>
 </section>
 <section class="screen panel" id="results"><h2>🏆 Итоги игры</h2><div id="finalScores" class="scores"></div><button class="primary" onclick="location.reload()">Новая игра</button></section>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="questions.js"></script>
+<script src="game-model.js"></script>
 <script>
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
 let selectedCategory='',selectedTopic='',selectedDifficulty='';
@@ -117,11 +151,42 @@ function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.cl
 document.querySelectorAll('[data-category]').forEach(btn=>btn.addEventListener('click',()=>{selectedCategory=btn.dataset.category;$('topicHeading').textContent=categoryEmoji[selectedCategory]+' '+(selectedCategory==='География'?'Путешествия и география':selectedCategory==='Наука'?'Наука и технологии':selectedCategory);$('topicList').innerHTML=topics[selectedCategory].map(t=>'<button class="topic-card" data-topic="'+safe(t)+'">'+safe(t)+'<small>Открыть рубрику →</small></button>').join('');document.querySelectorAll('[data-topic]').forEach(x=>x.addEventListener('click',()=>{selectedTopic=x.dataset.topic;$('levelHeading').textContent=selectedTopic;$('selectedTopicLabel').textContent='Категория: '+selectedCategory;showStep('catalogLevels')}));showStep('catalogTopics')}));
 $('backCategories').addEventListener('click',()=>showStep('catalogHome'));$('backTopics').addEventListener('click',()=>showStep('catalogTopics'));$('backLevels').addEventListener('click',()=>showStep('catalogLevels'));
 document.querySelectorAll('[data-level]').forEach(btn=>btn.addEventListener('click',()=>{selectedDifficulty=btn.dataset.level;$('finalSelection').textContent=categoryEmoji[selectedCategory]+' '+selectedCategory+' · '+selectedTopic+' · '+selectedDifficulty;$('setupNote').textContent='';showStep('gameSettings')}));
+ $('customRoundOpen').addEventListener('click',()=>showStep('customRoundStep'));
+ $('backCustomRound').addEventListener('click',()=>showStep('catalogHome'));
+const customType=$('customType');
+function updateCustomFields(){
+ const closest=customType.value==='closest';
+ $('customMediaFields').hidden=closest;$('customChoiceFields').hidden=closest;$('customClosestFields').hidden=!closest;
+ $('customFile').accept=customType.value==='image'?'image/*':customType.value==='audio'?'audio/*':'video/*';
+}
+customType.addEventListener('change',updateCustomFields);updateCustomFields();
+function createCustomDeck(){
+ const text=$('customQuestion').value.trim();
+ if(!text){$('customStatus').textContent='Добавь текст вопроса.';return false}
+ const category=$('customCategory').value,time=Number($('customTime').value);
+ let question;
+ if(customType.value==='closest'){
+  const answerMode=$('closestMode').value,correctValue=$('closestTarget').value.trim();let unit=$('closestUnit').value.trim();
+  if(answerMode==='number'&&!unit)unit=(correctValue.match(/[a-zа-яё]+$/i)||[''])[0];
+  if(answerMode==='date'?!QuizGameModel.parseDate(correctValue):QuizGameModel.parseQuantity(correctValue,unit)===null){$('customStatus').textContent=answerMode==='date'?'Укажи существующую дату в формате ГГГГ-ММ-ДД.':'Укажи правильное число и единицу измерения.';return false}
+  question={type:'closest',category,topic:'Пользовательский раунд',difficulty:'Любой',text,answerMode,correctValue,unit};
+ }else{
+  const file=$('customFile').files[0],kind=customType.value;
+  if(!file||!file.type.startsWith(kind+'/')){$('customStatus').textContent='Выбери файл типа «'+kind+'».';return false}
+  const start=Number($('customStart').value||0),end=$('customEnd').value===''?null:Number($('customEnd').value);
+  if(start<0||!Number.isFinite(start)||(end!==null&&(!Number.isFinite(end)||end<=start))){$('customStatus').textContent='Проверь границы фрагмента: конец должен быть позже начала.';return false}
+  const answers=[0,1,2,3].map(i=>$('customAnswer'+i).value.trim());
+  if(answers.some(answer=>!answer)){$('customStatus').textContent='Заполни все четыре варианта ответа.';return false}
+  question={type:'media-choice',category,topic:'Медиа-раунд',difficulty:'Любой',text,answers,correct:Number($('customCorrect').value),media:{type:kind,src:URL.createObjectURL(file),fileName:file.name,start,end}};
+ }
+ deck=[QuizGameModel.normalizeQuestion(question)];config={time,count:1,category,difficulty:'Любой'};$('customStatus').textContent='';return true;
+}
 let peer=null,config=null,deck=[],round=0,seconds=0,timer=null,revealTimeout=null,phase='setup',revealScheduled=false;
 const playerColors=['#ff6b6b','#4da3ff','#f6c453','#57d69a','#c084fc','#ff8c42','#48d1cc','#f472b6'];
 function send(c,d){try{if(c&&c.open)c.send(d)}catch(e){}}
 function broadcast(d){connections.forEach(c=>send(c,d))}
 function roster(){return [...players.values()]}
+function publicRoster(){return roster().map(({answer,...player})=>player)}
 function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function updateLobby(){
  const list=roster();$('players').innerHTML=list.length?list.map(p=>'<div class="player">'+safe(p.avatar)+' '+safe(p.name)+'<small>'+(p.ready?'✅ Готов':'⏳ Не готов')+'</small></div>').join(''):'<div class="player">Ждём участников…</div>';
@@ -131,12 +196,19 @@ function makeDeck(){
  const pool=(window.QUIZ_QUESTIONS||[]).filter(q=>q.category===selectedCategory&&q.topic===selectedTopic&&q.difficulty===selectedDifficulty);
  if(!pool.length){$('setupNote').textContent='Для этой рубрики и сложности пока нет вопросов. Выбери другой уровень.';return false}
  pool.sort(()=>Math.random()-.5);const requested=Number($('questionCount').value),count=Math.min(requested,pool.length);
- deck=pool.slice(0,count);config={time:Number($('timeLimit').value),count,category:selectedCategory+' / '+selectedTopic,difficulty:selectedDifficulty};
+ deck=pool.slice(0,count).map(QuizGameModel.normalizeQuestion);config={time:Number($('timeLimit').value),count,category:selectedCategory+' / '+selectedTopic,difficulty:selectedDifficulty};
  $('setupNote').textContent=count<requested?'В этой рубрике доступно '+count+' вопрос(а). Запускаем все доступные вопросы.':'';
  return true;
 }
 function createRoom(){
  if(!makeDeck())return;
+ openRoom();
+}
+function createCustomRoom(){
+ if(!createCustomDeck())return;
+ openRoom();
+}
+function openRoom(){
  $('setup').style.display='none';$('lobby').style.display='block';phase='lobby';$('status').textContent='Создаём игровую комнату…';
  if(!window.Peer){$('status').textContent='Не загрузилась библиотека связи. Обнови страницу.';return}
  peer=new Peer();
@@ -153,18 +225,21 @@ function handleConnection(conn){
   if(!data||!data.type)return;
   if(data.type==='join'){
    players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),color:playerColors[players.size%playerColors.length],ready:false,score:0,answer:null});
-   send(conn,{type:'state',players:roster(),gameStarted:phase==='game'});updateLobby();broadcast({type:'players',players:roster()});
+   const state={type:'state',players:publicRoster(),gameStarted:phase==='game'};
+   if(phase==='game'&&deck[round])state.question={question:QuizGameModel.toPlayerQuestion(deck[round]),round:round+1,total:deck.length,time:seconds||config.time};
+   send(conn,state);updateLobby();broadcast({type:'players',players:publicRoster()});
   }
-  if(data.type==='ready'&&players.has(conn.peer)){players.get(conn.peer).ready=!!data.ready;updateLobby();broadcast({type:'players',players:roster()})}
+  if(data.type==='ready'&&players.has(conn.peer)){players.get(conn.peer).ready=!!data.ready;updateLobby();broadcast({type:'players',players:publicRoster()})}
   if(data.type==='answer'&&phase==='game'&&players.has(conn.peer)){
-   const p=players.get(conn.peer);if(p.answer===null&&!revealScheduled){p.answer=Number(data.answer);renderLivePlayers();broadcast({type:'players',players:roster()});if(roster().length&&roster().every(x=>x.answer!==null)){revealScheduled=true;clearInterval(timer);$('timer').textContent='Ответы приняты';revealTimeout=setTimeout(reveal,2500)}}
+   const p=players.get(conn.peer),q=deck[round];if(p.answer===null&&!revealScheduled){p.answer=q.type==='closest'?{value:String(data.value??'').trim(),unit:String(data.unit||'')} : Number(data.answer);renderLivePlayers();broadcast({type:'players',players:publicRoster()});if(q.type!=='closest'&&roster().length&&roster().every(x=>x.answer!==null)){revealScheduled=true;clearInterval(timer);$('timer').textContent='Ответы приняты';revealTimeout=setTimeout(reveal,2500)}}
   }
  });
- conn.on('close',()=>{connections.delete(conn);players.delete(conn.peer);updateLobby();broadcast({type:'players',players:roster()})});
+ conn.on('close',()=>{connections.delete(conn);players.delete(conn.peer);updateLobby();broadcast({type:'players',players:publicRoster()})});
  conn.on('error',()=>{connections.delete(conn);players.delete(conn.peer);updateLobby()});
 }
 function renderLivePlayers(){
- $('livePlayers').innerHTML=roster().map(p=>'<div class="live-player" style="--player-color:'+p.color+'"><div class="who">'+safe(p.avatar)+' '+safe(p.name)+'</div><div class="points">'+p.score+' очк.</div><div class="picked">'+(p.answer===null?'Думает…':'Ответ: '+String.fromCharCode(1040+p.answer)+'. '+safe(deck[round]?.answers[p.answer]||''))+'</div></div>').join('');
+ const q=deck[round],revealed=$('answers').dataset.revealed==='1';
+ $('livePlayers').innerHTML=roster().map(p=>{let picked='Думает…';if(p.answer!==null){if(q?.type==='closest')picked=revealed?'Ответ: '+safe(p.answer.value)+(p.answer.unit||q.unit?' '+safe(p.answer.unit||q.unit):''):'Ответ принят';else picked='Ответ: '+String.fromCharCode(1040+p.answer)+'. '+safe(q?.answers[p.answer]||'')}return '<div class="live-player" style="--player-color:'+p.color+'"><div class="who">'+safe(p.avatar)+' '+safe(p.name)+'</div><div class="points">'+p.score+' очк.</div><div class="picked">'+picked+'</div></div>'}).join('');
  $('scores').textContent='Ответили: '+roster().filter(p=>p.answer!==null).length+' из '+roster().length;
  $('answers').querySelectorAll('.answer').forEach((el,i)=>{const voters=roster().filter(p=>p.answer===i);const holder=el.querySelector('.answer-votes');if(holder)holder.innerHTML=voters.map(p=>'<span class="vote-chip" style="--player-color:'+p.color+'">'+safe(p.avatar)+' '+safe(p.name)+'</span>').join('')});
 }
@@ -176,27 +251,46 @@ function ask(){
  revealScheduled=false;clearTimeout(revealTimeout);$('explanation').style.display='none';
  if(round>=deck.length){finish();return}
  const q=deck[round];roster().forEach(p=>p.answer=null);seconds=config.time;
- $('roundInfo').textContent='Вопрос '+(round+1)+' из '+deck.length+' · '+q.category+' · '+q.difficulty;
- $('question').textContent=q.text;$('answers').innerHTML=q.answers.map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'<div class="answer-votes"></div></div>').join('');
+ $('answers').dataset.revealed='0';$('hostMedia').replaceChildren();
+ $('roundInfo').textContent=(q.type==='closest'?'Кто ближе? · ':'')+'Вопрос '+(round+1)+' из '+deck.length+' · '+q.category+' · '+q.difficulty;
+ $('question').textContent=q.text;
+ if(q.type==='closest')$('answers').innerHTML='<div class="answer">Ответы будут показаны после таймера</div>';
+ else $('answers').innerHTML=q.answers.map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'<div class="answer-votes"></div></div>').join('');
+ if(q.media?.src){
+  const media=document.createElement(q.media.type==='image'?'img':q.media.type==='video'?'video':'audio');media.src=q.media.src;media.alt=q.media.type==='image'?'Изображение к вопросу':'';
+  if(q.media.type!=='image'){media.controls=true;media.preload='metadata';media.addEventListener('loadedmetadata',()=>{media.currentTime=Math.min(q.media.start||0,media.duration||0);if(q.media.end!==null&&q.media.end<media.duration)media.addEventListener('timeupdate',()=>{if(media.currentTime<q.media.start)media.currentTime=q.media.start;if(media.currentTime>=q.media.end){media.pause();media.currentTime=q.media.start}})},{once:true});if(q.media.type==='video')media.playsInline=true}
+  $('hostMedia').append(media);
+ }
  $('scores').textContent='Ответили: 0 из '+roster().length;$('timer').textContent=seconds+' сек.';renderLivePlayers();
- broadcast({type:'question',question:q,round:round+1,total:deck.length,time:config.time});
+ broadcast({type:'question',question:QuizGameModel.toPlayerQuestion(q),round:round+1,total:deck.length,time:config.time});
  clearInterval(timer);timer=setInterval(()=>{seconds--;$('timer').textContent=seconds+' сек.';if(seconds<=0)reveal()},1000);
 }
 function reveal(){
  if(phase!=='game'||$('answers').dataset.revealed==='1')return;
  $('answers').dataset.revealed='1';clearInterval(timer);clearTimeout(revealTimeout);const q=deck[round];
- roster().forEach(p=>{if(p.answer===q.correct)p.score+=1});
- [...$('answers').children].forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else el.classList.add('wrong')});
- $('timer').textContent='Правильный ответ: '+q.answers[q.correct];
- $('explanation').textContent=q.explanation||'Правильный ответ: '+q.answers[q.correct];$('explanation').style.display='block';renderLivePlayers();
- broadcast({type:'reveal',correct:q.correct,answerText:q.answers[q.correct],explanation:q.explanation||'',players:roster()});
+ let revealData;
+ if(q.type==='closest'){
+  const winners=QuizGameModel.closestWinners(q,roster());roster().forEach(p=>{if(winners.includes(p.id))p.score+=1});
+  const target=q.answerMode==='date'?q.correctValue:q.correctValue+(q.unit?' '+q.unit:'');
+  $('answers').innerHTML='<div class="answer">Правильное значение: '+safe(target)+'</div>';
+  $('timer').textContent='Ближе всех: '+(winners.length?roster().filter(p=>winners.includes(p.id)).map(p=>safe(p.name)).join(', '):'нет верных ответов');
+  revealData={type:'reveal',closest:true,target,winners,players:publicRoster()};
+ }else{
+  roster().forEach(p=>{if(p.answer===q.correct)p.score+=1});
+  [...$('answers').children].forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else el.classList.add('wrong')});
+  $('timer').textContent='Правильный ответ: '+q.answers[q.correct];
+  revealData={type:'reveal',correct:q.correct,answerText:q.answers[q.correct],explanation:q.explanation||'',players:publicRoster()};
+ }
+ const activeMedia=$('hostMedia').querySelector('audio,video');if(activeMedia)activeMedia.pause();
+ $('explanation').textContent=q.explanation||(q.type==='closest'?'Минимальное абсолютное отклонение получает 1 очко; при ничьей очко получают все лидеры.':'Правильный ответ: '+q.answers[q.correct]);$('explanation').style.display='block';renderLivePlayers();
+ broadcast(revealData);
  revealTimeout=setTimeout(()=>{round++;$('answers').dataset.revealed='0';ask()},5500);
 }
 function finish(){
  phase='results';clearInterval(timer);clearTimeout(revealTimeout);$('game').style.display='none';$('results').style.display='block';
  const sorted=roster().sort((a,b)=>b.score-a.score);$('finalScores').innerHTML=sorted.map((p,i)=>'<div class="player">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'🎮')+' '+safe(p.name)+'<small>'+p.score+' очков</small></div>').join('');
- broadcast({type:'game-over',players:sorted});
+ broadcast({type:'game-over',players:sorted.map(({answer,...player})=>player)});
 }
-$('createRoom').addEventListener('click',createRoom);$('startGame').addEventListener('click',start);
+$('createRoom').addEventListener('click',createRoom);$('createCustomRoom').addEventListener('click',createCustomRoom);$('startGame').addEventListener('click',start);
 </script>
 </body></html>
