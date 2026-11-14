@@ -247,10 +247,10 @@ function renderCatalog(){
  })).join('')+'</div></section>').join('');
  document.querySelectorAll('[data-qi]:not(:disabled)').forEach(btn=>btn.addEventListener('click',()=>{
   const q=quizzes[Number(btn.dataset.qi)],level=quizLevels.find(item=>item.color===btn.dataset.levelKey);
-  selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=level.legacy;
+  selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=q.multiRound?'multi':level.legacy;
   $('questionCount').previousElementSibling.textContent=q.multiRound?'Вопросов в каждом раунде':'Количество вопросов';
   $('questionCount').innerHTML=q.multiRound?'<option value="5">5 на раунд · 15 всего</option><option value="10" selected>10 на раунд · 30 всего</option>':'<option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option>';
-  $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+level.label;
+  $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+(q.multiRound?'3 раунда':level.label);
   saveCatalogReturn(btn);showStep('gameSettings');$('createRoom').focus({preventScroll:true});
  }));
  restoreCatalogReturn();
