@@ -24,8 +24,10 @@
   function normalizeQuestion(question) {
     if (!question || typeof question !== 'object') return null;
     const type = question.type === 'closest' ? 'closest'
-      : question.type === 'media-choice' ? 'media-choice' : 'choice';
+      : question.type === 'media-choice' ? 'media-choice'
+      : question.type === 'free-text' ? 'free-text' : 'choice';
     const normalized = { ...question, type };
+    if (type === 'free-text') return normalized;
     if (type !== 'closest') {
       normalized.answers = Array.isArray(question.answers) ? question.answers : [];
       normalized.correct = Number.isInteger(question.correct) ? question.correct : 0;
