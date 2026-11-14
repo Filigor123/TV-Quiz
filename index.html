@@ -59,33 +59,106 @@ button.primary{background:linear-gradient(110deg,#3478f6,#5b8dff);box-shadow:0 7
 #lobby,#game,#results{background:#111c2f}
 @media(max-width:600px){body{padding:14px}h1{font-size:30px}}
 
+/* TV catalog: dark aurora backdrop, wide art cards and five explicit levels. */
+:root{--tv-ink:#f4f8ff;--tv-muted:#aabbd4;--tv-line:#53708e}
+html{scroll-behavior:smooth;scroll-padding:3vh}
+body{min-height:100vh;padding:clamp(22px,3.6vh,48px) clamp(22px,4.4vw,76px) 7vh;background:#06101d;color:var(--tv-ink);font-family:Arial,"Segoe UI",sans-serif;position:relative;isolation:isolate}
+body:before{position:fixed;z-index:-2;inset:-18%;width:136%;height:136%;border-radius:0;background:radial-gradient(ellipse at 12% 22%,#07506a8a 0,transparent 30%),radial-gradient(ellipse at 88% 18%,#a64b183b 0,transparent 29%),radial-gradient(ellipse at 48% 78%,#05264d 0,transparent 42%),linear-gradient(155deg,#071222,#03101d 58%,#071522);animation:aurora-drift 28s ease-in-out infinite alternate}
+@keyframes aurora-drift{from{transform:translate3d(-1.5%,0,0) scale(1)}to{transform:translate3d(1.5%,1%,0) scale(1.04)}}
+h1{width:min(100%,1740px);color:#f8fbff;font-size:clamp(30px,3.25vw,54px);letter-spacing:.01em;margin:0 auto;text-shadow:0 3px 24px #0008}
+body>.sub{width:min(100%,1740px);margin:3px auto 0;color:#c2d0e4;font-size:clamp(15px,1.3vw,21px)}
+#status{width:min(100%,1740px);color:#d5e5fa;background:#091a2bc9;border-color:#34506b;border-radius:12px}#status:empty{display:none}
+.screen{width:min(100%,1740px);margin-top:clamp(14px,2.2vh,28px)}
+.panel{background:#071626c9;border:1px solid #3a5875;border-radius:24px;padding:clamp(20px,2.3vw,38px);box-shadow:0 25px 80px #0007,inset 0 1px #ffffff0a;backdrop-filter:blur(10px)}
+.hero{min-height:0;padding:0 0 clamp(20px,3vh,34px);margin:0 0 clamp(24px,3.5vh,42px);background:none;border-bottom:1px solid #35506b;border-radius:0;box-shadow:none}
+.hero:after{content:none}.hero-kicker{color:#a6c8e8;letter-spacing:.26em;font-size:clamp(11px,.9vw,15px)}
+.hero h2{max-width:100%;margin:0;font-size:clamp(34px,4.1vw,68px);line-height:1.04;letter-spacing:.025em;text-transform:uppercase;color:#f7f9ff}
+.hero-lead{max-width:920px;margin:10px 0 0;color:#bac9dc;font-size:clamp(15px,1.2vw,20px)}
+.hero-pills{display:none}
+.store-head{margin:0 0 clamp(18px,2.8vh,34px)}.store-head h2{font-size:clamp(21px,1.9vw,31px);color:#eff5ff;letter-spacing:.02em}.store-head p{font-size:clamp(13px,1vw,17px);color:#aabbd0}
+.shelf{margin-bottom:clamp(25px,4vh,46px);--shelf-color:#50c7f2;--shelf-pale:#27acd533}
+.shelf:nth-of-type(2){--shelf-color:#fa9d52;--shelf-pale:#ff6c2640}.shelf:nth-of-type(3){--shelf-color:#53dfc3;--shelf-pale:#22c7ad38}.shelf:nth-of-type(4){--shelf-color:#6da3ff;--shelf-pale:#5984ff3b}.shelf:nth-of-type(5){--shelf-color:#d295ff;--shelf-pale:#a64eff3a}
+.shelf-heading{margin-bottom:clamp(10px,1.5vh,17px)}.shelf-heading h3{display:flex;align-items:center;gap:.35em;font-size:clamp(22px,2vw,34px);color:#eff5ff;letter-spacing:.025em}.shelf-heading h3>span{font-size:.9em;filter:drop-shadow(0 0 8px var(--shelf-color))}.shelf-heading>span{font-size:clamp(12px,.9vw,15px);color:#9fb1c8}
+.shelf-track{gap:clamp(10px,1vw,18px);padding:4px 5px 15px;scrollbar-width:thin;scrollbar-color:#49627e #0c1928;overscroll-behavior-x:contain}
+.catalog-card{--card-glow:var(--shelf-color);flex:0 0 clamp(300px,27.4vw,510px);min-height:clamp(144px,20.5vh,245px);padding:clamp(17px,1.5vw,26px);border:1px solid #55708b;border-radius:19px;color:#f7faff;background:radial-gradient(ellipse at 72% 35%,var(--shelf-pale),transparent 43%),linear-gradient(128deg,#10243a,#091725 66%);box-shadow:inset 0 1px #ffffff15,0 12px 28px #0005;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;isolation:isolate}
+.catalog-card:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#06101de8 0%,#06101db0 41%,#06101d0c 100%);pointer-events:none}
+.catalog-card:hover,.catalog-card:focus-visible{z-index:2;transform:scale(1.035);border-color:#f0f8ff;box-shadow:0 0 0 1px #ffffff90,0 0 25px color-mix(in srgb,var(--card-glow),transparent 42%),0 18px 42px #0008}
+.quiz-card{background:radial-gradient(ellipse at 76% 28%,color-mix(in srgb,var(--shelf-color),transparent 37%),transparent 39%),linear-gradient(145deg,#132a43,#091422 72%)}
+.card-copy{max-width:79%;margin-top:auto}.card-eyebrow{color:#a8c2df;font-size:clamp(10px,.75vw,13px);letter-spacing:.15em}
+.catalog-card strong{font-size:clamp(20px,1.8vw,30px);line-height:1.08;letter-spacing:.005em;text-transform:uppercase;color:#fff;text-shadow:0 2px 13px #000b}
+.catalog-card small{color:#d0dceb;font-size:clamp(12px,.95vw,16px);line-height:1.35;text-shadow:0 2px 7px #0009}
+.card-art{z-index:-1;width:65%;height:100%;right:-2%;opacity:.96;mix-blend-mode:screen}.card-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#08152490,transparent 68%),linear-gradient(0deg,#071322a8,transparent 52%)}
+.card-art svg{width:100%;height:94%;max-height:none;filter:drop-shadow(0 0 14px color-mix(in srgb,var(--shelf-color),transparent 38%))}
+.card-art svg circle:first-child{fill:var(--shelf-pale);opacity:.88}.card-art svg g{stroke-width:4}
+.level-chip{position:absolute;top:clamp(13px,1vw,19px);right:clamp(13px,1vw,19px);z-index:3;max-width:60%;padding:7px 11px;border:1px solid currentColor;border-radius:999px;background:#07101dcf;color:#b7f2bb;font-size:clamp(11px,.85vw,14px);font-weight:800;letter-spacing:.05em;text-transform:uppercase;box-shadow:0 3px 14px #0008}
+.level-chip[data-level="Средний"]{color:#ffe071}.level-chip[data-level="Сложный"]{color:#ff8e83}.level-chip[data-level="Эксперт"]{color:#db9cff}.level-chip[data-level="Экстрим"]{color:#77dfff}
+.level-legend{display:flex;justify-content:flex-end;align-items:center;gap:clamp(8px,1.5vw,22px);flex-wrap:wrap;margin:-8px 0 clamp(19px,3vh,34px);color:#e5ebf5;font-size:clamp(11px,.95vw,16px);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.level-legend span{display:flex;align-items:center;gap:7px}.level-legend i{width:clamp(11px,.95vw,16px);height:clamp(11px,.95vw,16px);display:inline-block;border-radius:50%;background:#72e27c;box-shadow:0 0 13px #72e27c99}.level-legend span:nth-child(2) i{background:#ffd54f;box-shadow:0 0 13px #ffd54f99}.level-legend span:nth-child(3) i{background:#ff6868;box-shadow:0 0 13px #ff686899}.level-legend span:nth-child(4) i{background:#c779f2;box-shadow:0 0 13px #c779f299}.level-legend span:nth-child(5) i{background:#55d8f2;box-shadow:0 0 13px #55d8f299}
+.quiz-meta{position:relative;z-index:2;margin:12px 0 0!important;padding:5px 9px!important;border:1px solid #ffffff32!important;border-radius:7px!important;background:#07101d9c!important;color:#dbe7f8!important;font-size:clamp(10px,.76vw,13px)!important}
+.catalog-card.unavailable-card,.catalog-card.unavailable-card:hover{cursor:not-allowed;transform:none;border-color:#33465b;background:linear-gradient(135deg,#0d1b2a,#09121d);box-shadow:inset 0 1px #ffffff08;filter:saturate(.45);opacity:.72}
+.unavailable-card:before{background:#050b13a8}.unavailable-card .card-art{opacity:.38}.unavailable-card .level-chip{color:#bac4d0;background:#131d28;border-color:#526174}
+.upcoming-card{color:#dce5f2;background:linear-gradient(135deg,#102137,#0b1726);border-color:#344d67}.upcoming-card:hover{transform:scale(1.01);border-color:#5e7894;background:linear-gradient(135deg,#12243a,#0b1726)}
+.coming{background:#1a293a;color:#b5c2d2;border:1px solid #344b64}
+.catalog-card:focus-visible,.audio-controls button:focus-visible,button.primary:focus-visible{outline:4px solid #f6faff;outline-offset:4px}
+#lobby,#game,#results{color:#eff5ff;background:#071626;border-color:#34506b}
+@media(min-width:1500px){.catalog-card{flex-basis:clamp(400px,27.4vw,560px)}}
+@media(max-width:700px){body{padding:17px 14px 40px}.screen{width:100%}.panel{padding:17px}.hero h2{font-size:34px}.hero-lead{font-size:14px}.store-head{align-items:start}.shelf-heading h3{font-size:22px}.catalog-card{flex-basis:min(82vw,370px);min-height:205px}.level-legend{justify-content:flex-start;gap:8px 12px}.card-art{width:67%}}
+@media(max-height:900px) and (min-width:701px){.catalog-card{min-height:160px}.shelf{margin-bottom:clamp(15px,2vh,24px)}.hero{padding-bottom:18px;margin-bottom:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+.catalog-settings{max-width:760px;margin:0 auto}.catalog-settings h2{text-align:left;margin:0 0 8px}.catalog-settings .selection-label{color:var(--tv-muted);font-size:clamp(15px,1.2vw,20px);margin:0 0 24px}.settings-row{display:flex;gap:18px;flex-wrap:wrap}.settings-row>label{display:flex;flex:1;flex-direction:column;gap:8px;min-width:210px;color:#e1eaf6;font-weight:700}.settings-row select{width:100%;background:#0b1a2a;color:#f5f8ff;border-color:#45617e}.catalog-settings .catalog-back{background:#102338;color:#e8efff;border-color:#45617e}
+
+/* 16:9 catalog: three visible television shelves with independent horizontal tracks. */
+body{padding:clamp(16px,2.4vh,34px) clamp(22px,3.1vw,72px) 54px;background:#040c17;gap:0}
+body:before{content:"";position:fixed;inset:-24%;z-index:-2;width:148%;height:148%;background:radial-gradient(ellipse at 8% 15%,#007c9490 0,transparent 27%),radial-gradient(ellipse at 85% 14%,#aa4f22a0 0,transparent 24%),radial-gradient(ellipse at 46% 83%,#173c73a8 0,transparent 38%),linear-gradient(145deg,#071426 0%,#030b16 57%,#071526 100%);animation:aurora-drift 38s ease-in-out infinite alternate}
+@keyframes aurora-drift{from{transform:translate3d(-1%,0,0) scale(1)}to{transform:translate3d(1%,.8%,0) scale(1.025)}}
+h1{width:min(100%,3400px);font-size:clamp(30px,3vw,76px);margin:0 auto;text-align:left;letter-spacing:.025em}
+body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp(14px,1.08vw,27px)}#status{width:min(100%,3400px);color:#d9eaff;background:#091a2bc9;border-color:#34506b;border-radius:12px}#status:empty{display:none}
+.screen{width:min(100%,3400px);margin-top:clamp(12px,1.7vh,34px)}.panel{padding:clamp(17px,1.6vw,52px);background:#071626c9;border:1px solid #3a5875;border-radius:22px;box-shadow:0 25px 80px #0007,inset 0 1px #ffffff0a;backdrop-filter:blur(10px)}
+.hero{min-height:0;padding:0 0 clamp(12px,1.5vh,20px);margin:0 0 clamp(12px,1.65vh,22px);background:none;border-bottom:1px solid #35506b;border-radius:0;box-shadow:none}.hero:after{content:none}.hero-kicker{color:#9fc5e7;letter-spacing:.24em;font-size:clamp(10px,.75vw,18px)}.hero h2{max-width:100%;margin:0;font-size:clamp(32px,3vw,82px);line-height:1;text-align:left;letter-spacing:.025em;text-transform:uppercase;color:#f7f9ff}.hero-lead{max-width:1600px;margin:8px 0 0;color:#bac9dc;font-size:clamp(14px,1.05vw,28px)}
+.section-title{margin:0 0 3px;font-size:clamp(20px,1.65vw,44px);color:#f1f6ff}.sub.left{width:auto;margin:0;color:#aabbd0;text-align:left;font-size:clamp(13px,.9vw,23px)}
+.level-legend{display:flex;justify-content:flex-end;align-items:center;gap:clamp(7px,1.2vw,20px);flex-wrap:wrap;margin:clamp(-34px,-2.7vh,-18px) 0 clamp(10px,1.2vh,16px);color:#e5ebf5;font-size:clamp(10px,.8vw,15px);font-weight:700;text-transform:uppercase;letter-spacing:.035em}.level-legend span{display:flex;align-items:center;gap:7px}.level-legend i{width:clamp(10px,.8vw,15px);height:clamp(10px,.8vw,15px);border-radius:50%;background:#72e27c;box-shadow:0 0 13px #72e27c99}.level-legend span:nth-child(2) i{background:#ffd54f;box-shadow:0 0 13px #ffd54f99}.level-legend span:nth-child(3) i{background:#ff6868;box-shadow:0 0 13px #ff686899}.level-legend span:nth-child(4) i{background:#c779f2;box-shadow:0 0 13px #c779f299}.level-legend span:nth-child(5) i{background:#55d8f2;box-shadow:0 0 13px #55d8f299}
+.quiz-grid{display:grid;gap:clamp(10px,1.3vh,17px)}.shelf{--shelf-color:#46c6ed;--shelf-pale:#27acd533;margin:0;min-width:0}.shelf[data-shelf="1"]{--shelf-color:#f5a04e;--shelf-pale:#ff6c2640}.shelf[data-shelf="2"]{--shelf-color:#7f9eff;--shelf-pale:#5984ff3b}.shelf-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 clamp(6px,.7vh,10px)}.shelf-heading h3{display:flex;align-items:center;gap:.42em;margin:0;color:#eff5ff;font-size:clamp(20px,1.65vw,32px);line-height:1.1;letter-spacing:.025em}.shelf-heading h3>span{font-size:.9em;color:var(--shelf-color);filter:drop-shadow(0 0 8px var(--shelf-color))}.shelf-heading>span{color:#a9bad0;font-size:clamp(11px,.78vw,14px);white-space:nowrap}
+.shelf-track{display:flex;gap:clamp(8px,.75vw,15px);padding:3px 5px 9px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#49627e #0c1928;overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+.catalog-card{--card-glow:var(--shelf-color);position:relative;display:flex;flex:0 0 calc((100% - 30px)/3.1);min-width:0;min-height:clamp(154px,18.5vh,216px);padding:clamp(14px,1.25vw,23px);overflow:hidden;isolation:isolate;scroll-snap-align:start;border:1px solid #55708b;border-radius:16px;color:#f7faff;text-align:left;background:#0a1421;box-shadow:inset 0 1px #ffffff15,0 12px 28px #0005;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.catalog-card:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#06101df0 0%,#06101dc4 38%,#06101d21 78%,#06101d04 100%),linear-gradient(0deg,#06101d9c 0%,transparent 70%);pointer-events:none}.catalog-card:hover,.catalog-card:focus-visible{z-index:2;transform:scale(1.025);border-color:#f0f8ff;box-shadow:0 0 0 1px #ffffff90,0 0 25px color-mix(in srgb,var(--card-glow),transparent 42%),0 18px 42px #0008}
+.card-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:5px;width:76%;height:100%;min-height:inherit;margin:auto 0 0}.card-eyebrow{color:#bfd1e7;font-size:clamp(9px,.65vw,12px);letter-spacing:.1em;text-transform:uppercase}.catalog-card strong{display:block;font-size:clamp(17px,1.4vw,26px);line-height:1.05;letter-spacing:.005em;text-transform:uppercase;color:#fff;text-shadow:0 2px 13px #000c}.catalog-card small{display:block;color:#d0dceb;font-size:clamp(11px,.8vw,15px);line-height:1.28;text-shadow:0 2px 7px #0009}
+.card-art{position:absolute;z-index:-2;inset:0 0 0 auto;width:75%;height:100%;opacity:1;mix-blend-mode:normal;overflow:hidden}.card-art svg{display:block;width:100%;height:100%;max-height:none;filter:none}.card-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#081524a8,transparent 56%),linear-gradient(0deg,#07132270,transparent 48%)}
+.level-chip{position:absolute;top:clamp(9px,.8vw,15px);right:clamp(9px,.8vw,15px);z-index:3;max-width:60%;padding:6px 10px;border:1px solid currentColor;border-radius:999px;background:#07101de8;color:#8df59b;font-size:clamp(9px,.7vw,13px);font-weight:800;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 3px 14px #0008}.level-chip[data-level="Средний"]{color:#ffe071}.level-chip[data-level="Сложный"]{color:#ff8e83}.level-chip[data-level="Эксперт"]{color:#db9cff}.level-chip[data-level="Экстрим"]{color:#77dfff}.quiz-meta{position:absolute;right:clamp(9px,.8vw,15px);bottom:clamp(9px,.8vw,15px);z-index:3;margin:0!important;padding:4px 7px!important;border:1px solid #ffffff32!important;border-radius:6px!important;background:#07101dcc!important;color:#dbe7f8!important;font-size:clamp(9px,.62vw,12px)!important;white-space:nowrap}
+.catalog-card.unavailable-card,.catalog-card.unavailable-card:hover{cursor:not-allowed;transform:none;border-color:#33465b;background:#0a1421;box-shadow:inset 0 1px #ffffff08;filter:saturate(.48);opacity:.7}.unavailable-card:before{background:linear-gradient(90deg,#06101df4 0%,#06101dd8 55%,#06101d60 100%)}.unavailable-card .level-chip{color:#bac4d0;background:#131d28;border-color:#526174}.catalog-card:focus-visible,.audio-controls button:focus-visible,button.primary:focus-visible{outline:4px solid #f6faff;outline-offset:3px}
+#lobby,#game,#results{color:#eff5ff;background:#071626;border-color:#34506b}
+@media(min-width:1500px){.catalog-card{flex-basis:calc((100% - 32px)/3.05);min-height:clamp(175px,18.5vh,292px)}}@media(max-width:1100px){.level-legend{margin:10px 0}.catalog-card{flex-basis:calc((100% - 18px)/2.05)}}
+@media(max-width:700px){body{padding:16px 13px 36px}h1{font-size:31px}.screen{width:100%}.panel{padding:15px}.hero h2{font-size:34px}.hero-lead{font-size:14px}.level-legend{justify-content:flex-start;gap:8px 12px;margin:10px 0}.shelf-heading h3{font-size:21px}.catalog-card{flex-basis:82vw;min-height:190px;padding:16px}.card-copy{width:80%}.card-art{width:82%}}
+@media(max-height:800px) and (min-width:1101px){.catalog-card{min-height:clamp(138px,16.5vh,180px)}.quiz-grid{gap:7px}.shelf-track{padding-bottom:5px}}
+@media(min-width:2500px){h1{font-size:76px}body>.sub{font-size:27px}.screen{margin-top:34px}.panel{padding:52px}.hero h2{font-size:82px}.hero-lead{font-size:28px}.section-title{font-size:44px}.sub.left{font-size:23px}.level-legend{font-size:22px}.shelf-heading h3{font-size:48px}.catalog-card{min-height:390px;padding:36px}.catalog-card strong{font-size:46px}.catalog-card small{font-size:26px}.card-eyebrow{font-size:18px}.level-chip{font-size:22px}.quiz-meta{font-size:19px!important}}
+/* Keep three shelves in view on 1080p displays and 4K TVs using 2x CSS scaling. */
+@media(min-width:1500px) and (max-width:2499px) and (min-height:900px){
+ .screen{margin-top:12px}.panel{padding:22px}
+ .hero{padding-bottom:10px;margin-bottom:10px}.hero h2{font-size:clamp(32px,2.5vw,50px)}.hero-lead{font-size:clamp(14px,1vw,20px)}
+ .level-legend{margin:4px 0 8px;font-size:clamp(10px,.72vw,14px)}
+ .quiz-grid{gap:7px}.shelf-heading{margin-bottom:4px}.shelf-heading h3{font-size:clamp(20px,1.45vw,28px)}
+ .catalog-card{min-height:clamp(148px,15.2vh,168px)}.catalog-card strong{font-size:clamp(17px,1.2vw,23px)}.catalog-card small{font-size:clamp(11px,.72vw,14px)}
+}
+/* Retain large TV typography while trimming card and header whitespace at native 4K CSS size. */
+@media(min-width:2500px) and (min-height:1200px){
+ .screen{margin-top:22px}.panel{padding:40px}
+ .hero{padding-bottom:10px;margin-bottom:12px}.hero h2{font-size:72px}.hero-lead{font-size:24px}
+ .level-legend{margin:0 0 10px;font-size:20px}
+ .quiz-grid{gap:8px}.shelf-heading{margin-bottom:6px}.shelf-heading h3{font-size:42px}
+ .catalog-card{min-height:clamp(300px,15.5vh,340px);padding:28px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<h1>📺 TV QUIZ</h1><p class="sub">Настрой викторину, подключи игроков и начинай игру.</p><div id="status">Настрой параметры игры ниже.</div>
+<h1>📺 TV QUIZ</h1><p class="sub">Настрой викторину, подключи игроков и начинай игру.</p><div id="status" aria-live="polite"></div>
 <section class="screen panel" id="setup">
 <div id="catalogHome" class="catalog-step active">
-<h2>Выбери игровую категорию</h2>
-<p class="sub">Сначала выбираем направление. Внутри будут отдельные рубрики и режимы.</p>
-<div class="catalog-grid">
-<button class="catalog-card" data-category="Музыка"><span class="emoji">🎵</span><strong>Музыка</strong><small>Исполнители, группы, жанры и хиты</small></button>
-<button class="catalog-card" data-category="Кино"><span class="emoji">🎬</span><strong>Кино и сериалы</strong><small>Фильмы, актёры, режиссёры и вселенные</small></button>
-<button class="catalog-card" data-category="Автомобили"><span class="emoji">🏎️</span><strong>Автомобили</strong><small>Марки, модели, история и техника</small></button>
-<button class="catalog-card" data-category="География"><span class="emoji">🌍</span><strong>Путешествия и география</strong><small>Страны, города и удивительные места</small></button>
-<button class="catalog-card" data-category="Наука"><span class="emoji">🧪</span><strong>Наука и технологии</strong><small>Космос, открытия и изобретения</small></button>
-</div></div>
-<div id="catalogTopics" class="catalog-step">
-<button class="catalog-back" id="backCategories">← Все категории</button><h2 id="topicHeading">Рубрики</h2><p class="selection-label">Выбери конкретную рубрику</p><div class="topic-list" id="topicList"></div>
+<div class="hero"><div class="hero-copy"><div class="hero-kicker">TV QUIZ · ВЕЧЕР ИГР</div><h2>Вечер игр</h2><p class="hero-lead">Выбери квиз на большом экране, подключи друзей по QR-коду и играй с телефона.</p></div></div>
+<h3 class="section-title">Выбери тему и уровень</h3><p class="sub left">Листай тематические полки и выбери квиз для компании.</p>
+<div class="level-legend" aria-label="Уровни сложности"><span><i></i>Лёгкий</span><span><i></i>Средний</span><span><i></i>Сложный</span><span><i></i>Эксперт</span><span><i></i>Экстрим</span></div>
+<div class="quiz-grid" id="quizCatalog"></div>
 </div>
-<div id="catalogLevels" class="catalog-step">
-<button class="catalog-back" id="backTopics">← К рубрикам</button><h2 id="levelHeading">Уровень сложности</h2><p class="selection-label" id="selectedTopicLabel"></p>
-<div class="level-grid">
-<button class="level-card" data-level="Лёгкий">🟢 Новичок<small>Разогрев и базовые знания</small></button>
-<button class="level-card" data-level="Средний">🟡 Знаток<small>Понадобится вспомнить детали</small></button>
-<button class="level-card" data-level="Сложный">🔴 Эксперт<small>Для тех, кто реально в теме</small></button>
-</div></div>
 <div id="gameSettings" class="catalog-step">
-<button class="catalog-back" id="backLevels">← Сложность</button><h2>Настройки раунда</h2><p class="selection-label" id="finalSelection"></p>
+<button class="catalog-back" id="backCatalog">← К каталогу</button><h2>Настройки раунда</h2><p class="selection-label" id="finalSelection"></p>
 <div class="row"><div><div class="field-title">Количество вопросов</div><select id="questionCount"><option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option></select></div>
 <div><div class="field-title">Время на ответ</div><select id="timeLimit"><option value="10">10 секунд</option><option value="15" selected>15 секунд</option><option value="20">20 секунд</option><option value="30">30 секунд</option></select></div></div>
 <button class="primary" id="createRoom">Создать игровую комнату</button><p id="setupNote" class="sub"></p>
@@ -112,11 +185,85 @@ const topics={
  'География':['Страны и столицы','Города и природа'],
  'Наука':['Космос','Физика и изобретения']
 };
-const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪'};
+const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Мемасики':'😂'};
 function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
-document.querySelectorAll('[data-category]').forEach(btn=>btn.addEventListener('click',()=>{selectedCategory=btn.dataset.category;$('topicHeading').textContent=categoryEmoji[selectedCategory]+' '+(selectedCategory==='География'?'Путешествия и география':selectedCategory==='Наука'?'Наука и технологии':selectedCategory);$('topicList').innerHTML=topics[selectedCategory].map(t=>'<button class="topic-card" data-topic="'+safe(t)+'">'+safe(t)+'<small>Открыть рубрику →</small></button>').join('');document.querySelectorAll('[data-topic]').forEach(x=>x.addEventListener('click',()=>{selectedTopic=x.dataset.topic;$('levelHeading').textContent=selectedTopic;$('selectedTopicLabel').textContent='Категория: '+selectedCategory;showStep('catalogLevels')}));showStep('catalogTopics')}));
-$('backCategories').addEventListener('click',()=>showStep('catalogHome'));$('backTopics').addEventListener('click',()=>showStep('catalogTopics'));$('backLevels').addEventListener('click',()=>showStep('catalogLevels'));
-document.querySelectorAll('[data-level]').forEach(btn=>btn.addEventListener('click',()=>{selectedDifficulty=btn.dataset.level;$('finalSelection').textContent=categoryEmoji[selectedCategory]+' '+selectedCategory+' · '+selectedTopic+' · '+selectedDifficulty;$('setupNote').textContent='';showStep('gameSettings')}));
+const quizLevels=[
+ {label:'Лёгкий',legacy:'Лёгкий',color:'easy'},
+ {label:'Средний',legacy:'Средний',color:'medium'},
+ {label:'Сложный',legacy:'Сложный',color:'hard'},
+ {label:'Эксперт',legacy:null,color:'expert'},
+ {label:'Экстрим',legacy:null,color:'extreme'}
+];
+const topicDescriptions={
+ 'Музыкальные группы':'Группы и исполнители разных эпох','Исполнители и хиты':'Голоса, песни и музыкальные альбомы',
+ 'Культовые фильмы':'Герои, сцены и фильмы','Актёры и режиссёры':'Лица большого кино и авторы картин',
+ 'Марки и модели':'Автомобильные бренды и модели','Двигатели и техника':'Устройство автомобилей и инженерия',
+ 'Страны и столицы':'Страны и главные города','Города и природа':'Места и природные достопримечательности',
+ 'Космос':'Планеты, звёзды и открытия','Физика и изобретения':'Законы природы и изобретения'
+};
+const topicCovers={'Музыкальные группы':'music-groups','Исполнители и хиты':'music-hits','Культовые фильмы':'film-cinema','Актёры и режиссёры':'film-makers','Марки и модели':'auto-cars','Двигатели и техника':'auto-engine','Страны и столицы':'geo-globe','Города и природа':'geo-mountains','Космос':'science-space','Физика и изобретения':'science-atom'};
+const questionShelves=[
+ {name:'Музыка',icon:'♫',categories:['Музыка']},
+ {name:'Кино',icon:'▣',categories:['Кино']},
+ {name:'Эрудиция',icon:'✦',categories:['Автомобили','География','Наука']}
+].map(shelf=>({...shelf,items:shelf.categories.flatMap(category=>topics[category].map(topic=>({id:topicCovers[topic],category,topic,title:topic,desc:topicDescriptions[topic],cover:topicCovers[topic]})))}));
+// Reserved media asset shape: {type:'image'|'audio'|'video',src,startSeconds?,endSeconds?}.
+const mediaQuizPreview={id:'media-placeholder',category:'Мемасики',topic:'Мем-квизы',title:'Коллекция готовится',desc:'Появится после подготовки материалов',cover:'media-placeholder',media:{assets:[],segments:[]}};
+const shelves=[...questionShelves,{name:'Мемасики',icon:'◇',categories:['Мемасики'],items:[mediaQuizPreview]}];
+const quizzes=shelves.flatMap(shelf=>shelf.items);
+function artSvg(cover,suffix){
+ const art={
+  'music-groups':['#112e66','#f431a4','<path d="M0 228 Q95 168 190 222T380 212T560 198V300H0Z" fill="#090d25"/><circle cx="400" cy="152" r="112" fill="url(#disc)"/><circle cx="400" cy="152" r="81" fill="none" stroke="#d8e8ff" stroke-opacity=".65" stroke-width="3"/><circle cx="400" cy="152" r="48" fill="none" stroke="#d8e8ff" stroke-opacity=".45" stroke-width="2"/><circle cx="400" cy="152" r="21" fill="#ff5fc4"/><path d="M382 38Q408 15 435 40L474 110Q480 125 462 137L449 144L392 65Z" fill="#10192f" stroke="#9bdcf7" stroke-width="6"/><path d="M388 62L451 143M401 49L464 130M414 39L471 112" stroke="#fa5cae" stroke-width="5"/><path d="M0 54L89 35M29 92L106 69M84 127L142 101" stroke="#69ebff" stroke-width="5" stroke-linecap="round" opacity=".85"/>'],
+  'music-hits':['#41123d','#ff983c','<path d="M0 222Q125 173 250 220T560 195V300H0Z" fill="#210d2b"/><path d="M300 38Q318 26 338 39L360 59L346 177Q369 193 362 220Q352 250 315 244Q279 237 286 211Q290 190 316 183L325 81L293 101L291 75Z" fill="url(#silver)" stroke="#fff3da" stroke-width="5"/><path d="M310 91L342 86M307 112L339 107M305 133L336 128M302 154L333 149" stroke="#7f4773" stroke-width="4"/><path d="M0 25L100 120M560 25L460 120M70 0L143 116M492 0L420 112" stroke="#ffb75d" stroke-width="5" opacity=".8"/><circle cx="105" cy="62" r="31" fill="#ffc466" opacity=".88"/><circle cx="467" cy="71" r="38" fill="#ff4d83" opacity=".72"/><path d="M0 247L70 221L122 249L180 216L242 251L305 219L365 254L434 215L492 249L560 220V300H0Z" fill="#090b1b"/>'],
+  'film-cinema':['#28154c','#d93d77','<path d="M-15 31L574 15V72L-15 88ZM-15 225L574 208V265L-15 281Z" fill="#070b20" stroke="#d9d5ff" stroke-opacity=".7" stroke-width="5"/><g fill="#f7dff0" opacity=".75"><path d="M38 36h39v27H38zM128 34h39v27h-39zM218 31h39v27h-39zM308 29h39v27h-39zM398 26h39v27h-39zM488 23h39v27h-39zM38 232h39v27H38zM128 230h39v27h-39zM218 227h39v27h-39zM308 225h39v27h-39zM398 222h39v27h-39zM488 219h39v27h-39z</g><circle cx="315" cy="148" r="72" fill="url(#reel)" stroke="#ffd1ea" stroke-width="6"/><circle cx="315" cy="148" r="24" fill="#251234" stroke="#ffc1e1" stroke-width="5"/><circle cx="315" cy="98" r="10" fill="#140f27"/><circle cx="362" cy="132" r="10" fill="#140f27"/><circle cx="344" cy="191" r="10" fill="#140f27"/><circle cx="286" cy="190" r="10" fill="#140f27"/><circle cx="267" cy="130" r="10" fill="#140f27"/><path d="M78 174L151 110L210 174V223H78Z" fill="#172141" stroke="#8fa8ff" stroke-width="5"/><path d="M95 159L150 126L192 169" fill="none" stroke="#ffbd67" stroke-width="7"/>'],
+  'film-makers':['#17334a','#ff6b39','<path d="M300 61L492 61L533 120L341 120Z" fill="#101827" stroke="#e7f1ff" stroke-width="6"/><path d="M300 61L340 33L531 33L492 61M340 33L381 61M406 33L447 61M472 33L512 61" fill="#263c5e" stroke="#e7f1ff" stroke-width="5"/><path d="M0 0H560V34L320 162H0Z" fill="url(#beam)" opacity=".65"/><path d="M410 120V243M465 120V243M520 120V243" stroke="#dfebf9" stroke-width="7"/><path d="M384 245H550" stroke="#ffad56" stroke-width="9"/><circle cx="159" cy="132" r="74" fill="#142542" stroke="#7ddfff" stroke-width="5"/><path d="M105 165Q159 70 213 165V205H105Z" fill="#f0a45d"/><circle cx="159" cy="115" r="33" fill="#ffd3a1"/><path d="M128 119Q138 57 181 87Q196 101 191 125Q174 94 128 119Z" fill="#14203a"/><path d="M64 219H253" stroke="#ff7b51" stroke-width="8"/>'],
+  'auto-cars':['#25172c','#ff6c39','<path d="M63 184L91 119Q101 98 127 93L256 79Q278 77 297 96L346 148L432 160Q463 166 473 193L480 224H56Z" fill="url(#car)" stroke="#ffe2c2" stroke-width="5"/><path d="M119 119L145 101L245 92L273 99L315 147H98Z" fill="#15324c" stroke="#8eeaff" stroke-width="4"/><path d="M66 185H474" stroke="#ffb15f" stroke-width="8"/><circle cx="143" cy="218" r="34" fill="#0c1221" stroke="#dde7f4" stroke-width="7"/><circle cx="143" cy="218" r="12" fill="#ffb15f"/><circle cx="389" cy="218" r="34" fill="#0c1221" stroke="#dde7f4" stroke-width="7"/><circle cx="389" cy="218" r="12" fill="#ffb15f"/><path d="M35 252H525" stroke="#ff613d" stroke-width="4" opacity=".8"/>'],
+  'auto-engine':['#182e43','#5fc8ff','<path d="M340 80H425V113H460V191H425V219H339V193H301V111H340Z" fill="url(#steel)" stroke="#d8efff" stroke-width="6"/><path d="M360 80V45H412V80M370 47V25M402 47V25" stroke="#ffbd56" stroke-width="8"/><path d="M301 124H261V180H301M460 130H500V174H460" fill="none" stroke="#ff704c" stroke-width="11"/><circle cx="382" cy="151" r="43" fill="#101a2c" stroke="#9bd9f6" stroke-width="7"/><circle cx="382" cy="151" r="24" fill="none" stroke="#ffb64d" stroke-width="7"/><path d="M382 108V194M339 151H425M352 121L412 181M412 121L352 181" stroke="#88d9f4" stroke-width="5"/><path d="M68 242H489M103 222V260M457 222V260" stroke="#6de5ff" stroke-width="5"/>'],
+  'geo-globe':['#0c3151','#37d1c2','<circle cx="393" cy="150" r="109" fill="url(#ocean)" stroke="#d3fbff" stroke-width="5"/><path d="M335 63L373 47L410 61L418 87L449 98L457 128L430 142L418 172L393 182L384 213L350 220L332 193L306 177L315 150L297 125L309 95Z" fill="#52d7ad" stroke="#b9ffe4" stroke-width="3"/><path d="M393 42C344 93 344 208 393 258M393 42C442 93 442 208 393 258M287 150H499M304 99Q393 131 482 99M304 201Q393 169 482 201" fill="none" stroke="#d8fbff" stroke-opacity=".62" stroke-width="3"/><path d="M67 219L181 89L265 183L307 138" fill="none" stroke="#ffcf69" stroke-width="6" stroke-dasharray="10 12"/><circle cx="67" cy="219" r="9" fill="#ffcf69"/><circle cx="307" cy="138" r="9" fill="#ffcf69"/>'],
+  'geo-mountains':['#22456e','#ffbf68','<circle cx="405" cy="84" r="43" fill="#ffd47f"/><path d="M104 240L246 76L342 191L401 111L543 254Z" fill="#284c78" stroke="#bfe8ff" stroke-width="5"/><path d="M216 112L246 76L280 118L254 108L242 126Z" fill="#f3f5ff"/><path d="M365 160L401 111L438 153L410 142L395 161Z" fill="#f4f6ff"/><path d="M104 240L183 149L232 204L261 174L337 254H104Z" fill="#14707d"/><path d="M242 254Q330 217 407 254T560 250V300H0V261Q129 230 242 254Z" fill="#101f3b"/><path d="M248 300Q337 257 440 300" fill="none" stroke="#80e1d5" stroke-width="8"/>'],
+  'science-space':['#08172c','#7a7aff','<circle cx="393" cy="147" r="78" fill="url(#planet)" stroke="#bdc5ff" stroke-width="4"/><path d="M284 160Q392 68 506 135Q540 157 502 177Q391 121 283 196Q246 207 245 183Q247 169 284 160Z" fill="none" stroke="#f2a5ff" stroke-width="12"/><path d="M326 99Q381 68 436 91M324 188Q382 220 442 187" fill="none" stroke="#b6c7ff" stroke-width="6" opacity=".72"/><circle cx="167" cy="87" r="16" fill="#c6efff"/><circle cx="220" cy="231" r="7" fill="#ffd67a"/><circle cx="83" cy="150" r="9" fill="#a8baff"/><path d="M82 48V72M70 60H94M511 45V67M499 56H523" stroke="#e6ecff" stroke-width="4"/>'],
+  'science-atom':['#10244d','#56dfd4','<ellipse cx="393" cy="149" rx="122" ry="48" fill="none" stroke="#9be8ff" stroke-width="7" transform="rotate(-32 393 149)"/><ellipse cx="393" cy="149" rx="122" ry="48" fill="none" stroke="#ff8ad5" stroke-width="7" transform="rotate(32 393 149)"/><ellipse cx="393" cy="149" rx="122" ry="48" fill="none" stroke="#8fffd4" stroke-width="7"/><circle cx="393" cy="149" r="21" fill="#ffe17d"/><circle cx="289" cy="89" r="11" fill="#e9f7ff"/><circle cx="486" cy="203" r="11" fill="#e9f7ff"/><path d="M71 232H232M105 198V267M186 198V267" stroke="#a0d8ff" stroke-width="6"/><path d="M80 199L145 136L207 199" fill="none" stroke="#a0d8ff" stroke-width="6"/>'],
+  'media-placeholder':['#212d40','#8392a7','<rect x="311" y="59" width="180" height="134" rx="18" fill="#15243a" stroke="#a9bacf" stroke-width="5" transform="rotate(8 311 59)"/><rect x="344" y="95" width="170" height="124" rx="18" fill="#25354b" stroke="#d4deea" stroke-width="5" transform="rotate(-9 344 95)"/><path d="M374 148L412 124L452 165L480 146L505 188H362Z" fill="#65768c"/><circle cx="400" cy="128" r="13" fill="#c4cfdd"/><path d="M80 230H240M111 200V259M206 200V259" stroke="#8192a8" stroke-width="6"/>' ]
+ };
+ const [a,b,scene]=art[cover]||art['media-placeholder'],uid='art-'+cover+'-'+suffix;
+ const scopedScene=scene.replace(/url\(#([a-z]+)\)/g,(_,name)=>'url(#'+uid+'-'+name+')');
+ return '<svg viewBox="0 0 560 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><defs><linearGradient id="'+uid+'-bg" x2="1" y2="1"><stop stop-color="'+a+'"/><stop offset="1" stop-color="#07101e"/></linearGradient><linearGradient id="'+uid+'-disc" x2="1" y2="1"><stop stop-color="#6ff4ef"/><stop offset=".5" stop-color="'+b+'"/><stop offset="1" stop-color="#171641"/></linearGradient><linearGradient id="'+uid+'-silver" x2="1" y2="1"><stop stop-color="#fff1d0"/><stop offset=".48" stop-color="#c5d8ed"/><stop offset="1" stop-color="#687e9f"/></linearGradient><linearGradient id="'+uid+'-reel" x2="1" y2="1"><stop stop-color="#ffcb78"/><stop offset="1" stop-color="'+b+'"/></linearGradient><linearGradient id="'+uid+'-beam"><stop stop-color="'+b+'" stop-opacity=".8"/><stop offset="1" stop-color="'+b+'" stop-opacity="0"/></linearGradient><linearGradient id="'+uid+'-car" x2="0" y2="1"><stop stop-color="#ffd09b"/><stop offset=".5" stop-color="'+b+'"/><stop offset="1" stop-color="#9d293f"/></linearGradient><linearGradient id="'+uid+'-steel" x2="1" y2="1"><stop stop-color="#e8fbff"/><stop offset=".45" stop-color="#7194b5"/><stop offset="1" stop-color="#2d4562"/></linearGradient><radialGradient id="'+uid+'-ocean"><stop stop-color="#48e0cf"/><stop offset="1" stop-color="#17619a"/></radialGradient><radialGradient id="'+uid+'-planet" cx=".3" cy=".3"><stop stop-color="#edc4ff"/><stop offset=".55" stop-color="#9b70dc"/><stop offset="1" stop-color="#344a9e"/></radialGradient><radialGradient id="'+uid+'-glow"><stop stop-color="'+b+'" stop-opacity=".42"/><stop offset="1" stop-color="'+b+'" stop-opacity="0"/></radialGradient></defs><rect width="560" height="300" fill="url(#'+uid+'-bg)"/><ellipse cx="390" cy="150" rx="235" ry="175" fill="url(#'+uid+'-glow)"/><path d="M0 260Q135 218 250 264T560 242V300H0Z" fill="#070d19" opacity=".55"/>'+scopedScene+'<path d="M0 292H560" stroke="'+b+'" stroke-opacity=".65" stroke-width="4"/></svg>';
+}
+function readCatalogList(key){try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch(e){return []}}
+function quizCountLabel(count){const lastDigit=count%10,lastTwo=count%100,word=lastDigit===1&&lastTwo!==11?'квиз':lastDigit>=2&&lastDigit<=4&&(lastTwo<12||lastTwo>14)?'квиза':'квизов';return count+' '+word}
+function saveCatalogReturn(btn){try{localStorage.setItem('tvquiz.return-focus',btn.dataset.cardId);localStorage.setItem('tvquiz.return-y',String(window.scrollY));localStorage.setItem('tvquiz.return-x',JSON.stringify([...document.querySelectorAll('.shelf-track')].map(track=>track.scrollLeft)))}catch(e){}}
+function restoreCatalogReturn(){try{const cardId=localStorage.getItem('tvquiz.return-focus');if(!cardId)return;const positions=JSON.parse(localStorage.getItem('tvquiz.return-x')||'[]');requestAnimationFrame(()=>{document.querySelectorAll('.shelf-track').forEach((track,index)=>track.scrollLeft=positions[index]||0);window.scrollTo(0,Number(localStorage.getItem('tvquiz.return-y'))||0);document.querySelector('[data-card-id="'+CSS.escape(cardId)+'"]')?.focus({preventScroll:true})})}catch(e){}}
+function rememberCompletedQuiz(){const key=[selectedCategory,selectedTopic,selectedDifficulty].join('|');try{const done=readCatalogList('tvquiz.completed');if(!done.includes(key))done.push(key);localStorage.setItem('tvquiz.completed',JSON.stringify(done))}catch(e){}}
+function renderCatalog(){
+ const questions=window.QUIZ_QUESTIONS||[],done=readCatalogList('tvquiz.completed');
+ $('quizCatalog').innerHTML=shelves.map((shelf,index)=>'<section class="shelf" data-shelf="'+index+'" aria-label="'+safe(shelf.name)+'"><div class="shelf-heading"><h3><span aria-hidden="true">'+shelf.icon+'</span> '+safe(shelf.name)+'</h3><span>'+quizCountLabel(shelf.items.length)+'</span></div><div class="shelf-track">'+shelf.items.flatMap(q=>(q.media?[{label:'Скоро',legacy:null,color:'soon'}]:quizLevels).map(level=>{
+  const count=level.legacy?questions.filter(item=>item.category===q.category&&item.topic===q.topic&&item.difficulty===level.legacy).length:0;
+  const available=!q.media&&count>0,key=[q.category,q.topic,level.legacy||level.label].join('|'),completed=done.includes(key),cardId=q.category+'-'+q.topic+'-'+level.color;
+  const unavailableText=q.media?'Нет подготовленного контента':level.legacy?'Пока нет вопросов этого уровня':'Скоро · нет вопросов';
+  return '<button type="button" class="catalog-card quiz-card '+(available?'':'unavailable-card')+'" data-qi="'+quizzes.indexOf(q)+'" data-level-key="'+level.color+'" data-card-id="'+safe(cardId)+'" '+(available?'':'disabled aria-disabled="true"')+' aria-label="'+safe(q.title+', '+level.label+(available?', '+count+' вопросов':' — пока недоступен'))+'"><span class="level-chip" data-level="'+safe(level.label)+'">'+safe(level.label)+'</span><span class="card-copy"><span class="card-eyebrow">'+safe(q.category)+' · квиз</span><strong>'+safe(q.title)+(completed?' ✓':'')+'</strong><small>'+safe(q.desc)+'</small></span><span class="card-art">'+artSvg(q.cover,level.color)+'</span><span class="quiz-meta">'+(available?count+' вопросов'+(completed?' · пройден':''):unavailableText)+'</span></button>'
+ })).join('')+'</div></section>').join('');
+ document.querySelectorAll('[data-qi]:not(:disabled)').forEach(btn=>btn.addEventListener('click',()=>{
+  const q=quizzes[Number(btn.dataset.qi)],level=quizLevels.find(item=>item.color===btn.dataset.levelKey);
+  selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=level.legacy;
+  $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+level.label;
+  saveCatalogReturn(btn);showStep('gameSettings');$('createRoom').focus({preventScroll:true});
+ }));
+ restoreCatalogReturn();
+}
+document.querySelector('#catalogHome').addEventListener('keydown',event=>{
+ const current=event.target.closest('.catalog-card[data-qi]:not(:disabled)');
+ if(!current||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
+ const rows=[...document.querySelectorAll('.shelf')],row=current.closest('.shelf'),cards=[...row.querySelectorAll('.catalog-card[data-qi]:not(:disabled)')];
+ if(event.key==='ArrowLeft'||event.key==='ArrowRight'){
+  const next=cards[cards.indexOf(current)+(event.key==='ArrowRight'?1:-1)];if(next){event.preventDefault();next.focus();next.scrollIntoView({block:'nearest',inline:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}return;
+ }
+ const index=rows.indexOf(row),targetRow=rows[index+(event.key==='ArrowDown'?1:-1)];if(!targetRow)return;
+ const rect=current.getBoundingClientRect(),center=rect.left+rect.width/2;
+ const target=[...targetRow.querySelectorAll('.catalog-card[data-qi]:not(:disabled)')].sort((a,b)=>Math.abs(a.getBoundingClientRect().left+a.getBoundingClientRect().width/2-center)-Math.abs(b.getBoundingClientRect().left+b.getBoundingClientRect().width/2-center))[0];
+ if(target){event.preventDefault();target.focus();target.scrollIntoView({block:'nearest',inline:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
+});
+renderCatalog();
+$('backCatalog').addEventListener('click',()=>{showStep('catalogHome');restoreCatalogReturn()});
 let peer=null,config=null,deck=[],round=0,seconds=0,timer=null,revealTimeout=null,phase='setup',revealScheduled=false;
 const playerColors=['#ff6b6b','#4da3ff','#f6c453','#57d69a','#c084fc','#ff8c42','#48d1cc','#f472b6'];
 function send(c,d){try{if(c&&c.open)c.send(d)}catch(e){}}
@@ -193,6 +340,7 @@ function reveal(){
  revealTimeout=setTimeout(()=>{round++;$('answers').dataset.revealed='0';ask()},5500);
 }
 function finish(){
+ rememberCompletedQuiz();
  phase='results';clearInterval(timer);clearTimeout(revealTimeout);$('game').style.display='none';$('results').style.display='block';
  const sorted=roster().sort((a,b)=>b.score-a.score);$('finalScores').innerHTML=sorted.map((p,i)=>'<div class="player">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'🎮')+' '+safe(p.name)+'<small>'+p.score+' очков</small></div>').join('');
  broadcast({type:'game-over',players:sorted});
