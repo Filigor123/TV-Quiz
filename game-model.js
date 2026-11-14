@@ -108,11 +108,12 @@
   function toPlayerQuestion(question) {
     const q = normalizeQuestion(question);
     if (!q) return null;
-    if (q.media) {
-      const { src, file, objectUrl, ...publicMedia } = q.media;
-      q.media = publicMedia;
+    const { correct, correctValue, correctAnswer, acceptableAnswers, explanation, source, ...publicQuestion } = q;
+    if (publicQuestion.media) {
+      const { src, file, objectUrl, ...publicMedia } = publicQuestion.media;
+      publicQuestion.media = publicMedia;
     }
-    return q;
+    return publicQuestion;
   }
 
   window.QuizGameModel = Object.freeze({
