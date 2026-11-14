@@ -18,6 +18,9 @@ button.primary:disabled{opacity:.45;cursor:not-allowed}
 #players{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.player{background:#293957;border-radius:13px;padding:16px;font-size:21px;text-align:center}.player small{display:block;color:#b9c9df;font-size:14px;margin-top:6px}
 #game,#results,#lobby{display:none}.live-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;margin:16px 0 22px}.live-player{background:#152238;border:2px solid var(--player-color);border-radius:13px;padding:10px;text-align:center;min-width:0}.live-player .who{font-size:17px;font-weight:bold;overflow-wrap:anywhere}.live-player .points{font-size:22px;color:#ffe18a;margin:5px 0}.live-player .picked{font-size:13px;color:#d0dcf5;min-height:30px}.answer-votes{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:9px}.vote-chip{font-size:13px;padding:4px 7px;border-radius:8px;background:#111b2d;border:1px solid var(--player-color)}#explanation{display:none;margin:18px 0 4px;padding:16px;border-radius:14px;background:#142b39;border:1px solid #397c69;color:#d8ffed;font-size:18px;line-height:1.45}.question{font-size:clamp(27px,4vw,46px);text-align:center;line-height:1.25;margin:24px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:14px}.answer{padding:18px;background:#293957;border:2px solid #405273;border-radius:14px;text-align:center;font-size:clamp(19px,2.7vw,28px)}.answer.correct{border-color:#63d99b;background:#1c513f}.answer.wrong{opacity:.55}
 #timer{font-size:clamp(30px,5vw,54px);font-weight:bold;text-align:center;color:#ffda83}#roundInfo{text-align:center;color:#c6d4f4;font-size:18px}#scores{text-align:center;font-size:20px;line-height:1.8;margin-top:20px}
+.custom-round{margin-top:22px;padding:18px;border:1px solid #34496c;border-radius:16px;background:#142238}
+[hidden]{display:none!important}
+.custom-round h3{margin:0 0 8px}.custom-round p{color:#b9c9df}.custom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.custom-field label{display:block;margin:10px 0 6px;font-weight:bold;color:#dce7ff}.custom-field input,.custom-field select{width:100%;min-width:0;padding:11px;border:1px solid #52698f;border-radius:10px;background:#101a2d;color:#fff;font-size:16px}.custom-choice-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.custom-choice-fields input{width:100%;padding:11px;border:1px solid #52698f;border-radius:10px;background:#101a2d;color:#fff;font-size:16px}.custom-note{font-size:13px;color:#aebbd4!important}.host-media{max-width:min(100%,800px);margin:16px auto;display:grid;place-items:center}.host-media img,.host-media video{display:block;max-width:100%;max-height:55vh;border-radius:14px}.host-media audio{width:min(100%,650px)}.closest-answer{margin-top:10px;color:#d0dcf5}
 @media(max-width:600px){body{padding:14px}.answers{grid-template-columns:1fr}.option{font-size:15px}}
 
 /* New catalog navigation */
@@ -146,17 +149,52 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
  .catalog-card{min-height:clamp(300px,15.5vh,340px);padding:28px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+.audio-controls{width:min(100%,1740px);margin:10px auto 0;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;border:1px solid #34506b;border-radius:12px;background:#091a2bc9;color:#d5e5fa;font-size:14px}
+.audio-controls label{display:flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}.audio-controls input{width:18px;height:18px;margin:0;accent-color:#77b8ff}
+.audio-action{display:block;margin:10px auto 0;padding:10px 15px;border:1px solid #38527a;border-radius:11px;background:#172741;color:#dce7ff;font-size:16px;font-weight:bold;cursor:pointer}.audio-status{min-height:1.3em;margin:8px 0;color:#aabbd0;font-size:13px;text-align:center}
+@media(max-width:700px){.audio-controls{align-items:flex-start;flex-direction:column;gap:4px;padding:9px 11px}}
 </style>
 </head>
 <body>
 <h1>📺 TV QUIZ</h1><p class="sub">Настрой викторину, подключи игроков и начинай игру.</p><div id="status" aria-live="polite"></div>
 <section class="screen panel" id="setup">
+<div class="audio-controls" aria-label="Звук игры"><label><input id="effectsEnabled" type="checkbox" checked> Звуковые эффекты</label><label><input id="musicEnabled" type="checkbox"> Фоновая музыка</label></div>
 <div id="catalogHome" class="catalog-step active">
 <div class="hero"><div class="hero-copy"><div class="hero-kicker">TV QUIZ · ВЕЧЕР ИГР</div><h2>Вечер игр</h2><p class="hero-lead">Выбери квиз на большом экране, подключи друзей по QR-коду и играй с телефона.</p></div></div>
 <h3 class="section-title">Выбери тему и уровень</h3><p class="sub left">Листай тематические полки и выбери квиз для компании.</p>
 <div class="level-legend" aria-label="Уровни сложности"><span><i></i>Лёгкий</span><span><i></i>Средний</span><span><i></i>Сложный</span><span><i></i>Эксперт</span><span><i></i>Экстрим</span></div>
 <div class="quiz-grid" id="quizCatalog"></div>
+<button class="primary" id="customRoundOpen" type="button">Создать свой медиа-вопрос или «Кто ближе?»</button>
 </div>
+<div id="customRoundStep" class="catalog-step">
+<button class="catalog-back" id="backCustomRound" type="button">← К категориям</button>
+<section class="custom-round" aria-labelledby="customRoundTitle">
+<h2 id="customRoundTitle">Свой медиа-вопрос или «Кто ближе?»</h2>
+<p id="customStatus" class="custom-note" aria-live="polite">Файл загружается только в эту комнату и не отправляется в репозиторий. Для аудио и видео можно указать фрагмент.</p>
+<div class="custom-grid">
+ <div class="custom-field"><label for="customType">Тип раунда</label><select id="customType"><option value="image">Изображение</option><option value="audio">Аудио</option><option value="video">Видео</option><option value="closest">Кто ближе? — число или дата</option></select></div>
+ <div class="custom-field"><label for="customCategory">Категория</label><select id="customCategory"><option>Музыка</option><option>Кино</option><option>Мемы</option><option>Звуки</option><option>Эрудиция</option></select></div>
+ <div class="custom-field"><label for="customTime">Время на ответ</label><select id="customTime"><option value="10">10 секунд</option><option value="15" selected>15 секунд</option><option value="20">20 секунд</option><option value="30">30 секунд</option></select></div>
+</div>
+<div class="custom-field"><label for="customQuestion">Текст вопроса</label><input id="customQuestion" maxlength="240" placeholder="Например: Какой фильм звучит в этом фрагменте?"></div>
+<div id="customMediaFields" class="custom-grid">
+ <div class="custom-field"><label for="customFile">Файл изображения, аудио или видео</label><input id="customFile" type="file" accept="image/*,audio/*,video/*"></div>
+ <div class="custom-field"><label for="customStart">Начало фрагмента, сек.</label><input id="customStart" type="number" min="0" step="0.1" value="0"></div>
+ <div class="custom-field"><label for="customEnd">Конец фрагмента, сек. (необязательно)</label><input id="customEnd" type="number" min="0" step="0.1" placeholder="До конца файла"></div>
+</div>
+<div id="customChoiceFields" class="custom-choice-fields">
+ <input id="customAnswer0" maxlength="100" aria-label="Вариант ответа А" placeholder="Вариант А"><input id="customAnswer1" maxlength="100" aria-label="Вариант ответа Б" placeholder="Вариант Б"><input id="customAnswer2" maxlength="100" aria-label="Вариант ответа В" placeholder="Вариант В"><input id="customAnswer3" maxlength="100" aria-label="Вариант ответа Г" placeholder="Вариант Г">
+ <div class="custom-field"><label for="customCorrect">Правильный вариант</label><select id="customCorrect"><option value="0">А</option><option value="1">Б</option><option value="2">В</option><option value="3">Г</option></select></div>
+</div>
+<div id="customClosestFields" class="custom-grid" hidden>
+ <div class="custom-field"><label for="closestMode">Что вводят игроки</label><select id="closestMode"><option value="number">Число</option><option value="date">Дату</option></select></div>
+ <div class="custom-field"><label for="closestTarget">Правильное значение</label><input id="closestTarget" placeholder="Например: -12,5 или 1969-07-20"></div>
+ <div class="custom-field"><label for="closestUnit">Единица измерения (если нужна)</label><input id="closestUnit" maxlength="12" placeholder="км, кг, м"></div>
+</div>
+<button class="primary" id="createCustomRoom" type="button">Создать комнату с этим вопросом</button>
+</section>
+</div>
+
 <div id="gameSettings" class="catalog-step">
 <button class="catalog-back" id="backCatalog">← К каталогу</button><h2>Настройки раунда</h2><p class="selection-label" id="finalSelection"></p>
 <div class="row"><div><div class="field-title">Количество вопросов</div><select id="questionCount"><option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option></select></div>
@@ -169,15 +207,29 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
 <button class="primary" id="startGame" disabled>Ждём игроков</button>
 </section>
 <section class="screen panel" id="game">
-<div class="live-board" id="livePlayers"></div><div id="roundInfo"></div><div id="timer"></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div id="explanation"></div><div id="scores"></div>
+<div class="live-board" id="livePlayers"></div><div id="roundInfo"></div><div id="timer"></div><div id="hostMedia" class="host-media"></div><div class="question" id="question"></div><button class="audio-action" id="speakQuestionBtn" type="button">Прочитать вопрос</button><p id="speechStatus" class="audio-status" aria-live="polite"></p><div class="answers" id="answers"></div><div id="explanation"></div><div id="scores"></div>
 </section>
 <section class="screen panel" id="results"><h2>🏆 Итоги игры</h2><div id="finalScores" class="scores"></div><button class="primary" onclick="location.reload()">Новая игра</button></section>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="questions.js"></script>
+<script src="game-model.js"></script>
+<script src="audio.js"></script>
 <script src="slang-quiz.js"></script>
 <script>
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
+let currentQuestionText='';
+QuizAudio.setMusicEnabled(false);
+QuizAudio.setEffectsEnabled($('effectsEnabled').checked);
+$('effectsEnabled').addEventListener('change',event=>{QuizAudio.setEffectsEnabled(event.target.checked);if(event.target.checked)void QuizAudio.unlock()});
+$('musicEnabled').addEventListener('change',async event=>{const enabled=event.target.checked;QuizAudio.setMusicEnabled(enabled);if(enabled){await QuizAudio.unlock();void QuizAudio.startMusic()}else QuizAudio.stopMusic()});
+$('speakQuestionBtn').addEventListener('click',async()=>{
+ if(!currentQuestionText){$('speechStatus').textContent='Дождись появления вопроса.';return}
+ if(!QuizAudio.isSpeechSupported()){$('speechStatus').textContent='В этом браузере нет озвучки. Вопрос остаётся на экране.';return}
+ const questionText=currentQuestionText;await QuizAudio.unlock();if(questionText!==currentQuestionText)return;
+ $('speechStatus').textContent='Читаю вопрос…';const spoken=await QuizAudio.speakQuestion(questionText);if(questionText!==currentQuestionText)return;
+ $('speechStatus').textContent=spoken?'Озвучивание завершено.':'Не удалось озвучить. Вопрос остаётся на экране.';
+});
 let selectedCategory='',selectedTopic='',selectedDifficulty='';
 const topics={
  'Музыка':['Музыкальные группы','Исполнители и хиты'],
@@ -186,7 +238,7 @@ const topics={
  'География':['Страны и столицы','Города и природа'],
  'Наука':['Космос','Физика и изобретения']
 };
-const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Мемасики':'😂','Эрудиция':'✦'};
+const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Мемасики':'😂','Сленг':'💬'};
 function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
 const quizLevels=[
  {label:'Лёгкий',legacy:'Лёгкий',color:'easy'},
@@ -247,10 +299,10 @@ function renderCatalog(){
  })).join('')+'</div></section>').join('');
  document.querySelectorAll('[data-qi]:not(:disabled)').forEach(btn=>btn.addEventListener('click',()=>{
   const q=quizzes[Number(btn.dataset.qi)],level=quizLevels.find(item=>item.color===btn.dataset.levelKey);
-  selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=q.multiRound?'multi':level.legacy;
-  $('questionCount').previousElementSibling.textContent=q.multiRound?'Вопросов в каждом раунде':'Количество вопросов';
-  $('questionCount').innerHTML=q.multiRound?'<option value="5">5 на раунд · 15 всего</option><option value="10" selected>10 на раунд · 30 всего</option>':'<option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option>';
-  $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+(q.multiRound?'3 раунда':level.label);
+   selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=q.multiRound?'multi':level.legacy;
+   $('questionCount').previousElementSibling.textContent=q.multiRound?'Вопросов в каждом раунде':'Количество вопросов';
+   $('questionCount').innerHTML=q.multiRound?'<option value="5">5 на раунд · 15 всего</option><option value="10" selected>10 на раунд · 30 всего</option>':'<option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option>';
+   $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+(q.multiRound?'3 раунда':level.label);
   saveCatalogReturn(btn);showStep('gameSettings');$('createRoom').focus({preventScroll:true});
  }));
  restoreCatalogReturn();
@@ -269,6 +321,37 @@ document.querySelector('#catalogHome').addEventListener('keydown',event=>{
 });
 renderCatalog();
 $('backCatalog').addEventListener('click',()=>{showStep('catalogHome');restoreCatalogReturn()});
+$('customRoundOpen').addEventListener('click',()=>showStep('customRoundStep'));
+$('backCustomRound').addEventListener('click',()=>showStep('catalogHome'));
+
+const customType=$('customType');
+function updateCustomFields(){
+ const closest=customType.value==='closest';
+ $('customMediaFields').hidden=closest;$('customChoiceFields').hidden=closest;$('customClosestFields').hidden=!closest;
+ $('customFile').accept=customType.value==='image'?'image/*':customType.value==='audio'?'audio/*':'video/*';
+}
+customType.addEventListener('change',updateCustomFields);updateCustomFields();
+function createCustomDeck(){
+ const text=$('customQuestion').value.trim();
+ if(!text){$('customStatus').textContent='Добавь текст вопроса.';return false}
+ const category=$('customCategory').value,time=Number($('customTime').value);
+ let question;
+ if(customType.value==='closest'){
+  const answerMode=$('closestMode').value,correctValue=$('closestTarget').value.trim();let unit=$('closestUnit').value.trim();
+  if(answerMode==='number'&&!unit)unit=(correctValue.match(/[a-zа-яё]+$/i)||[''])[0];
+  if(answerMode==='date'?!QuizGameModel.parseDate(correctValue):QuizGameModel.parseQuantity(correctValue,unit)===null){$('customStatus').textContent=answerMode==='date'?'Укажи существующую дату в формате ГГГГ-ММ-ДД.':'Укажи правильное число и единицу измерения.';return false}
+  question={type:'closest',category,topic:'Пользовательский раунд',difficulty:'Любой',text,answerMode,correctValue,unit};
+ }else{
+  const file=$('customFile').files[0],kind=customType.value;
+  if(!file||!file.type.startsWith(kind+'/')){$('customStatus').textContent='Выбери файл типа «'+kind+'».';return false}
+  const start=Number($('customStart').value||0),end=$('customEnd').value===''?null:Number($('customEnd').value);
+  if(start<0||!Number.isFinite(start)||(end!==null&&(!Number.isFinite(end)||end<=start))){$('customStatus').textContent='Проверь границы фрагмента: конец должен быть позже начала.';return false}
+  const answers=[0,1,2,3].map(i=>$('customAnswer'+i).value.trim());
+  if(answers.some(answer=>!answer)){$('customStatus').textContent='Заполни все четыре варианта ответа.';return false}
+  question={type:'media-choice',category,topic:'Медиа-раунд',difficulty:'Любой',text,answers,correct:Number($('customCorrect').value),media:{type:kind,src:URL.createObjectURL(file),fileName:file.name,start,end}};
+ }
+ deck=[QuizGameModel.normalizeQuestion(question)];config={time,count:1,category,difficulty:'Любой'};$('customStatus').textContent='';return true;
+}
 let peer=null,config=null,deck=[],round=0,seconds=0,timer=null,revealTimeout=null,phase='setup',revealScheduled=false;
 const playerColors=['#ff6b6b','#4da3ff','#f6c453','#57d69a','#c084fc','#ff8c42','#48d1cc','#f472b6'];
 function send(c,d){try{if(c&&c.open)c.send(d)}catch(e){}}
@@ -286,20 +369,29 @@ function makeDeck(){
   deck=rounds.flatMap((item,roundIndex)=>item.questions.slice(0,perRound).map((q,index)=>{
    const question={...q,type:item.type,category:window.QUIZ_SLENG.category,topic:window.QUIZ_SLENG.topic,difficulty:item.title,roundTitle:item.title,roundIndex,roundQuestionNumber:index+1};
    if(question.answers){const choices=question.answers.map((answer,originalIndex)=>({answer,correct:originalIndex===question.correct}));for(let i=choices.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[choices[i],choices[j]]=[choices[j],choices[i]]}question.answers=choices.map(choice=>choice.answer);question.correct=choices.findIndex(choice=>choice.correct)}
-   return question;
+   return QuizGameModel.normalizeQuestion(question);
   }));
   config={time:Number($('timeLimit').value),count:deck.length,perRound,category:window.QUIZ_SLENG.title,difficulty:'3 раунда'};$('setupNote').textContent='Свободный ответ засчитывается по заранее подготовленным вариантам. За каждый верный ответ — 1 очко.';return true;
  }
  const pool=(window.QUIZ_QUESTIONS||[]).filter(q=>q.category===selectedCategory&&q.topic===selectedTopic&&q.difficulty===selectedDifficulty);
  if(!pool.length){$('setupNote').textContent='Для этой рубрики и сложности пока нет вопросов. Выбери другой уровень.';return false}
  pool.sort(()=>Math.random()-.5);const requested=Number($('questionCount').value),count=Math.min(requested,pool.length);
- deck=pool.slice(0,count);config={time:Number($('timeLimit').value),count,category:selectedCategory+' / '+selectedTopic,difficulty:selectedDifficulty};
+ deck=pool.slice(0,count).map(QuizGameModel.normalizeQuestion);config={time:Number($('timeLimit').value),count,category:selectedCategory+' / '+selectedTopic,difficulty:selectedDifficulty};
  $('setupNote').textContent=count<requested?'В этой рубрике доступно '+count+' вопрос(а). Запускаем все доступные вопросы.':'';
  return true;
 }
+
 function createRoom(){
  if(!makeDeck())return;
+ openRoom();
+}
+function createCustomRoom(){
+ if(!createCustomDeck())return;
+ openRoom();
+}
+function openRoom(){
  $('setup').style.display='none';$('lobby').style.display='block';phase='lobby';$('status').textContent='Создаём игровую комнату…';
+ void QuizAudio.unlock();if(QuizAudio.getSettings().music)void QuizAudio.startMusic();
  if(!window.Peer){$('status').textContent='Не загрузилась библиотека связи. Обнови страницу.';return}
  peer=new Peer();
  peer.on('open',id=>{
@@ -315,14 +407,20 @@ function handleConnection(conn){
   if(!data||!data.type)return;
   if(data.type==='join'){
    players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),color:playerColors[players.size%playerColors.length],ready:false,score:0,answer:null});
-   send(conn,{type:'state',players:publicRoster(),gameStarted:phase==='game'});updateLobby();broadcast({type:'players',players:publicRoster()});
+   const state={type:'state',players:publicRoster(),gameStarted:phase==='game'};
+   if(phase==='game'&&deck[round])state.question={question:QuizGameModel.toPlayerQuestion(deck[round]),round:round+1,total:deck.length,time:seconds||config.time};
+   send(conn,state);updateLobby();broadcast({type:'players',players:publicRoster()});
   }
   if(data.type==='ready'&&players.has(conn.peer)){players.get(conn.peer).ready=!!data.ready;updateLobby();broadcast({type:'players',players:publicRoster()})}
   if(data.type==='answer'&&phase==='game'&&players.has(conn.peer)){
-   const p=players.get(conn.peer),q=deck[round];if(p.answer===null&&!revealScheduled&&q){
-    const valid=q.type==='free-text'?typeof data.answer==='string'&&data.answer.trim().length>0&&data.answer.length<=120:Number.isInteger(data.answer)&&data.answer>=0&&data.answer<(q.answers||[]).length;
-    if(valid){p.answer=q.type==='free-text'?data.answer.trim():data.answer;renderLivePlayers();if(roster().length&&roster().every(x=>x.answer!==null)){revealScheduled=true;clearInterval(timer);$('timer').textContent='Ответы приняты';revealTimeout=setTimeout(reveal,2500)}}
-   }
+    const p=players.get(conn.peer),q=deck[round];if(p.answer===null&&!revealScheduled&&q){
+     const valid=q.type==='closest'
+      ? typeof data.value==='string'&&data.value.length<=40
+      : q.type==='free-text'
+       ? typeof data.answer==='string'&&data.answer.trim().length>0&&data.answer.length<=120
+       : Number.isInteger(data.answer)&&data.answer>=0&&data.answer<(q.answers||[]).length;
+     if(valid){p.answer=q.type==='closest'?{value:String(data.value??'').trim(),unit:String(data.unit||'')}:q.type==='free-text'?data.answer.trim():data.answer;renderLivePlayers();broadcast({type:'players',players:publicRoster()});if(q.type!=='closest'&&roster().length&&roster().every(x=>x.answer!==null)){revealScheduled=true;clearInterval(timer);$('timer').textContent='Ответы приняты';revealTimeout=setTimeout(reveal,2500)}}
+    }
   }
  });
  conn.on('close',()=>{connections.delete(conn);players.delete(conn.peer);updateLobby();broadcast({type:'players',players:publicRoster()})});
@@ -330,42 +428,66 @@ function handleConnection(conn){
 }
 function renderLivePlayers(){
  const q=deck[round],revealed=$('answers').dataset.revealed==='1';
- $('livePlayers').innerHTML=roster().map(p=>{const answer=p.answer===null?'Думает…':revealed?'Ответ: '+safe(q?.type==='free-text'?p.answer:q?.answers?.[p.answer]||'')+(p.isCorrect?' ✅':' ❌'):'Ответ принят';return '<div class="live-player" style="--player-color:'+p.color+'"><div class="who">'+safe(p.avatar)+' '+safe(p.name)+'</div><div class="points">'+p.score+' очк.</div><div class="picked">'+answer+'</div></div>'}).join('');
+  $('livePlayers').innerHTML=roster().map(p=>{let picked='Думает…';if(p.answer!==null){if(q?.type==='closest')picked=revealed?'Ответ: '+safe(p.answer.value)+(p.answer.unit||q.unit?' '+safe(p.answer.unit||q.unit):''):'Ответ принят';else if(q?.type==='free-text')picked=revealed?'Ответ: '+safe(p.answer):'Ответ принят';else picked='Ответ: '+String.fromCharCode(1040+p.answer)+'. '+safe(q?.answers[p.answer]||'')}return '<div class="live-player" style="--player-color:'+p.color+'"><div class="who">'+safe(p.avatar)+' '+safe(p.name)+'</div><div class="points">'+p.score+' очк.</div><div class="picked">'+picked+'</div></div>'}).join('');
  $('scores').textContent='Ответили: '+roster().filter(p=>p.answer!==null).length+' из '+roster().length;
+ $('answers').querySelectorAll('.answer').forEach((el,i)=>{const voters=roster().filter(p=>p.answer===i);const holder=el.querySelector('.answer-votes');if(holder)holder.innerHTML=voters.map(p=>'<span class="vote-chip" style="--player-color:'+p.color+'">'+safe(p.avatar)+' '+safe(p.name)+'</span>').join('')});
 }
 function start(){
  if(!roster().length||!roster().every(p=>p.ready))return;
+ void QuizAudio.unlock();QuizAudio.playStart();if(QuizAudio.getSettings().music)void QuizAudio.startMusic();
  $('lobby').style.display='none';$('game').style.display='block';phase='game';roster().forEach(p=>{p.score=0;p.answer=null});round=0;ask();
 }
 function ask(){
+ QuizAudio.stopSpeech();$('speechStatus').textContent='';
  revealScheduled=false;clearTimeout(revealTimeout);$('explanation').style.display='none';
  if(round>=deck.length){finish();return}
  const q=deck[round];roster().forEach(p=>p.answer=null);seconds=config.time;
- $('roundInfo').textContent=(q.roundTitle?q.roundTitle+' · вопрос '+q.roundQuestionNumber+' из '+config.perRound+' · ':'Вопрос '+(round+1)+' из '+deck.length+' · ')+q.category+' · '+q.difficulty;
- $('question').textContent=q.text;$('answers').innerHTML=(q.answers||[]).map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'</div>').join('');
+ currentQuestionText=q.text||'';QuizAudio.playQuestion();
+ $('answers').dataset.revealed='0';$('hostMedia').replaceChildren();
+  $('roundInfo').textContent=(q.roundTitle?q.roundTitle+' · вопрос '+q.roundQuestionNumber+' из '+config.perRound+' · ':q.type==='closest'?'Кто ближе? · ':'Вопрос '+(round+1)+' из '+deck.length+' · ')+q.category+' · '+q.difficulty;
+ $('question').textContent=q.text;
+ if(q.type==='closest')$('answers').innerHTML='<div class="answer">Ответы будут показаны после таймера</div>';
+  else $('answers').innerHTML=(q.answers||[]).map((a,i)=>'<div class="answer">'+String.fromCharCode(1040+i)+'. '+safe(a)+'<div class="answer-votes"></div></div>').join('');
+ if(q.media?.src){
+  const media=document.createElement(q.media.type==='image'?'img':q.media.type==='video'?'video':'audio');media.src=q.media.src;media.alt=q.media.type==='image'?'Изображение к вопросу':'';
+  if(q.media.type!=='image'){media.controls=true;media.preload='metadata';media.addEventListener('loadedmetadata',()=>{media.currentTime=Math.min(q.media.start||0,media.duration||0);if(q.media.end!==null&&q.media.end<media.duration)media.addEventListener('timeupdate',()=>{if(media.currentTime<q.media.start)media.currentTime=q.media.start;if(media.currentTime>=q.media.end){media.pause();media.currentTime=q.media.start}})},{once:true});if(q.media.type==='video')media.playsInline=true}
+  $('hostMedia').append(media);
+ }
  $('scores').textContent='Ответили: 0 из '+roster().length;$('timer').textContent=seconds+' сек.';renderLivePlayers();
- const {correct,correctAnswer,acceptableAnswers,explanation,source,...publicQuestionData}=q;
- broadcast({type:'question',question:publicQuestionData,round:round+1,total:deck.length,time:config.time});
+ broadcast({type:'question',question:QuizGameModel.toPlayerQuestion(q),round:round+1,total:deck.length,time:config.time});
  clearInterval(timer);timer=setInterval(()=>{seconds--;$('timer').textContent=seconds+' сек.';if(seconds<=0)reveal()},1000);
 }
 function reveal(){
  if(phase!=='game'||$('answers').dataset.revealed==='1')return;
+ QuizAudio.stopSpeech();QuizAudio.playReveal();
  $('answers').dataset.revealed='1';clearInterval(timer);clearTimeout(revealTimeout);const q=deck[round];
- const isCorrect=p=>q.type==='free-text'?window.QUIZ_SLENG.isFreeTextCorrect(q,p.answer):p.answer===q.correct;
- roster().forEach(p=>{p.isCorrect=isCorrect(p);if(p.isCorrect)p.score+=1});
- [...$('answers').children].forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else el.classList.add('wrong')});
- const answerText=q.type==='free-text'?q.correctAnswer:q.answers[q.correct];
- $('timer').textContent='Правильный ответ: '+answerText;
- $('explanation').textContent=q.explanation||'Правильный ответ: '+answerText;$('explanation').style.display='block';renderLivePlayers();
- connections.forEach(conn=>send(conn,{type:'reveal',typeOfQuestion:q.type,correct:q.correct,answerText,explanation:q.explanation||'',isCorrect:players.get(conn.peer)?.isCorrect===true,players:publicRoster()}));
+ let revealData;
+ if(q.type==='closest'){
+  const winners=QuizGameModel.closestWinners(q,roster());roster().forEach(p=>{if(winners.includes(p.id))p.score+=1});
+  const target=q.answerMode==='date'?q.correctValue:q.correctValue+(q.unit?' '+q.unit:'');
+  $('answers').innerHTML='<div class="answer">Правильное значение: '+safe(target)+'</div>';
+  $('timer').textContent='Ближе всех: '+(winners.length?roster().filter(p=>winners.includes(p.id)).map(p=>safe(p.name)).join(', '):'нет верных ответов');
+  revealData={type:'reveal',closest:true,target,winners,players:publicRoster()};
+ }else{
+   const isCorrect=p=>q.type==='free-text'?window.QUIZ_SLENG.isFreeTextCorrect(q,p.answer):p.answer===q.correct;
+   roster().forEach(p=>{p.isCorrect=isCorrect(p);if(p.isCorrect)p.score+=1});
+  [...$('answers').children].forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else el.classList.add('wrong')});
+   const answerText=q.type==='free-text'?q.correctAnswer:q.answers[q.correct];
+   $('timer').textContent='Правильный ответ: '+answerText;
+   revealData={type:'reveal',freeText:q.type==='free-text',correct:q.correct,answerText,explanation:q.explanation||'',players:publicRoster()};
+ }
+ const activeMedia=$('hostMedia').querySelector('audio,video');if(activeMedia)activeMedia.pause();
+  $('explanation').textContent=q.explanation||(q.type==='closest'?'Минимальное абсолютное отклонение получает 1 очко; при ничьей очко получают все лидеры.':'Правильный ответ: '+(q.type==='free-text'?q.correctAnswer:q.answers[q.correct]));$('explanation').style.display='block';renderLivePlayers();
+  connections.forEach(conn=>{const payload={...revealData};if(revealData.freeText)payload.isCorrect=players.get(conn.peer)?.isCorrect===true;send(conn,payload)});
  revealTimeout=setTimeout(()=>{round++;$('answers').dataset.revealed='0';ask()},5500);
 }
 function finish(){
+ QuizAudio.stopSpeech();QuizAudio.stopMusic();QuizAudio.playResults();
  rememberCompletedQuiz();
  phase='results';clearInterval(timer);clearTimeout(revealTimeout);$('game').style.display='none';$('results').style.display='block';
  const sorted=roster().sort((a,b)=>b.score-a.score);$('finalScores').innerHTML=sorted.map((p,i)=>'<div class="player">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'🎮')+' '+safe(p.name)+'<small>'+p.score+' очков</small></div>').join('');
- broadcast({type:'game-over',players:sorted});
+ broadcast({type:'game-over',players:sorted.map(({answer,...player})=>player)});
 }
-$('createRoom').addEventListener('click',createRoom);$('startGame').addEventListener('click',start);
+$('createRoom').addEventListener('click',createRoom);$('createCustomRoom').addEventListener('click',createCustomRoom);$('startGame').addEventListener('click',start);
 </script>
 </body></html>
