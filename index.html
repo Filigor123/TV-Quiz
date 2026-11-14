@@ -129,6 +129,22 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
 @media(max-width:700px){body{padding:16px 13px 36px}h1{font-size:31px}.screen{width:100%}.panel{padding:15px}.hero h2{font-size:34px}.hero-lead{font-size:14px}.level-legend{justify-content:flex-start;gap:8px 12px;margin:10px 0}.shelf-heading h3{font-size:21px}.catalog-card{flex-basis:82vw;min-height:190px;padding:16px}.card-copy{width:80%}.card-art{width:82%}}
 @media(max-height:800px) and (min-width:1101px){.catalog-card{min-height:clamp(138px,16.5vh,180px)}.quiz-grid{gap:7px}.shelf-track{padding-bottom:5px}}
 @media(min-width:2500px){h1{font-size:76px}body>.sub{font-size:27px}.screen{margin-top:34px}.panel{padding:52px}.hero h2{font-size:82px}.hero-lead{font-size:28px}.section-title{font-size:44px}.sub.left{font-size:23px}.level-legend{font-size:22px}.shelf-heading h3{font-size:48px}.catalog-card{min-height:390px;padding:36px}.catalog-card strong{font-size:46px}.catalog-card small{font-size:26px}.card-eyebrow{font-size:18px}.level-chip{font-size:22px}.quiz-meta{font-size:19px!important}}
+/* Keep three shelves in view on 1080p displays and 4K TVs using 2x CSS scaling. */
+@media(min-width:1500px) and (max-width:2499px) and (min-height:900px){
+ .screen{margin-top:12px}.panel{padding:22px}
+ .hero{padding-bottom:10px;margin-bottom:10px}.hero h2{font-size:clamp(32px,2.5vw,50px)}.hero-lead{font-size:clamp(14px,1vw,20px)}
+ .level-legend{margin:4px 0 8px;font-size:clamp(10px,.72vw,14px)}
+ .quiz-grid{gap:7px}.shelf-heading{margin-bottom:4px}.shelf-heading h3{font-size:clamp(20px,1.45vw,28px)}
+ .catalog-card{min-height:clamp(148px,15.2vh,168px)}.catalog-card strong{font-size:clamp(17px,1.2vw,23px)}.catalog-card small{font-size:clamp(11px,.72vw,14px)}
+}
+/* Retain large TV typography while trimming card and header whitespace at native 4K CSS size. */
+@media(min-width:2500px) and (min-height:1200px){
+ .screen{margin-top:22px}.panel{padding:40px}
+ .hero{padding-bottom:10px;margin-bottom:12px}.hero h2{font-size:72px}.hero-lead{font-size:24px}
+ .level-legend{margin:0 0 10px;font-size:20px}
+ .quiz-grid{gap:8px}.shelf-heading{margin-bottom:6px}.shelf-heading h3{font-size:42px}
+ .catalog-card{min-height:clamp(300px,15.5vh,340px);padding:28px}
+}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
 </head>
