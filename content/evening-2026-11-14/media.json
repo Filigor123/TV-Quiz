@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "preparedAt": "2026-11-14",
+  "ready": [
+    {
+      "id": "eve-20261114-v1",
+      "category": "Наука",
+      "topic": "Логика и числа",
+      "difficulty": "Средний",
+      "type": "image",
+      "prompt": "Сколько квадратов всех размеров образовано белыми линиями?",
+      "answer": "5",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "9"
+      ],
+      "correct": 1,
+      "acceptedAnswers": [
+        "5"
+      ],
+      "explanation": "Четыре маленьких квадрата и один большой: 4 + 1 = 5.",
+      "alt": "Сетка два на два.",
+      "status": "file_prepared",
+      "editorialStatus": "math_checked_svg_rendered",
+      "sourcePage": "original: procedural SVG and exact mathematical construction",
+      "rightsStatus": "Original procedural diagram created for TV Quiz; no third-party imagery",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/evening-20261114-v1.svg",
+        "startSeconds": 0
+      },
+      "roundSuggestion": 1,
+      "bytes": 361,
+      "sha256": "18e614265a8eb8169c715925b7af84cf9875558b6159a7a1145a9607556d5ea6"
+    },
+    {
+      "id": "eve-20261114-v2",
+      "category": "Наука",
+      "topic": "Логика и числа",
+      "difficulty": "Средний",
+      "type": "image",
+      "prompt": "Сколько треугольников всех размеров образовано белыми отрезками?",
+      "answer": "5",
+      "options": [
+        "4",
+        "6",
+        "5",
+        "8"
+      ],
+      "correct": 2,
+      "acceptedAnswers": [
+        "5"
+      ],
+      "explanation": "Три маленьких угловых, один перевёрнутый центральный и один большой: всего пять.",
+      "alt": "Большой треугольник, стороны которого соединены по серединам.",
+      "status": "file_prepared",
+      "editorialStatus": "math_checked_svg_rendered",
+      "sourcePage": "original: procedural SVG and exact mathematical construction",
+      "rightsStatus": "Original procedural diagram created for TV Quiz; no third-party imagery",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/evening-20261114-v2.svg",
+        "startSeconds": 0
+      },
+      "roundSuggestion": 1,
+      "bytes": 288,
+      "sha256": "7c53377b1faf14a6b3520ef594432267b2b0b8eb47262e1f13cafc5be043aa5f"
+    },
+    {
+      "id": "eve-20261114-v3",
+      "category": "Наука",
+      "topic": "Логика и числа",
+      "difficulty": "Лёгкий",
+      "type": "image",
+      "prompt": "Какая доля круга закрашена голубым?",
+      "answer": "3/8",
+      "options": [
+        "1/4",
+        "3/4",
+        "5/8",
+        "3/8"
+      ],
+      "correct": 3,
+      "acceptedAnswers": [
+        "3/8"
+      ],
+      "explanation": "Круг разделён на восемь равных секторов, три закрашены: 3/8.",
+      "alt": "Круг из восьми равных секторов; три соседних сектора голубые.",
+      "status": "file_prepared",
+      "editorialStatus": "math_checked_svg_rendered",
+      "sourcePage": "original: procedural SVG and exact mathematical construction",
+      "rightsStatus": "Original procedural diagram created for TV Quiz; no third-party imagery",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/evening-20261114-v3.svg",
+        "startSeconds": 0
+      },
+      "roundSuggestion": 1,
+      "bytes": 1011,
+      "sha256": "36a868ee1226fa014558cfd8b60075c18a80be7b28101b5b6cf50f3d7f62f8cb"
+    },
+    {
+      "id": "eve-20261114-v4",
+      "category": "Наука",
+      "topic": "Логика и числа",
+      "difficulty": "Лёгкий",
+      "type": "image",
+      "prompt": "Чему равен меньший угол между стрелками на циферблате?",
+      "answer": "90°",
+      "options": [
+        "90°",
+        "60°",
+        "120°",
+        "180°"
+      ],
+      "correct": 0,
+      "acceptedAnswers": [
+        "90°"
+      ],
+      "explanation": "Одна стрелка направлена на 12, другая — на 3: четверть полного круга, 90°.",
+      "alt": "Циферблат со стрелками на 12 и 3.",
+      "status": "file_prepared",
+      "editorialStatus": "math_checked_svg_rendered",
+      "sourcePage": "original: procedural SVG and exact mathematical construction",
+      "rightsStatus": "Original procedural diagram created for TV Quiz; no third-party imagery",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/evening-20261114-v4.svg",
+        "startSeconds": 0
+      },
+      "roundSuggestion": 1,
+      "bytes": 1127,
+      "sha256": "eb1425e9daa4ecbd8714b055ff232e34624960a82931a3832995a3c7993c8f3d"
+    },
+    {
+      "id": "eve-20261114-v5",
+      "category": "Наука",
+      "topic": "Логика и числа",
+      "difficulty": "Сложный",
+      "type": "image",
+      "prompt": "Сколько кратчайших путей из A в B по линиям сетки, если двигаться можно только вправо и вниз?",
+      "answer": "20",
+      "options": [
+        "9",
+        "20",
+        "18",
+        "24"
+      ],
+      "correct": 1,
+      "acceptedAnswers": [
+        "20"
+      ],
+      "explanation": "Нужно сделать три шага вправо и три вниз. Выбираем места трёх шагов вправо среди шести: C(6,3) = 20.",
+      "alt": "Сетка три на три; A — верхняя левая вершина, B — нижняя правая.",
+      "status": "file_prepared",
+      "editorialStatus": "math_checked_svg_rendered",
+      "sourcePage": "original: procedural SVG and exact mathematical construction",
+      "rightsStatus": "Original procedural diagram created for TV Quiz; no third-party imagery",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/evening-20261114-v5.svg",
+        "startSeconds": 0
+      },
+      "roundSuggestion": 1,
+      "bytes": 642,
+      "sha256": "67326fd9e110bb4127d9f14ed7b52476bb9cc0ef931e8c34b0a350dea8eed2ba"
+    },
+    {
+      "id": "eve-20261114-v6",
+      "category": "Наука",
+      "topic": "Логика и числа",
+      "difficulty": "Средний",
+      "type": "image",
+      "prompt": "Из пяти одинаковых квадратов со стороной 1 составлена фигура. Чему равен её внешний периметр?",
+      "answer": "12",
+      "options": [
+        "10",
+        "14",
+        "12",
+        "16"
+      ],
+      "correct": 2,
+      "acceptedAnswers": [
+        "12"
+      ],
+      "explanation": "Пять квадратов имеют суммарно 20 сторон. Четыре общие стороны вычитаются дважды: 20 − 8 = 12.",
+      "alt": "Г-образная фигура: три квадрата вертикально и три горизонтально, угловой квадрат общий.",
+      "status": "file_prepared",
+      "editorialStatus": "math_checked_svg_rendered",
+      "sourcePage": "original: procedural SVG and exact mathematical construction",
+      "rightsStatus": "Original procedural diagram created for TV Quiz; no third-party imagery",
+      "media": {
+        "type": "image",
+        "src": "assets/quiz-media/evening-20261114-v6.svg",
+        "startSeconds": 0
+      },
+      "roundSuggestion": 1,
+      "bytes": 345,
+      "sha256": "bea70c30af089de8f3ef2b5f9ede9589f41ec11b7f8d8e327751ce758bd4f263"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "eve-20261114-c1",
+      "title": "Они за спички удавятся. Кин-дза-дза!",
+      "answer": "Кин-дза-дза!",
+      "sourcePage": "https://rutube.ru/video/20fb6a8fb5dfa443870070a6c600bf84/",
+      "sourceCheck": "indexed_official_publisher_clip",
+      "sourceDurationSeconds": 33,
+      "options": [
+        "Кин-дза-дза!",
+        "Афоня",
+        "Мимино",
+        "Осенний марафон"
+      ],
+      "cutNotes": "Найти 6–10 секунд диалога без титров; сцена узнаваема по героям и упоминанию спичек. Точные границы выбрать после скачивания и просмотра.",
+      "category": "Кино",
+      "status": "source_only",
+      "media": null,
+      "sourceStartSeconds": null,
+      "sourceEndSeconds": null,
+      "targetDurationSeconds": {
+        "min": 6,
+        "max": 10
+      },
+      "rightsStatus": "not_reviewed",
+      "editorialStatus": "not_viewed_or_listened",
+      "prompt": "Из какого фильма эта сцена?",
+      "acceptedAnswers": [
+        "Кин-дза-дза!"
+      ]
+    },
+    {
+      "id": "eve-20261114-c2",
+      "title": "Афоня",
+      "answer": "Афоня",
+      "sourcePage": "https://www.mosfilm.ru/cinema/films/afonya/",
+      "sourceCheck": "official_film_page_opened",
+      "sourceDurationSeconds": null,
+      "options": [
+        "Афоня",
+        "Гараж",
+        "Мимино",
+        "Служебный роман"
+      ],
+      "cutNotes": "Выбрать немой кадр или короткую сцену с Афанасием Борщовым; 6–10 секунд без названия и субтитров. Плееры есть на официальной странице; прямой скачиваемый URL ещё не извлечён.",
+      "category": "Кино",
+      "status": "source_only",
+      "media": null,
+      "sourceStartSeconds": null,
+      "sourceEndSeconds": null,
+      "targetDurationSeconds": {
+        "min": 6,
+        "max": 10
+      },
+      "rightsStatus": "not_reviewed",
+      "editorialStatus": "not_viewed_or_listened",
+      "prompt": "Из какого фильма эта сцена?",
+      "acceptedAnswers": [
+        "Афоня"
+      ]
+    },
+    {
+      "id": "eve-20261114-c3",
+      "title": "Осенний марафон",
+      "answer": "Осенний марафон",
+      "sourcePage": "https://www.mosfilm.ru/cinema/films/osenniy-marafon/",
+      "sourceCheck": "official_film_page_indexed",
+      "sourceDurationSeconds": null,
+      "options": [
+        "Осенний марафон",
+        "Служебный роман",
+        "Вокзал для двоих",
+        "Афоня"
+      ],
+      "cutNotes": "После просмотра подобрать сцену с главным героем без титров. Не выбирать случайные первые секунды полного фильма.",
+      "category": "Кино",
+      "status": "source_only",
+      "media": null,
+      "sourceStartSeconds": null,
+      "sourceEndSeconds": null,
+      "targetDurationSeconds": {
+        "min": 6,
+        "max": 10
+      },
+      "rightsStatus": "not_reviewed",
+      "editorialStatus": "not_viewed_or_listened",
+      "prompt": "Из какого фильма эта сцена?",
+      "acceptedAnswers": [
+        "Осенний марафон"
+      ]
+    },
+    {
+      "id": "eve-20261114-c4",
+      "title": "Queen — Radio Ga Ga (Official Video)",
+      "answer": "Radio Ga Ga",
+      "sourcePage": "https://www.youtube.com/watch?v=azdwsXLmrHE",
+      "sourceCheck": "search_title_verified_direct_fetch_failed",
+      "sourceDurationSeconds": null,
+      "options": [
+        "Radio Ga Ga",
+        "I Want to Break Free",
+        "A Kind of Magic",
+        "The Show Must Go On"
+      ],
+      "cutNotes": "Вопрос именно о названии песни, не о группе. После прослушивания подобрать 6–10 секунд без произнесённого названия; клип и таймкоды пока не проверены.",
+      "category": "Музыка",
+      "status": "source_only",
+      "media": null,
+      "sourceStartSeconds": null,
+      "sourceEndSeconds": null,
+      "targetDurationSeconds": {
+        "min": 6,
+        "max": 10
+      },
+      "rightsStatus": "not_reviewed",
+      "editorialStatus": "not_viewed_or_listened",
+      "prompt": "Как называется эта песня?",
+      "acceptedAnswers": [
+        "Radio Ga Ga"
+      ]
+    },
+    {
+      "id": "eve-20261114-c5",
+      "title": "Поле чудес — выпуск 24.10.2025",
+      "answer": "Поле чудес",
+      "sourcePage": "https://www.1tv.ru/shows/pole-chudes/vypuski/pole-chudes-vypusk-ot-24-10-2025",
+      "sourceCheck": "secondary_link_found_official_page_fetch_failed",
+      "sourceDurationSeconds": null,
+      "options": [
+        "Поле чудес",
+        "Сто к одному",
+        "Угадай мелодию",
+        "Своя игра"
+      ],
+      "cutNotes": "Это резервная версия/эпоха для уже существующего sound-001 из PR15, а не новый уникальный источник ответа. Сначала проверить готовый sound-001. Если замена нужна — извлечь заставку без объявленного названия, указать версию. Прямой файл не получен.",
+      "category": "Звуки",
+      "status": "source_only",
+      "media": null,
+      "sourceStartSeconds": null,
+      "sourceEndSeconds": null,
+      "targetDurationSeconds": {
+        "min": 6,
+        "max": 10
+      },
+      "rightsStatus": "not_reviewed",
+      "editorialStatus": "not_viewed_or_listened",
+      "prompt": "Из какой телепередачи эта заставка?",
+      "acceptedAnswers": [
+        "Поле чудес"
+      ]
+    },
+    {
+      "id": "eve-20261114-c6",
+      "title": "Угадай мелодию — официальный раздел",
+      "answer": "Угадай мелодию",
+      "sourcePage": "https://www.1tv.ru/shows/ugaday-melodiyu",
+      "sourceCheck": "official_section_fetch_failed_unverified_media",
+      "sourceDurationSeconds": null,
+      "options": [
+        "Угадай мелодию",
+        "Поле чудес",
+        "Слабое звено",
+        "Сто к одному"
+      ],
+      "cutNotes": "Раздел для поиска альтернативы существующему sound-002. Не готовый ролик. Нужен конкретный выпуск, версия заставки и файл; в случайную выдачу не включать.",
+      "category": "Звуки",
+      "status": "source_only",
+      "media": null,
+      "sourceStartSeconds": null,
+      "sourceEndSeconds": null,
+      "targetDurationSeconds": {
+        "min": 6,
+        "max": 10
+      },
+      "rightsStatus": "not_reviewed",
+      "editorialStatus": "not_viewed_or_listened",
+      "prompt": "Из какой телепередачи эта заставка?",
+      "acceptedAnswers": [
+        "Угадай мелодию"
+      ]
+    }
+  ]
+}
