@@ -28,4 +28,4 @@
 - [Словарь Института русского языка имени А. С. Пушкина](https://ls.pushkininstitute.ru/lsslovar/?title=%D0%97%D0%90%D0%93%D0%A1%2FC1-C2) — расшифровка ЗАГС.
 - [NASA](https://science.nasa.gov/learning-resources/for-kids-and-students/what-is-nasa/), [Adobe](https://www.adobe.com/acrobat/about-adobe-pdf.html), [W3C](https://www.w3.org/wiki/HTML/Training/What_is_HTML), [GPS.gov](https://www.gps.gov/gps) и [ВОЗ](https://www.who.int/news-room/fact-sheets/detail/hiv-aids) — утверждения третьего раунда.
 
-Лицензии сайтов на повторное распространение фактов не нужны; в игру не добавляются защищённые изображения, аудио или фрагменты видео.
+В игру не добавляются сторонние изображения, аудио или фрагменты видео; формулировки вопросов написаны самостоятельно, а источники фактов указаны у заданий.
