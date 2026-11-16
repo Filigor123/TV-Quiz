@@ -81,6 +81,7 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 </main>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="game-model.js"></script>
+<script src="peer-id.js"></script>
 <script>
 let avatar='😎',peer=null,conn=null,amReady=false,players=[],started=false,answered=false,phoneTimer=null,selectedAnswer=null,localPlayerId='',currentQuestion=null,wagerAvailable=true;
 const hostId=new URLSearchParams(location.search).get('host');
@@ -188,7 +189,7 @@ connectBtn.addEventListener('click',()=>{
   connectBtn.disabled=true;
   connectBtn.textContent='Подключаемся…';
   setMessage('Подключаемся к службе связи…');
-  peer=new Peer();
+  peer=new Peer(QuizPeerId.create());
   const attemptPeer=peer;
   let joined=false;
   waitFor(15000,'Служба связи не ответила. Проверь интернет на телефоне и повтори попытку.');

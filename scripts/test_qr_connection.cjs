@@ -11,6 +11,27 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+(req
  try{
   const local='http://127.0.0.1:'+server.address().port+'/';
   const host=await browser.newPage({viewport:{width:1920,height:1080},reducedMotion:'reduce'});
+  // Regression: the original client fails with server-error when /id is blocked.
+  // Updated clients must register local IDs using real WebSocket signalling.
+  const blockIdEndpoint=process.env.TV_BLOCK_ID_ENDPOINT==='1';
+  let idRequests=0;
+  const blockId=async page=>page.route('https://0.peerjs.com/**',route=>{
+   if(new URL(route.request().url()).pathname==='/peerjs/id'){idRequests++;return route.abort('failed')}
+   return route.continue();
+  });
+  if(blockIdEndpoint){
+   const baseline=await browser.newPage();await blockId(baseline);
+   await baseline.goto(local+'join.html?host=unavailable-id-regression');
+   const failure=await baseline.evaluate(()=>new Promise(resolve=>{
+    const oldPeer=new Peer();
+    const timeout=setTimeout(()=>{oldPeer.destroy();resolve('timeout')},15000);
+    oldPeer.on('error',error=>{clearTimeout(timeout);oldPeer.destroy();resolve(error.type)});
+   }));
+   assert.equal(failure,'server-error');
+   assert.equal(idRequests,1);await baseline.close();
+   console.log('Reproduced server-error with the previous Peer constructor by blocking HTTP ID allocation.');
+   await blockId(host);
+  }
   host.on('pageerror',e=>console.log('HOST ERROR',e.message));
   await host.goto(require('node:url').pathToFileURL(path.join(root,'index.html')).href);await host.keyboard.press('Enter');
   await host.waitForFunction(()=>peer&&peer.id&&!document.getElementById('joinLink').hidden,{},{timeout:20000});
@@ -26,9 +47,10 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+(req
   const phones=[];
   for(let i=0;i<2;i++){
    const phone=await browser.newPage({viewport:{width:390,height:844}});phones.push(phone);
-   // First phone really visits the URL decoded from the QR, without routes/mocks.
-   // Second uses this branch's phone client to verify its corrected player identity.
-   await phone.goto(i===0?scanned.data:local+'join.html?host='+encodeURIComponent(id));
+   if(blockIdEndpoint)await blockId(phone);
+   // Normal smoke visits the decoded public URL with the first phone.
+   // With /id deliberately blocked, both phones use this branch's local-ID fix.
+   await phone.goto(i===0&&!blockIdEndpoint?scanned.data:local+'join.html?host='+encodeURIComponent(id));
    await phone.locator('#playerName').fill('Проверка '+(i+1));
    await phone.locator('#connectBtn').click();await phone.locator('#readyBtn').waitFor({state:'visible',timeout:20000});await phone.locator('#readyBtn').click();
    assert.ok(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
@@ -45,6 +67,7 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+(req
   await phones[1].waitForFunction(()=>document.getElementById('phoneTimer').textContent==='Раунд завершён');
   assert.deepEqual(await host.evaluate(()=>roster().map(p=>p.score)),[0,1]);
   assert.match(await phones[1].locator('#answerMessage').innerText(),/Правильно!/);
-  console.log('PASS real PeerJS: scanned public URL opens phone, two clients join/ready, direct catalog→QR, keyboard-only launch, dynamic first timer, answers/reveal and 0/1 scores.');
+  if(blockIdEndpoint){assert.equal(idRequests,1,'updated host/phones must not request a server-generated ID');console.log('PASS: real connection and game work with HTTP ID allocation blocked.');}
+  console.log('PASS real PeerJS: QR URL, two clients join/ready, direct catalog→QR, keyboard-only launch, dynamic first timer, answers/reveal and 0/1 scores.');
  } finally {await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1});
