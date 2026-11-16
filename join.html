@@ -146,37 +146,78 @@ document.getElementById('submitClosest').addEventListener('click',()=>{
  if(!valid){document.getElementById('answerMessage').textContent=currentQuestion.answerMode==='date'?'Укажи существующую дату.':'Проверь число и единицу измерения.';return}
  answered=true;send({type:'answer',value,unit});input.disabled=true;document.getElementById('closestUnitChoice').disabled=true;document.getElementById('submitClosest').disabled=true;document.getElementById('answerMessage').textContent='Ответ принят. Он скрыт до конца таймера.';
 });
+let connectionAttempt=0,connectionTimeout=null;
+function releaseConnection(){
+ // Invalidate callbacks before closing: close/error events can fire synchronously.
+ connectionAttempt++;clearTimeout(connectionTimeout);connectionTimeout=null;
+ const oldConnection=conn,oldPeer=peer;conn=null;peer=null;
+ try{if(oldConnection)oldConnection.close()}catch(error){}
+ try{if(oldPeer)oldPeer.destroy()}catch(error){}
+}
 function resetConnect(message){
+ releaseConnection();clearInterval(phoneTimer);
+ amReady=false;started=false;localPlayerId='';currentQuestion=null;
+ document.getElementById('profile').style.display='block';
+ document.getElementById('lobby').style.display='none';
+ document.getElementById('play').style.display='none';
+ document.getElementById('readyBtn').textContent='Готов';
  setMessage(message);
  connectBtn.disabled=false;
  connectBtn.textContent='Повторить подключение';
 }
+function connectionErrorMessage(error){
+ const type=error&&error.type;
+ if(type==='peer-unavailable')return 'Комната уже закрыта или её код изменился. Открой квиз на экране ведущего и отсканируй новый QR-код.';
+ if(type==='browser-incompatible')return 'Этот браузер не поддерживает игровое соединение. Открой ссылку в обычном Chrome или Safari, а не внутри сканера QR.';
+ if(type==='network'||type==='server-error'||type==='socket-error'||type==='socket-closed')return 'Не удалось связаться со службой подключения. Проверь интернет и повтори попытку.';
+ if(type==='webrtc'||type==='negotiation-failed')return 'Не удалось установить прямое соединение с ведущим. Проверь, что устройства в обычной, не гостевой сети, а VPN не мешает связи.';
+ return 'Ошибка подключения'+(type?' ('+type+')':'')+'. Повтори попытку.';
+}
 connectBtn.addEventListener('click',()=>{
+ if(connectBtn.disabled)return;
  try{
   const name=document.getElementById('playerName').value.trim();
   if(!name){setMessage('Сначала введи имя.');return}
   if(!hostId){setMessage('Не найден код комнаты. Вернись к телевизору и отсканируй QR-код ещё раз.');return}
   if(!window.Peer){setMessage('Не загрузилась библиотека связи. Проверь интернет и обнови страницу.');return}
+  releaseConnection();
+  const attempt=connectionAttempt;
+  const active=()=>attempt===connectionAttempt;
+  const fail=message=>{if(active())resetConnect(message)};
+  const waitFor=(duration,message)=>{clearTimeout(connectionTimeout);connectionTimeout=setTimeout(()=>fail(message),duration)};
   connectBtn.disabled=true;
   connectBtn.textContent='Подключаемся…';
-  setMessage('Создаём соединение с телевизором…');
+  setMessage('Подключаемся к службе связи…');
   peer=new Peer();
-  const timeout=setTimeout(()=>{if(!conn||!conn.open){try{peer.destroy()}catch(e){}resetConnect('Телевизор не ответил за 15 секунд. Проверь, что страница с QR-кодом открыта, и попробуй ещё раз.')}},15000);
-  peer.on('open',()=>{
-   setMessage('Нашли сеть. Соединяемся с телевизором…');
-   conn=peer.connect(hostId,{reliable:true});
-   conn.on('open',()=>{
-    clearTimeout(timeout);
-    localPlayerId=peer.id;
-    send({type:'join',name,avatar});
-    document.getElementById('profile').style.display='none';
-    document.getElementById('lobby').style.display='block';
-    document.getElementById('welcome').textContent=avatar+' '+name;
-    document.getElementById('connectionState').textContent='Подключение установлено';
-    setMessage('');
+  const attemptPeer=peer;
+  let joined=false;
+  waitFor(15000,'Служба связи не ответила. Проверь интернет на телефоне и повтори попытку.');
+  attemptPeer.on('open',()=>{
+   if(!active())return;
+   setMessage('Служба связи найдена. Соединяемся с ведущим…');
+   waitFor(25000,'Не удалось установить прямое соединение с ведущим. Оставь QR-код открытым. Проверь обычную Wi-Fi сеть и VPN; повтори попытку.');
+   conn=attemptPeer.connect(hostId,{reliable:true});
+   const attemptConnection=conn;
+   attemptConnection.on('open',()=>{
+    if(!active())return;
+    localPlayerId=attemptPeer.id;
+    setMessage('Соединение открыто. Ждём подтверждение входа…');
+    waitFor(10000,'Ведущий не подтвердил вход в комнату. Открой квиз заново и отсканируй новый QR-код.');
+    try{attemptConnection.send({type:'join',name,avatar})}catch(error){fail(connectionErrorMessage(error))}
    });
-   conn.on('data',data=>{
-    if(data.type==='state'){renderPlayers(data.players);if(data.gameStarted&&data.question)startQuestion(data.question)}
+   attemptConnection.on('data',data=>{
+    if(!active()||!data||typeof data!=='object')return;
+    if(data.type==='state'){
+     if(!Array.isArray(data.players)||!data.players.some(player=>player.id===localPlayerId))return;
+     clearTimeout(connectionTimeout);connectionTimeout=null;joined=true;
+     document.getElementById('profile').style.display='none';
+     document.getElementById('lobby').style.display='block';
+     document.getElementById('welcome').textContent=avatar+' '+name;
+     document.getElementById('connectionState').textContent='Ты в комнате. Нажми «Готов».';
+     setMessage('');renderPlayers(data.players);
+     if(data.gameStarted&&data.question)startQuestion(data.question);
+    }
+    if(!joined)return;
     if(data.type==='players')renderPlayers(data.players);
     if(data.type==='question')startQuestion(data);
     if(data.type==='answer-open'){document.querySelectorAll('.choice').forEach(button=>button.disabled=false);currentQuestion.answerOpen=true;document.getElementById('freeAnswer').disabled=false;document.getElementById('sendFreeAnswer').disabled=false;document.getElementById('closestValue').disabled=false;document.getElementById('submitClosest').disabled=false;syncWagerControl();document.getElementById('answerMessage').textContent='Время пошло — отправь ответ.';let left=Number(data.time)||0;clearInterval(phoneTimer);document.getElementById('phoneTimer').textContent=left+' сек.';phoneTimer=setInterval(()=>{left=Math.max(0,left-1);document.getElementById('phoneTimer').textContent=left+' сек.';if(left===0)clearInterval(phoneTimer)},1000)}
@@ -184,10 +225,11 @@ connectBtn.addEventListener('click',()=>{
     if(data.type==='reveal')renderReveal(data);
     if(data.type==='game-over'){clearInterval(phoneTimer);document.getElementById('play').innerHTML='<h1>🏆 Игра завершена</h1><div class="resultBox">'+data.players.map((p,i)=>(i+1)+'. '+escapeHtml(p.name)+' — '+p.score+' очков').join('<br>')+'</div><p class="hint">Спасибо за игру!</p>';}
    });
-   conn.on('close',()=>{clearTimeout(timeout);resetConnect('Связь с телевизором потеряна. Обнови страницу и подключись снова.')});
-   conn.on('error',()=>{clearTimeout(timeout);resetConnect('Ошибка связи с телевизором. Проверь, что экран TV Quiz всё ещё открыт.')});
+   attemptConnection.on('close',()=>fail('Связь с ведущим потеряна. Имя сохранено — можно повторить подключение.'));
+   attemptConnection.on('error',error=>fail(connectionErrorMessage(error)));
   });
-  peer.on('error',e=>{clearTimeout(timeout);resetConnect('Ошибка подключения: '+(e.type||'неизвестная ошибка')+'. Попробуй ещё раз.')});
+  attemptPeer.on('error',error=>fail(connectionErrorMessage(error)));
+  attemptPeer.on('disconnected',()=>{if(!joined)fail('Связь со службой подключения прервалась. Проверь интернет и повтори попытку.')});
  }catch(error){
   resetConnect('Ошибка на телефоне: '+error.message);
  }
