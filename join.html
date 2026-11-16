@@ -167,7 +167,7 @@ connectBtn.addEventListener('click',()=>{
    conn=peer.connect(hostId,{reliable:true});
    conn.on('open',()=>{
     clearTimeout(timeout);
-    localPlayerId=conn.peer;
+    localPlayerId=peer.id;
     send({type:'join',name,avatar});
     document.getElementById('profile').style.display='none';
     document.getElementById('lobby').style.display='block';

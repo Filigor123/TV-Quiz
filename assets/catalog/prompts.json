@@ -1,0 +1,42 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "date": "2026-11-16",
+  "assets": [
+    {
+      "file": "rock.webp",
+      "prompt": "Use case: photorealistic-natural. Create ONE finished wide 16:9 cinematic background artwork for a premium television quiz card titled Rock Legends (the title will be overlaid in HTML; DO NOT render any text). A compelling stage photograph: anonymous long-haired rock singer silhouetted at center-right, microphone held upward, electric guitar, distant crowd hands, smoky deep blue stage light and crisp white spotlights. High photographic detail, moody polished concert photography, rich navy blacks, subtle violet rim light. Wide landscape composition, primary objects upper and central part, dark bottom 25 percent for readable white title overlay. Edge-to-edge full-bleed artwork, no border, no UI, no text, no letters, no logos, no watermarks. This is an individual cover image asset, not a mockup or collage."
+    },
+    {
+      "file": "pop.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide 16:9 cinematic television quiz cover artwork. A vintage silver microphone on a stand and glossy vinyl records in a jewel-colored studio, magenta and cyan neon reflected across chrome, out-of-focus disco lights, glamorous international pop music atmosphere. Photorealistic, no people. Fill the entire wide frame with a polished movie-poster-like photographic scene, detailed and vivid but readable at thumbnail size. Primary subject in upper and middle area, bottom 20 percent darker for white HTML title to be overlaid later. Full bleed rectangular image. Absolutely NO lettering, titles, captions, logos, watermark, UI, badges, borders, collage or grid. This is an individual background asset, not an interface mockup."
+    },
+    {
+      "file": "queen.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide 16:9 cinematic television quiz cover artwork. A distinctive red-brown handmade electric guitar standing beside an elegant black grand piano on a huge empty arena stage, antique silver microphone nearby, warm golden spotlights through smoke, regal rock concert atmosphere. No text, no logos, no people. Fill the entire wide frame with a polished movie-poster-like photographic scene, detailed and vivid but readable at thumbnail size. Primary subject in upper and middle area, bottom 20 percent darker for white HTML title to be overlaid later. Full bleed rectangular image. Absolutely NO lettering, titles, captions, logos, watermark, UI, badges, borders, collage or grid. This is an individual background asset, not an interface mockup."
+    },
+    {
+      "file": "adventure.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide 16:9 cinematic television quiz cover artwork. An anonymous adventurer seen from behind in a weathered brown fedora and canvas jacket on a sandstone ridge overlooking an immense ancient city carved into cliffs, warm golden sunset, epic adventure cinema. Photorealistic cinematic still, not an identifiable actor. Fill the entire wide frame with a polished movie-poster-like photographic scene, detailed and vivid but readable at thumbnail size. Primary subject in upper and middle area, bottom 20 percent darker for white HTML title to be overlaid later. Full bleed rectangular image. Absolutely NO lettering, titles, captions, logos, watermark, UI, badges, borders, collage or grid. This is an individual background asset, not an interface mockup."
+    },
+    {
+      "file": "cinema.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide 16:9 cinematic television quiz cover artwork. Classic cinema noir still life, black rotary telephone, dark felt fedora and an old metal film reel on a wooden desk, warm brass desk lamp, luminous curls of atmospheric smoke, black shadows, beautifully controlled tungsten light. No people, no legible labels. Fill the entire wide frame with a polished movie-poster-like photographic scene, detailed and vivid but readable at thumbnail size. Primary subject in upper and middle area, bottom 20 percent darker for white HTML title to be overlaid later. Full bleed rectangular image. Absolutely NO lettering, titles, captions, logos, watermark, UI, badges, borders, collage or grid. This is an individual background asset, not an interface mockup."
+    },
+    {
+      "file": "soviet.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide 16:9 cinematic television quiz cover artwork. Nostalgic mid-century Soviet cinema theatre on a Moscow street at blue hour, warmly glowing marquee with NO letters or symbols, decorative illuminated vertical panels without text, rain-slick pavement, silhouettes of people going to a movie, elegant 1960s city architecture, cinematic warm amber and blue palette. No flags, no readable text. Fill the entire wide frame with a polished movie-poster-like photographic scene, detailed and vivid but readable at thumbnail size. Primary subject in upper and middle area, bottom 20 percent darker for white HTML title to be overlaid later. Full bleed rectangular image. Absolutely NO lettering, titles, captions, logos, watermark, UI, badges, borders, collage or grid. This is an individual background asset, not an interface mockup."
+    },
+    {
+      "file": "world.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide 16:9 cinematic television quiz cover artwork. Breathtaking natural panorama of rugged alpine mountains, emerald wooded valleys, turquoise lake and a distant coastline, soft sea of clouds, sunlit snow peaks, sweeping travel photography, refined teal and slate palette. No buildings, no people. Fill the entire wide frame with a polished movie-poster-like photographic scene, detailed and vivid but readable at thumbnail size. Primary subject in upper and middle area, bottom 20 percent darker for white HTML title to be overlaid later. Full bleed rectangular image. Absolutely NO lettering, titles, captions, logos, watermark, UI, badges, borders, collage or grid. This is an individual background asset, not an interface mockup."
+    },
+    {
+      "file": "space.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide 16:9 cinematic television quiz cover artwork. An immense detailed golden moon above a distant astronomical observatory, deep midnight blue starfield, an elegant brass armillary sphere in foreground at right, luminous celestial atmosphere, cinematic scientific imagination, photorealistic materials. No text or labels. Fill the entire wide frame with a polished movie-poster-like photographic scene, detailed and vivid but readable at thumbnail size. Primary subject in upper and middle area, bottom 20 percent darker for white HTML title to be overlaid later. Full bleed rectangular image. Absolutely NO lettering, titles, captions, logos, watermark, UI, badges, borders, collage or grid. This is an individual background asset, not an interface mockup."
+    },
+    {
+      "file": "logic.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide 16:9 cinematic television quiz cover artwork. A beautiful antique brass orrery and geometric wooden puzzle pieces on a dark library desk, delicate concentric brass rings, small brass owl figurine on the right, soft amber light, scholarly cinematic still life, rich walnut and navy shadows. No books with readable text, no text at all. Fill the entire wide frame with a polished movie-poster-like photographic scene, detailed and vivid but readable at thumbnail size. Primary subject in upper and middle area, bottom 20 percent darker for white HTML title to be overlaid later. Full bleed rectangular image. Absolutely NO lettering, titles, captions, logos, watermark, UI, badges, borders, collage or grid. This is an individual background asset, not an interface mockup."
+    }
+  ]
+}

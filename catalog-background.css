@@ -1,0 +1,36 @@
+/* Independent backdrop: replace only --catalog-backdrop-image or these colors. */
+:root {
+  --catalog-night: #060d21;
+  --catalog-violet: #7a238fb3;
+  --catalog-blue: #173f7b88;
+  --catalog-cyan: #08739899;
+}
+.catalog-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--catalog-night);
+  background-image: var(--catalog-backdrop-image,
+    radial-gradient(ellipse at 13% 5%, var(--catalog-violet), transparent 39%),
+    radial-gradient(ellipse at 38% 65%, #42237180, transparent 52%),
+    radial-gradient(ellipse at 98% 93%, var(--catalog-cyan), transparent 38%),
+    radial-gradient(ellipse at 80% 20%, var(--catalog-blue), transparent 40%),
+    linear-gradient(145deg, #100b25, #08132c 65%, #041d32));
+  background-size: cover;
+  background-position: center;
+}
+body.catalog-mode .catalog-backdrop { display: block; }
+.catalog-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .45;
+  background:
+    radial-gradient(circle at 32% 4%, #ef63edaa 0, #ba41cf55 .6%, transparent 1.8%),
+    radial-gradient(circle at 39% 11%, #a352df55 0, transparent 1.8%),
+    radial-gradient(circle at 84% 5%, #00a5da44 0, transparent 2.1%),
+    radial-gradient(circle at 88% 78%, #48cbe633 0, transparent 2.4%);
+  filter: blur(8px);
+}
