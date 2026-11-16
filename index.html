@@ -153,23 +153,40 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
 .audio-controls label{display:flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}.audio-controls input{width:18px;height:18px;margin:0;accent-color:#77b8ff}.audio-controls select{max-width:230px;min-width:140px;padding:7px 9px;border:1px solid #45617e;border-radius:8px;background:#0b1a2a;color:#f5f8ff}.audio-controls .audio-action{margin:0;font-size:13px;padding:7px 10px}.voice-status{color:#9fb1c9;font-size:12px}
 .audio-action{display:block;margin:10px auto 0;padding:10px 15px;border:1px solid #38527a;border-radius:11px;background:#172741;color:#dce7ff;font-size:16px;font-weight:bold;cursor:pointer}.audio-status{min-height:1.3em;margin:8px 0;color:#aabbd0;font-size:13px;text-align:center}
 @media(max-width:700px){.audio-controls{align-items:flex-start;flex-direction:column;gap:4px;padding:9px 11px}}
+/* Remote focus must also be visible when focus originates from a TV key code. */
+[hidden]{display:none!important}
+button:focus,select:focus,input:focus,a:focus{outline:4px solid #fff;outline-offset:4px}
+.catalog-card:focus{outline:none;border-color:#fff;box-shadow:inset 0 0 0 4px #fff,0 0 24px #55d8f299;transform:none}
+.catalog-card:focus:after{content:"";position:absolute;inset:0;z-index:5;border:4px solid #fff;border-radius:inherit;pointer-events:none}
+.card-copy{min-height:0;height:auto;padding-top:32px}
+.shelf-track{padding:8px 8px 12px;scroll-behavior:auto}
+.remote-hint{color:#b9cfe6;font-size:clamp(16px,1.2vw,26px)}
+#gameSettings{max-width:1100px;margin:auto}
+#gameSettings select,.catalog-back{font-size:clamp(18px,1.4vw,30px)}
+@media(min-width:701px){
+ body{padding-top:2vh}h1{font-size:clamp(28px,2.3vw,64px)}
+ body>.sub{font-size:clamp(14px,1vw,26px)}
+ .hero{padding-bottom:1vh;margin-bottom:1vh}.hero h2{font-size:clamp(28px,2.2vw,62px)}
+ .hero-kicker,.hero-lead{display:none}
+ .level-legend{margin:8px 0 12px;justify-content:flex-start}
+ .catalog-card{min-height:18vh}
+}
 </style>
 </head>
 <body>
-<h1>📺 TV QUIZ</h1><p class="sub">Настрой викторину, подключи игроков и начинай игру.</p><div id="status" aria-live="polite"></div>
+<h1>📺 TV QUIZ</h1><p class="sub">Выбери квиз · подключи друзей · играйте вместе</p><div id="status" aria-live="polite"></div>
 <section class="screen panel" id="setup">
-<div class="audio-controls" aria-label="Звук игры"><label><input id="effectsEnabled" type="checkbox" checked> Звуковые эффекты</label><label><input id="musicEnabled" type="checkbox"> Фоновая музыка</label><label><input id="speechEnabled" type="checkbox" checked> Голос ведущего</label><label for="speechVoiceSelect">Русский голос<select id="speechVoiceSelect"><option value="">Загружаю голоса…</option></select></label><button class="audio-action" id="previewVoiceBtn" type="button">Пример голоса</button><span class="voice-status" id="voiceStatus" aria-live="polite"></span></div>
 <div id="catalogHome" class="catalog-step active">
 <div class="hero"><div class="hero-copy"><div class="hero-kicker">TV QUIZ · ВЕЧЕР ИГР</div><h2>Вечер игр</h2><p class="hero-lead">Выбери квиз на большом экране, подключи друзей по QR-коду и играй с телефона.</p></div></div>
-<h3 class="section-title">Выбери тему и уровень</h3><p class="sub left">Листай тематические полки и выбери квиз для компании.</p>
+<h3 class="section-title">Выбери тему и уровень</h3><p class="sub left">← → квизы · ↑ ↓ темы · OK выбрать · Назад вернуться</p>
 <div class="level-legend" aria-label="Уровни сложности"><span><i></i>Лёгкий</span><span><i></i>Средний</span><span><i></i>Сложный</span><span><i></i>Эксперт</span><span><i></i>Экстрим</span></div>
-<div class="quiz-grid" id="quizCatalog"></div>
-<button class="primary" id="customRoundOpen" type="button">Создать свой медиа-вопрос или «Кто ближе?»</button>
+<div class="quiz-grid" id="quizCatalog"><p id="catalogLoading" role="status">Загружаем квизы… Если карточки не появились, обнови страницу.</p></div><noscript>Для выбора квизов включи JavaScript в браузере телевизора.</noscript>
+
 </div>
 <div id="customRoundStep" class="catalog-step">
-<button class="catalog-back" id="backCustomRound" type="button">← К категориям</button>
+<button class="catalog-back" id="backCustomRound" type="button">← К каталогу</button>
 <section class="custom-round" aria-labelledby="customRoundTitle">
-<h2 id="customRoundTitle">Свой медиа-вопрос или «Кто ближе?»</h2>
+<h2 id="customRoundTitle">Редактор своего вопроса</h2>
 <p id="customStatus" class="custom-note" aria-live="polite">Файл загружается только в эту комнату и не отправляется в репозиторий. Для аудио и видео можно указать фрагмент.</p>
 <div class="custom-grid">
  <div class="custom-field"><label for="customType">Тип раунда</label><select id="customType"><option value="image">Изображение</option><option value="audio">Аудио</option><option value="video">Видео</option><option value="closest">Кто ближе? — число или дата</option></select></div>
@@ -196,13 +213,14 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
 </div>
 
 <div id="gameSettings" class="catalog-step">
-<button class="catalog-back" id="backCatalog">← К каталогу</button><h2>Настройки раунда</h2><p class="selection-label" id="finalSelection"></p>
+<button class="catalog-back" id="backCatalog">← К каталогу</button><h2>Параметры квиза</h2><p class="remote-hint">↑ ↓ выбрать параметр · ← → изменить · OK дальше</p><p class="selection-label" id="finalSelection"></p>
 <div class="row"><div><div class="field-title">Количество вопросов</div><select id="questionCount"><option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option></select></div>
 <div><div class="field-title">Время на ответ</div><select id="timeLimit"><option value="10">10 секунд</option><option value="15" selected>15 секунд</option><option value="20">20 секунд</option><option value="30">30 секунд</option></select></div></div>
 <label class="field-title" for="timerMode">Режим времени</label><select id="timerMode"><option value="staged" selected>Динамический по ходу раунда</option><option value="fixed">Одинаковое время из списка</option></select>
 <button class="primary" id="createRoom">Создать игровую комнату</button><p id="setupNote" class="sub"></p>
 </div></section>
 <section class="screen panel" id="lobby">
+<button class="catalog-back" id="backLobby" type="button">← К параметрам квиза (закрыть комнату)</button>
 <h2>Игровая комната</h2><p class="sub">Отсканируйте QR-код, чтобы присоединиться</p><div id="qr">Создаём QR-код…</div><div id="room"></div>
 <div class="field-title" style="text-align:center">Игроки</div><div id="players"><div class="player">Ждём участников…</div></div>
 <button class="primary" id="startGame" disabled>Ждём игроков</button>
@@ -211,6 +229,7 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
 <div class="live-board" id="livePlayers"></div><div id="roundInfo"></div><div id="timer"></div><div id="hostMedia" class="host-media"></div><div class="question" id="question"></div><button class="audio-action" id="speakQuestionBtn" type="button">Прочитать вопрос</button><button class="audio-action" id="continueQuestionBtn" type="button" hidden>Продолжить без голоса</button><p id="speechStatus" class="audio-status" aria-live="polite"></p><div class="answers" id="answers"></div><div id="explanation"></div><div id="scores"></div>
 </section>
 <section class="screen panel" id="results"><h2>🏆 Итоги игры</h2><div id="finalScores" class="scores"></div><button class="primary" onclick="location.reload()">Новая игра</button></section>
+<script>window.addEventListener('error',function(){var message=document.getElementById('catalogLoading');if(message)message.textContent='Не удалось загрузить каталог. Обнови страницу. Если ошибка повторится, проверь обновление браузера телевизора.';});</script>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="questions.js"></script>
@@ -220,20 +239,16 @@ body>.sub{width:min(100%,3400px);margin:2px auto 0;color:#c1cee0;font-size:clamp
 <script src="audio-quiz.js"></script>
 <script src="facts-quiz.js"></script>
 <script src="media-preview-quiz.js"></script>
+<script src="closest-quiz.js"></script>
 <script>
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
 let currentQuestionText='',lastAnnouncedRound=null,currentQuestionToken=0;
-const soundSettings=QuizAudio.getSettings();$('effectsEnabled').checked=soundSettings.effects;$('musicEnabled').checked=soundSettings.music;$('speechEnabled').checked=soundSettings.speech;
-QuizAudio.setEffectsEnabled($('effectsEnabled').checked);
-$('effectsEnabled').addEventListener('change',event=>{QuizAudio.setEffectsEnabled(event.target.checked);if(event.target.checked)void QuizAudio.unlock()});
-$('musicEnabled').addEventListener('change',async event=>{const enabled=event.target.checked;QuizAudio.setMusicEnabled(enabled);if(enabled){await QuizAudio.unlock();void QuizAudio.startMusic()}else QuizAudio.stopMusic()});
-$('speechEnabled').addEventListener('change',event=>{QuizAudio.setSpeechEnabled(event.target.checked)});
-function refreshSpeechVoices(){const select=$('speechVoiceSelect'),voices=QuizAudio.getSpeechVoices(),selected=QuizAudio.getSettings().voiceURI;select.replaceChildren();if(!voices.length){const option=document.createElement('option');option.value='';option.textContent=QuizAudio.isSpeechSupported()?'Нет русских голосов':'Озвучка недоступна';select.append(option);$('previewVoiceBtn').disabled=true;$('voiceStatus').textContent=QuizAudio.isSpeechSupported()?'В этом браузере нет доступных русских голосов. Игру можно продолжить вручную.':'Этот браузер не поддерживает озвучку; игру можно продолжить вручную.';return}$('previewVoiceBtn').disabled=false;for(const voice of voices){const option=document.createElement('option');option.value=voice.voiceURI;option.textContent=voice.name+' · '+voice.lang;select.append(option)}select.value=voices.some(voice=>voice.voiceURI===selected)?selected:'';$('voiceStatus').textContent='Голос выбирается только на этом устройстве; внешние запросы не выполняются.'}
-refreshSpeechVoices();if(window.speechSynthesis)window.speechSynthesis.addEventListener('voiceschanged',refreshSpeechVoices);
-$('speechVoiceSelect').addEventListener('change',event=>QuizAudio.setSpeechVoice(event.target.value));
-$('previewVoiceBtn').addEventListener('click',async()=>{await QuizAudio.unlock();$('voiceStatus').textContent='Телефоны готовы? Отлично. Время на ответ начнётся, когда я закончу читать.';const ok=await QuizAudio.speakQuestion('Телефоны готовы? Отлично. Время на ответ начнётся, когда я закончу читать.');if(!ok)$('voiceStatus').textContent='Не удалось включить выбранный голос. Попробуй другой голос или настройки браузера.'});
+// The catalog and lobby are silent. Audio starts only from start().
+QuizAudio.setEffectsEnabled(true);
+QuizAudio.setMusicEnabled(true);
+QuizAudio.setSpeechEnabled(true);
 $('speakQuestionBtn').addEventListener('click',async()=>{if(!currentQuestionText)return;$('speechStatus').textContent='Читаю вопрос…';await QuizAudio.unlock();const spoken=await QuizAudio.speakQuestion(currentQuestionText);$('speechStatus').textContent=spoken?'Озвучивание завершено.':'Не удалось озвучить. Можно продолжить без голоса.'});
-let selectedCategory='',selectedTopic='',selectedDifficulty='',selectedMultiQuiz=null,answerWindowOpen=false;
+let selectedCategory='',selectedTopic='',selectedDifficulty='',selectedMultiQuiz=null,selectedFixedQuiz=null,answerWindowOpen=false;
 const topics={
  'Музыка':['Музыкальные группы','Исполнители и хиты'],
  'Кино':['Культовые фильмы','Актёры и режиссёры'],
@@ -242,7 +257,14 @@ const topics={
  'Наука':['Космос','Физика и изобретения','Логика и числа']
 };
 const categoryEmoji={'Музыка':'🎵','Кино':'🎬','Автомобили':'🏎️','География':'🌍','Наука':'🧪','Эрудиция':'🧠','Мемасики':'😂','Сленг':'💬','Звуки':'🔊','Медиапакет':'🗂️'};
-function showStep(id){document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');$('setupNote').textContent=''}
+function showStep(id,recordHistory=true){
+ document.querySelectorAll('.catalog-step').forEach(x=>x.classList.remove('active'));
+ $(id).classList.add('active');$('setupNote').textContent='';
+ if(recordHistory)history.pushState({tvQuiz:true,step:id},'');
+ if(id==='catalogHome')restoreCatalogReturn();
+ else requestAnimationFrame(()=>window.TVNavigation?.focus($(id).querySelector('button:not(:disabled),select:not(:disabled),input:not(:disabled)')));
+}
+history.replaceState({tvQuiz:true,step:'catalogHome'},'');
 const quizLevels=[
  {label:'Лёгкий',legacy:'Лёгкий',color:'easy'},
  {label:'Средний',legacy:'Средний',color:'medium'},
@@ -266,6 +288,7 @@ const questionShelves=[
 questionShelves[2].items.push({id:'slang-chat',category:window.QUIZ_SLENG.category,topic:window.QUIZ_SLENG.topic,title:window.QUIZ_SLENG.title,desc:window.QUIZ_SLENG.description,cover:window.QUIZ_SLENG.cover,multiRound:true});
 const factsQuizCard={id:'abbreviation-pilot',category:window.QUIZ_FACTS.category,topic:window.QUIZ_FACTS.topic,title:window.QUIZ_FACTS.title,desc:window.QUIZ_FACTS.description,cover:window.QUIZ_FACTS.cover,multiQuiz:window.QUIZ_FACTS};
 questionShelves[2].items.push(factsQuizCard);
+questionShelves[2].items.push({id:'closest-numbers',category:'Эрудиция',topic:'Кто ближе?',title:'Кто ближе?',desc:'Угадывай числа · ближайший ответ получает очко',cover:'logic-numbers',fixedQuiz:window.QUIZ_CLOSEST});
 // Reserved media asset shape: {type:'image'|'audio'|'video',src,startSeconds?,endSeconds?}.
 const audioQuizCard={id:'audio-recognition',category:window.QUIZ_AUDIO.category,topic:window.QUIZ_AUDIO.topic,title:window.QUIZ_AUDIO.title,desc:window.QUIZ_AUDIO.description,cover:window.QUIZ_AUDIO.cover,multiQuiz:window.QUIZ_AUDIO};
 const mediaQuizPreview={id:'media-review-preview',category:window.QUIZ_MEDIA_PREVIEW.category,topic:window.QUIZ_MEDIA_PREVIEW.topic,title:window.QUIZ_MEDIA_PREVIEW.title,desc:window.QUIZ_MEDIA_PREVIEW.description,cover:window.QUIZ_MEDIA_PREVIEW.cover,multiQuiz:window.QUIZ_MEDIA_PREVIEW};
@@ -293,44 +316,61 @@ function artSvg(cover,suffix){
 }
 function readCatalogList(key){try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch(e){return []}}
 function quizCountLabel(count){const lastDigit=count%10,lastTwo=count%100,word=lastDigit===1&&lastTwo!==11?'квиз':lastDigit>=2&&lastDigit<=4&&(lastTwo<12||lastTwo>14)?'квиза':'квизов';return count+' '+word}
-function saveCatalogReturn(btn){try{localStorage.setItem('tvquiz.return-focus',btn.dataset.cardId);localStorage.setItem('tvquiz.return-y',String(window.scrollY));localStorage.setItem('tvquiz.return-x',JSON.stringify([...document.querySelectorAll('.shelf-track')].map(track=>track.scrollLeft)))}catch(e){}}
-function restoreCatalogReturn(){try{const cardId=localStorage.getItem('tvquiz.return-focus');if(!cardId)return;const positions=JSON.parse(localStorage.getItem('tvquiz.return-x')||'[]');requestAnimationFrame(()=>{document.querySelectorAll('.shelf-track').forEach((track,index)=>track.scrollLeft=positions[index]||0);window.scrollTo(0,Number(localStorage.getItem('tvquiz.return-y'))||0);document.querySelector('[data-card-id="'+CSS.escape(cardId)+'"]')?.focus({preventScroll:true})})}catch(e){}}
+function saveCatalogReturn(btn){catalogReturnId=btn.dataset.cardId;try{localStorage.setItem('tvquiz.return-focus',btn.dataset.cardId);localStorage.setItem('tvquiz.return-y',String(window.scrollY));localStorage.setItem('tvquiz.return-x',JSON.stringify([...document.querySelectorAll('.shelf-track')].map(track=>track.scrollLeft)))}catch(e){}}
+let catalogReturnId='';
+function restoreCatalogReturn(){
+ requestAnimationFrame(()=>{
+  let positions=[],y=0;
+  try{catalogReturnId=localStorage.getItem('tvquiz.return-focus')||catalogReturnId;positions=JSON.parse(localStorage.getItem('tvquiz.return-x')||'[]');y=Number(localStorage.getItem('tvquiz.return-y'))||0}catch(e){}
+  document.querySelectorAll('.shelf-track').forEach((track,index)=>track.scrollLeft=positions[index]||0);
+  window.scrollTo(0,y);
+  const cards=[...document.querySelectorAll('.catalog-card:not(:disabled)')];
+  const card=cards.find(item=>item.dataset.cardId===catalogReturnId)||cards[0];
+  if(card){card.focus({preventScroll:true});card.scrollIntoView({block:'nearest',inline:'nearest',behavior:'auto'})}
+ });
+}
 function rememberCompletedQuiz(){const key=[selectedCategory,selectedTopic,selectedDifficulty].join('|');try{const done=readCatalogList('tvquiz.completed');if(!done.includes(key))done.push(key);localStorage.setItem('tvquiz.completed',JSON.stringify(done))}catch(e){}}
 function renderCatalog(){
  const questions=window.QUIZ_QUESTIONS||[],done=readCatalogList('tvquiz.completed');
- $('quizCatalog').innerHTML=shelves.map((shelf,index)=>'<section class="shelf" data-shelf="'+index+'" aria-label="'+safe(shelf.name)+'"><div class="shelf-heading"><h3><span aria-hidden="true">'+shelf.icon+'</span> '+safe(shelf.name)+'</h3><span>'+quizCountLabel(shelf.items.length)+'</span></div><div class="shelf-track">'+shelf.items.flatMap(q=>(q.media?[{label:'Скоро',legacy:null,color:'soon'}]:(q.multiRound||q.multiQuiz)?[{label:'3 раунда',legacy:'multi',color:'medium'}]:quizLevels).map(level=>{
-  const count=q.multiRound?window.QUIZ_SLENG.rounds.reduce((sum,round)=>sum+round.questions.length,0):q.multiQuiz?q.multiQuiz.rounds.reduce((sum,round)=>sum+round.questions.length,0):level.legacy?questions.filter(item=>item.category===q.category&&item.topic===q.topic&&item.difficulty===level.legacy).length:0;
+ $('quizCatalog').innerHTML=shelves.map((shelf,index)=>'<section class="shelf" data-shelf="'+index+'" aria-label="'+safe(shelf.name)+'"><div class="shelf-heading"><h3><span aria-hidden="true">'+shelf.icon+'</span> '+safe(shelf.name)+'</h3><span>'+quizCountLabel(shelf.items.length)+'</span></div><div class="shelf-track">'+shelf.items.flatMap(q=>(q.media?[{label:'Скоро',legacy:null,color:'soon'}]:q.fixedQuiz?[{label:'Лёгкий',legacy:'Лёгкий',color:'easy'}]:(q.multiRound||q.multiQuiz)?[{label:'3 раунда',legacy:'multi',color:'medium'}]:quizLevels).map(level=>{
+  const count=q.fixedQuiz?q.fixedQuiz.length:q.multiRound?window.QUIZ_SLENG.rounds.reduce((sum,round)=>sum+round.questions.length,0):q.multiQuiz?q.multiQuiz.rounds.reduce((sum,round)=>sum+round.questions.length,0):level.legacy?questions.filter(item=>item.category===q.category&&item.topic===q.topic&&item.difficulty===level.legacy).length:0;
   const available=!q.media&&(q.multiRound||q.multiQuiz||count>0),key=[q.category,q.topic,level.legacy||level.label].join('|'),completed=done.includes(key),cardId=q.category+'-'+q.topic+'-'+level.color;
   const unavailableText=q.media?'Нет подготовленного контента':level.legacy?'Пока нет вопросов этого уровня':'Скоро · нет вопросов';
   return '<button type="button" class="catalog-card quiz-card '+(available?'':'unavailable-card')+'" data-qi="'+quizzes.indexOf(q)+'" data-level-key="'+level.color+'" data-card-id="'+safe(cardId)+'" '+(available?'':'disabled aria-disabled="true"')+' aria-label="'+safe(q.title+', '+level.label+(available?', '+count+' вопросов':' — пока недоступен'))+'"><span class="level-chip" data-level="'+safe(level.label)+'">'+safe(level.label)+'</span><span class="card-copy"><span class="card-eyebrow">'+safe(q.category)+' · квиз</span><strong>'+safe(q.title)+(completed?' ✓':'')+'</strong><small>'+safe(q.desc)+'</small></span><span class="card-art">'+artSvg(q.cover,level.color)+'</span><span class="quiz-meta">'+(available?count+' вопросов'+(completed?' · пройден':''):unavailableText)+'</span></button>'
  })).join('')+'</div></section>').join('');
  document.querySelectorAll('[data-qi]:not(:disabled)').forEach(btn=>btn.addEventListener('click',()=>{
   const q=quizzes[Number(btn.dataset.qi)],level=quizLevels.find(item=>item.color===btn.dataset.levelKey);
-   selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=(q.multiRound||q.multiQuiz)?'multi':level.legacy;selectedMultiQuiz=q.multiQuiz||null;
+   selectedCategory=q.category;selectedTopic=q.topic;selectedDifficulty=(q.multiRound||q.multiQuiz)?'multi':level.legacy;selectedMultiQuiz=q.multiQuiz||null;selectedFixedQuiz=q.fixedQuiz||null;
    const multi=q.multiRound||q.multiQuiz;
    $('questionCount').previousElementSibling.textContent=multi?'Вопросов в каждом раунде':'Количество вопросов';
    $('questionCount').innerHTML=multi?'<option value="5" selected>5 на раунд · 15 всего</option>':'<option value="5">5 вопросов</option><option value="10" selected>10 вопросов</option><option value="15">15 вопросов</option>';
    $('finalSelection').textContent=categoryEmoji[q.category]+' '+q.category+' · '+q.topic+' · '+(multi?'3 раунда':level.label);
-  saveCatalogReturn(btn);showStep('gameSettings');$('createRoom').focus({preventScroll:true});
+  saveCatalogReturn(btn);showStep('gameSettings');
  }));
  restoreCatalogReturn();
 }
-document.querySelector('#catalogHome').addEventListener('keydown',event=>{
- const current=event.target.closest('.catalog-card[data-qi]:not(:disabled)');
- if(!current||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
- const rows=[...document.querySelectorAll('.shelf')],row=current.closest('.shelf'),cards=[...row.querySelectorAll('.catalog-card[data-qi]:not(:disabled)')];
- if(event.key==='ArrowLeft'||event.key==='ArrowRight'){
-  const next=cards[cards.indexOf(current)+(event.key==='ArrowRight'?1:-1)];if(next){event.preventDefault();next.focus();next.scrollIntoView({block:'nearest',inline:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}return;
- }
- const index=rows.indexOf(row),targetRow=rows[index+(event.key==='ArrowDown'?1:-1)];if(!targetRow)return;
- const rect=current.getBoundingClientRect(),center=rect.left+rect.width/2;
- const target=[...targetRow.querySelectorAll('.catalog-card[data-qi]:not(:disabled)')].sort((a,b)=>Math.abs(a.getBoundingClientRect().left+a.getBoundingClientRect().width/2-center)-Math.abs(b.getBoundingClientRect().left+b.getBoundingClientRect().width/2-center))[0];
- if(target){event.preventDefault();target.focus();target.scrollIntoView({block:'nearest',inline:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
-});
 renderCatalog();
-$('backCatalog').addEventListener('click',()=>{showStep('catalogHome');restoreCatalogReturn()});
-$('customRoundOpen').addEventListener('click',()=>showStep('customRoundStep'));
-$('backCustomRound').addEventListener('click',()=>showStep('catalogHome'));
+function backFromScreen(){
+ if(phase==='setup'&&!$('catalogHome').classList.contains('active'))history.back();
+ else if(phase==='lobby')history.back();
+ else if(phase==='results')location.reload();
+}
+$('backCatalog').addEventListener('click',backFromScreen);
+$('backCustomRound').addEventListener('click',backFromScreen);
+$('backLobby').addEventListener('click',backFromScreen);
+document.addEventListener('tv-back',backFromScreen);
+window.addEventListener('popstate',event=>{
+ if(phase==='game'){
+  history.pushState({tvQuiz:true,step:'game'},'');
+  $('status').textContent='Игра идёт. Ответы — на телефонах.';
+  return;
+ }
+ if(phase==='lobby')closeLobby();
+ const step=event.state?.step;
+ showStep(['catalogHome','gameSettings','customRoundStep'].includes(step)?step:'catalogHome',false);
+});
+// Advanced authoring is a direct link, outside the normal quiz selection flow.
+if(location.hash==='#editor')showStep('customRoundStep');
 
 const customType=$('customType');
 function updateCustomFields(){
@@ -373,6 +413,13 @@ function updateLobby(){
  const btn=$('startGame');btn.disabled=!list.length||!list.every(p=>p.ready);btn.textContent=btn.disabled?'Ждём, пока все будут готовы':'Начать викторину';if(phase==='game')renderLivePlayers();
 }
 function makeDeck(){
+ if(selectedFixedQuiz){
+  const requested=Number($('questionCount').value),count=Math.min(requested,selectedFixedQuiz.length);
+  deck=selectedFixedQuiz.slice(0,count).map(QuizGameModel.normalizeQuestion);
+  config={time:Number($('timeLimit').value),timerMode:'fixed',count,category:selectedTopic,difficulty:selectedDifficulty};
+  $('setupNote').textContent=count<requested?'Доступно '+count+' уникальных вопросов.':'';
+  return true;
+ }
  if(selectedDifficulty==='multi'){
  const quiz=selectedMultiQuiz||window.QUIZ_SLENG,rounds=quiz.rounds,perRound=Math.min(Number($('questionCount').value),...rounds.map(item=>item.questions.length));
   deck=rounds.flatMap((item,roundIndex)=>item.questions.slice(0,perRound).map((q,index)=>{
@@ -399,22 +446,32 @@ function createCustomRoom(){
  if(!createCustomDeck())return;
  openRoom();
 }
+function closeLobby(){
+ phase='setup';
+ connections.forEach(conn=>conn.close());connections.clear();players.clear();
+ if(peer){peer.destroy();peer=null}
+ $('lobby').style.display='none';$('setup').style.display='block';$('status').textContent='';
+ $('qr').textContent='Создаём QR-код…';$('room').textContent='';updateLobby();
+}
 function openRoom(){
+ history.pushState({tvQuiz:true,step:'lobby'},'');
  $('setup').style.display='none';$('lobby').style.display='block';phase='lobby';$('status').textContent='Создаём игровую комнату…';
  void QuizAudio.unlock();
  if(!window.Peer){$('status').textContent='Не загрузилась библиотека связи. Обнови страницу.';return}
  peer=new Peer();
+ const roomPeer=peer;
  peer.on('open',id=>{
+  if(peer!==roomPeer||phase!=='lobby')return;
   $('qr').innerHTML='';const url=location.origin+location.pathname.replace(/[^/]*$/,'')+'join.html?host='+encodeURIComponent(id);
   if(window.QRCode)new QRCode($('qr'),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});else $('qr').textContent='QR-код недоступен';
   $('room').textContent='Код комнаты: '+id;$('status').textContent='Комната открыта. Игроки могут подключаться.';
  });
- peer.on('connection',handleConnection);peer.on('error',e=>$('status').textContent='Ошибка соединения: '+e.type);
+ peer.on('connection',conn=>{if(peer===roomPeer)handleConnection(conn);else conn.close()});peer.on('error',e=>{if(peer===roomPeer)$('status').textContent='Ошибка соединения: '+e.type+'. Вернись к параметрам и попробуй снова.'});
 }
 function handleConnection(conn){
  connections.add(conn);
  conn.on('data',data=>{
-  if(!data||!data.type)return;
+  if(!connections.has(conn)||!data||!data.type)return;
   if(data.type==='join'){
    if(!players.has(conn.peer))players.set(conn.peer,{id:conn.peer,name:String(data.name||'Игрок').slice(0,16),avatar:String(data.avatar||'🎮'),color:playerColors[players.size%playerColors.length],ready:false,score:0,answer:null,wagerUsed:false,currentWager:false});
    const state={type:'state',players:publicRoster(),gameStarted:phase==='game'};
@@ -514,4 +571,5 @@ function finish(){
 }
 $('createRoom').addEventListener('click',createRoom);$('createCustomRoom').addEventListener('click',createCustomRoom);$('startGame').addEventListener('click',start);
 </script>
+<script src="tv-navigation.js"></script>
 </body></html>
