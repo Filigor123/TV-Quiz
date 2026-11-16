@@ -34,7 +34,7 @@ async function main() {
   if(!file.startsWith(root+path.sep)){res.writeHead(403);res.end();return}
   fs.readFile(file,(error,data)=>{
    if(error){res.writeHead(404);res.end();return}
-   res.setHeader('Content-Type',file.endsWith('.html')?'text/html; charset=utf-8':file.endsWith('.js')?'text/javascript; charset=utf-8':file.endsWith('.svg')?'image/svg+xml':'application/octet-stream');
+   res.setHeader('Content-Type',file.endsWith('.html')?'text/html; charset=utf-8':file.endsWith('.js')?'text/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':file.endsWith('.svg')?'image/svg+xml':'application/octet-stream');
    res.end(data);
   });
  });
@@ -52,7 +52,7 @@ async function main() {
   const focused=()=>page.locator(':focus');
   const key=async name=>{await page.keyboard.press(name);await page.waitForTimeout(35)};
   const legacy=async code=>{await page.evaluate(code=>document.dispatchEvent(new KeyboardEvent('keydown',{key:'Unidentified',keyCode:code,bubbles:true,cancelable:true})),code);await page.waitForTimeout(35)};
-  assert.equal(await page.locator('.catalog-card').count(),60);
+  assert.equal(await page.locator('.catalog-card').count(),105);
   assert.equal(await page.locator('.audio-controls').count(),0);
   assert.equal(await page.locator('#customRoundOpen').count(),0);
   assert.match(await focused().getAttribute('data-card-id'),/Музыка.*easy/);
@@ -68,32 +68,28 @@ async function main() {
    await page.screenshot({path:path.join(out,`tv-catalog-${width}.png`)});
   }
   await page.setViewportSize({width:1920,height:1080});
-  await legacy(39);assert.match(await focused().getAttribute('data-card-id'),/medium$/);
-  await legacy(39);await legacy(39);assert.match(await focused().getAttribute('data-card-id'),/Исполнители и хиты-easy$/,'skip unavailable difficulty');
+  assert.equal(await page.locator('#gameSettings,#questionCount,#timeLimit,#timerMode').count(),0,'no setup controls');
+  assert.equal(await page.locator('.hero,.level-legend,.remote-hint').count(),0,'approved clean header');
+  await legacy(39);assert.match(await focused().getAttribute('data-card-id'),/Queen-medium$/);
+  await legacy(39);assert.match(await focused().getAttribute('data-card-id'),/Мировые хиты-hard$/);
+  await legacy(39);await legacy(39);await legacy(39);
+  assert.match(await focused().getAttribute('data-card-id'),/Queen-easy$/,'skip unavailable expert/extreme');
   await legacy(40);assert.match(await focused().getAttribute('data-card-id'),/^Кино/);
   const selected=await focused().getAttribute('data-card-id');
-  await legacy(13);assert.equal(await focused().getAttribute('id'),'backCatalog');
-  await key('ArrowDown');assert.equal(await focused().getAttribute('id'),'questionCount');
-  await key('ArrowRight');assert.equal(await focused().inputValue(),'15');
-  await key('ArrowLeft');await key('ArrowLeft');assert.equal(await focused().inputValue(),'5');
-  await key('ArrowDown');await key('ArrowRight');assert.equal(await focused().inputValue(),'20');
+  await legacy(13);assert.equal(await focused().getAttribute('id'),'backLobby','card opens QR directly');
+  assert.equal(await page.locator('#startGame').isDisabled(),true);
+  await key('ArrowDown');assert.equal(await focused().getAttribute('id'),'joinLink');
+  await key('ArrowDown');assert.equal(await focused().getAttribute('id'),'joinLink','skip disabled start');
+  assert.equal(await page.locator('#qr').getAttribute('data-url'),'https://filigor123.github.io/TV-Quiz/join.html?host=test-room');
+  assert.equal(await page.locator('#joinLink').getAttribute('href'),await page.locator('#qr').getAttribute('data-url'));
+  assert.deepEqual(await page.evaluate(()=>audioCalls),[],'lobby is silent');
   await legacy(461);assert.equal(await focused().getAttribute('data-card-id'),selected,'LG Back restores card');
+  assert.equal(await page.evaluate(()=>testPeers[0].destroyed),true,'Back destroys old room');
   await key('Enter');await page.goBack();await page.waitForTimeout(60);
   assert.equal(await focused().getAttribute('data-card-id'),selected,'browser Back restores card');
   await key('Enter');
-  for(let i=0;i<4;i++)await key('ArrowDown');
-  assert.equal(await focused().getAttribute('id'),'createRoom');
-  await key('Enter');
-  assert.equal(await focused().getAttribute('id'),'backLobby');
-  assert.equal(await page.locator('#startGame').isDisabled(),true);
-  await key('ArrowDown');assert.equal(await focused().getAttribute('id'),'backLobby','skip disabled start');
-  assert.ok((await page.locator('#qr').getAttribute('data-url')).endsWith('join.html?host=test-room'));
-  assert.deepEqual(await page.evaluate(()=>audioCalls),[],'lobby is silent');
-  await legacy(461);assert.equal(await focused().getAttribute('id'),'backCatalog');
-  assert.equal(await page.evaluate(()=>testPeers[0].destroyed),true,'Back destroys old room');
-  for(let i=0;i<4;i++)await key('ArrowDown');await key('Enter');
   await page.evaluate(()=>{window.p1=testJoin('Первый');window.p2=testJoin('Второй')});
-  await key('ArrowDown');assert.equal(await focused().getAttribute('id'),'startGame');await key('Enter');
+  await key('ArrowDown');await key('ArrowDown');assert.equal(await focused().getAttribute('id'),'startGame');await key('Enter');
   await page.waitForFunction(()=>document.getElementById('game').style.display==='block');
   await page.waitForFunction(()=>p1.sent.some(message=>message.type==='answer-open'));
   assert.ok(await page.evaluate(()=>audioCalls.some(call=>call[0]==='startMusic')),'music starts with game');
@@ -105,10 +101,9 @@ async function main() {
   // Numeric quiz is a prepared catalog item, not the question editor.
   await page.goto(url);await page.waitForTimeout(60);
   await page.locator('.catalog-card[data-card-id="Эрудиция-Кто ближе?-easy"]').click();
-  await page.locator('#createRoom').click();
   assert.deepEqual(await page.evaluate(()=>deck.map(q=>q.type)),Array(10).fill('closest'));
   await page.evaluate(()=>{window.p1=testJoin('Первый');window.p2=testJoin('Второй')});
-  await key('ArrowDown');await key('Enter');
+  await key('ArrowDown');await key('ArrowDown');await key('Enter');
   await page.waitForFunction(()=>answerWindowOpen);
   await page.evaluate(()=>{
    p1.handlers.data({type:'answer',value:'1430',unit:''});
@@ -117,6 +112,20 @@ async function main() {
   assert.equal(await page.evaluate(()=>p1.sent.some(message=>message.type==='reveal')),false,'closest stays hidden until timeout');
   await page.evaluate(()=>reveal());
   assert.deepEqual(await page.evaluate(()=>roster().map(p=>p.score)),[1,1],'equidistant answers both earn one');
+  // Every playable card opens a room directly and uses a descending automatic timer.
+  await page.goto(url);await page.waitForTimeout(60);
+  const cardIds=await page.locator('.catalog-card:not(:disabled)').evaluateAll(cards=>cards.map(card=>card.dataset.cardId));
+  for(const id of cardIds){
+   await page.locator('[data-card-id='+JSON.stringify(id)+']').click();
+   const result=await page.evaluate(()=>({mode:config.timerMode,count:deck.length,types:deck.map(q=>q.type),times:deck.map(q=>questionTime(q)),rounds:deck.map(q=>q.roundIndex),numbers:deck.map(q=>q.roundQuestionNumber)}));
+   assert.equal(result.mode,'staged',id);assert.ok(result.count>0,id);
+   for(let n=0;n<result.times.length;n++){
+    if(result.numbers[n]===1)assert.equal(result.times[n],result.types[n]==='free-text'?50:40,id+' starts with ample time');
+    if(n&&result.rounds[n]===result.rounds[n-1])assert.ok(result.times[n]<=result.times[n-1],id+' descending timer');
+   }
+   await legacy(461);
+  }
+  console.log('Verified direct room launch and automatic timers for '+cardIds.length+' playable cards.');
   // Missing voice APIs and blocked storage cannot remove the catalog/focus.
   const fallback=await context.newPage();
   await fallback.addInitScript(()=>{
@@ -125,7 +134,7 @@ async function main() {
    Storage.prototype.setItem=()=>{throw new Error('Storage blocked')};
   });
   await fallback.goto(url);await fallback.waitForTimeout(60);
-  assert.equal(await fallback.locator('.catalog-card').count(),60);
+  assert.equal(await fallback.locator('.catalog-card').count(),105);
   assert.match(await fallback.locator(':focus').getAttribute('data-card-id'),/^Музыка/);
   await fallback.setViewportSize({width:390,height:844});
   assert.ok(await fallback.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'narrow host has no horizontal overflow');
