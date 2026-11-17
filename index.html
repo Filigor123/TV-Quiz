@@ -238,6 +238,7 @@ button:focus,select:focus,input:focus,a:focus{outline:4px solid #fff;outline-off
 <script src="catalog-collections.js"></script>
 <script src="room-link.js"></script>
 <script src="peer-id.js"></script>
+<script src="relay-transport.js"></script>
 <script>
 const $=id=>document.getElementById(id),players=new Map(),connections=new Set();
 let currentQuestionText='',lastAnnouncedRound=null,currentQuestionToken=0;
@@ -476,8 +477,8 @@ function openRoom(){
  history.pushState({tvQuiz:true,step:'lobby'},'');
  $('setup').style.display='none';$('lobby').style.display='block';phase='lobby';$('status').textContent='Создаём игровую комнату…';
  void QuizAudio.unlock();
- if(!window.Peer){$('status').textContent='Не загрузилась библиотека связи. Обнови страницу.';return}
- peer=new Peer(QuizPeerId.create());
+ if(!window.QuizTransport){$('status').textContent='Не загрузилась библиотека связи. Обнови страницу.';return}
+ peer=QuizTransport.host();
  const roomPeer=peer;
  peer.on('open',id=>{
   if(peer!==roomPeer||phase!=='lobby')return;

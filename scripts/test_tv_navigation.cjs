@@ -43,6 +43,7 @@ async function main() {
  try {
   const context=await browser.newContext({viewport:{width:1920,height:1080},reducedMotion:'reduce'});
   await context.route('https://unpkg.com/**',route=>route.fulfill({contentType:'text/javascript',body:peerStub}));
+  await context.route('**/relay-transport.js',route=>route.fulfill({contentType:'text/javascript',body:'window.QuizTransport={host:()=>new Peer(),player:()=>new Peer()};'}));
   await context.route('https://cdnjs.cloudflare.com/**',route=>route.fulfill({contentType:'text/javascript',body:'window.QRCode=class {static CorrectLevel={M:0};constructor(el,options){el.dataset.url=options.text}}'}));
   await context.route('**/audio.js',route=>route.fulfill({contentType:'text/javascript',body:fs.readFileSync(path.join(root,'audio.js'),'utf8')+audioStub}));
   const page=await context.newPage(), errors=[];
