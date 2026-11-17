@@ -82,6 +82,7 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="game-model.js"></script>
 <script src="peer-id.js"></script>
+<script src="relay-transport.js"></script>
 <script>
 let avatar='😎',peer=null,conn=null,amReady=false,players=[],started=false,answered=false,phoneTimer=null,selectedAnswer=null,localPlayerId='',currentQuestion=null,wagerAvailable=true;
 const hostId=new URLSearchParams(location.search).get('host');
@@ -180,7 +181,7 @@ connectBtn.addEventListener('click',()=>{
   const name=document.getElementById('playerName').value.trim();
   if(!name){setMessage('Сначала введи имя.');return}
   if(!hostId){setMessage('Не найден код комнаты. Вернись к телевизору и отсканируй QR-код ещё раз.');return}
-  if(!window.Peer){setMessage('Не загрузилась библиотека связи. Проверь интернет и обнови страницу.');return}
+  if(!window.QuizTransport||(!hostId.startsWith('r1-')&&!window.Peer)){setMessage('Не загрузилась библиотека связи. Проверь интернет и обнови страницу.');return}
   releaseConnection();
   const attempt=connectionAttempt;
   const active=()=>attempt===connectionAttempt;
@@ -189,14 +190,14 @@ connectBtn.addEventListener('click',()=>{
   connectBtn.disabled=true;
   connectBtn.textContent='Подключаемся…';
   setMessage('Подключаемся к службе связи…');
-  peer=new Peer(QuizPeerId.create());
+  peer=QuizTransport.player(hostId);
   const attemptPeer=peer;
   let joined=false;
   waitFor(15000,'Служба связи не ответила. Проверь интернет на телефоне и повтори попытку.');
   attemptPeer.on('open',()=>{
    if(!active())return;
-   setMessage('Служба связи найдена. Соединяемся с ведущим…');
-   waitFor(25000,'Не удалось установить прямое соединение с ведущим. Оставь QR-код открытым. Проверь обычную Wi-Fi сеть и VPN; повтори попытку.');
+   setMessage('Входим в игровую комнату…');
+   waitFor(25000,hostId.startsWith('r1-')?'Сервер комнаты не ответил. Проверь интернет и повтори подключение.':'Не удалось установить прямое соединение с ведущим. Обнови страницу ведущего и отсканируй новый QR-код.');
    conn=attemptPeer.connect(hostId,{reliable:true});
    const attemptConnection=conn;
    attemptConnection.on('open',()=>{
