@@ -1,0 +1,4 @@
+# Local audio preparation; never published automatically.
+.local-tools/
+__pycache__/
+*.pyc
