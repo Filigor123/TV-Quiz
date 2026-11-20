@@ -54,7 +54,14 @@ async function main() {
   const key=async name=>{await page.keyboard.press(name);await page.waitForTimeout(35)};
   const legacy=async code=>{await page.evaluate(code=>document.dispatchEvent(new KeyboardEvent('keydown',{key:'Unidentified',keyCode:code,bubbles:true,cancelable:true})),code);await page.waitForTimeout(35)};
   assert.equal(await page.locator('.catalog-card').count(),105);
-  assert.equal(await page.locator('.audio-controls').count(),0);
+  const coverInventory=await page.locator('.catalog-card').evaluateAll(cards=>{
+    const byQuiz=new Map();
+    for(const card of cards)byQuiz.set(card.dataset.qi,card.querySelector('.card-art img')?.getAttribute('src'));
+    return [...byQuiz.values()];
+  });
+  assert.equal(new Set(coverInventory).size,coverInventory.length,'each named quiz has its own image');
+  assert(coverInventory.every(src=>src&&fs.existsSync(path.join(root,src))),'all covers exist');
+  assert.equal(await page.locator('.audio-controls:visible').count(),0);
   assert.equal(await page.locator('#customRoundOpen').count(),0);
   assert.match(await focused().getAttribute('data-card-id'),/Музыка.*easy/);
   assert.deepEqual(await page.evaluate(()=>audioCalls),[],'catalog is silent');
@@ -62,7 +69,7 @@ async function main() {
   const out=process.env.TV_TEST_ARTIFACTS||path.join(require('node:os').tmpdir(),'tv-quiz-test-artifacts');fs.mkdirSync(out,{recursive:true});
   for(const [width,height] of [[1920,1080],[3840,2160]]){
    await page.setViewportSize({width,height});
-   await page.waitForTimeout(60);
+   await page.evaluate(()=>Promise.all([...document.querySelectorAll('.shelf:nth-child(-n+3) .card-art img[fetchpriority]')].map(img=>img.decode())));
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
    const third=await page.locator('.shelf').nth(2).boundingBox();
    assert.ok(third.y+third.height<=height,`third shelf fits ${width}: ${third.y+third.height}`);
@@ -74,7 +81,7 @@ async function main() {
   await legacy(39);assert.match(await focused().getAttribute('data-card-id'),/Queen-medium$/);
   await legacy(39);assert.match(await focused().getAttribute('data-card-id'),/Мировые хиты-hard$/);
   await legacy(39);await legacy(39);await legacy(39);
-  assert.match(await focused().getAttribute('data-card-id'),/Queen-easy$/,'skip unavailable expert/extreme');
+  assert.match(await focused().getAttribute('data-card-id'),/Мировые хиты-easy$/,'skip unavailable expert/extreme');
   await legacy(40);assert.match(await focused().getAttribute('data-card-id'),/^Кино/);
   const selected=await focused().getAttribute('data-card-id');
   await legacy(13);assert.equal(await focused().getAttribute('id'),'backLobby','card opens QR directly');
@@ -86,25 +93,35 @@ async function main() {
   assert.deepEqual(await page.evaluate(()=>audioCalls),[],'lobby is silent');
   await legacy(461);assert.equal(await focused().getAttribute('data-card-id'),selected,'LG Back restores card');
   assert.equal(await page.evaluate(()=>testPeers[0].destroyed),true,'Back destroys old room');
-  await key('Enter');await page.goBack();await page.waitForTimeout(60);
+  await key('Enter');await page.goBack();await page.waitForFunction(id=>document.activeElement?.dataset.cardId===id,selected);
   assert.equal(await focused().getAttribute('data-card-id'),selected,'browser Back restores card');
   await key('Enter');
   await page.evaluate(()=>{window.p1=testJoin('Первый');window.p2=testJoin('Второй')});
   await key('ArrowDown');await key('ArrowDown');assert.equal(await focused().getAttribute('id'),'startGame');await key('Enter');
   await page.waitForFunction(()=>document.getElementById('game').style.display==='block');
+  await page.locator('#beginRound').waitFor({state:'visible'});await key('Enter');
   await page.waitForFunction(()=>p1.sent.some(message=>message.type==='answer-open'));
+  for(const [width,height] of [[1920,1080],[3840,2160],[390,844]]){
+   await page.setViewportSize({width,height});
+   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth&&[...document.querySelectorAll('body *')].map(el=>[el.id||el.className,el.getBoundingClientRect().right]).filter(([,right])=>right>innerWidth).slice(0,10));
+   assert(!overflow,`game fits ${width}px: ${JSON.stringify(overflow)}`);
+   await page.screenshot({path:path.join(out,`tv-game-${width}.png`)});
+  }
+  await page.setViewportSize({width:1920,height:1080});
   assert.ok(await page.evaluate(()=>audioCalls.some(call=>call[0]==='startMusic')),'music starts with game');
-  assert.ok(await page.evaluate(()=>audioCalls.some(call=>call[0]==='speakQuestion')),'voice starts with game');
+  assert.equal(await page.evaluate(()=>audioCalls.some(call=>call[0]==='speakQuestion')),false,'voice remains disabled');
   assert.equal(await page.evaluate(()=>p1.sent.filter(m=>m.type==='question').some(m=>'correct' in m.question)),false);
   await page.evaluate(()=>{p1.handlers.data({type:'answer',answer:0});p2.handlers.data({type:'answer',answer:1})});
   await page.waitForFunction(()=>p1.sent.some(message=>message.type==='reveal'),{},{timeout:6000});
   assert.equal(await page.evaluate(()=>p1.sent.filter(message=>message.type==='reveal').length),1);
+  await page.screenshot({path:path.join(out,'tv-game-reveal.png')});
   // Numeric quiz is a prepared catalog item, not the question editor.
   await page.goto(url);await page.waitForTimeout(60);
   await page.locator('.catalog-card[data-card-id="Эрудиция-Кто ближе?-easy"]').click();
   assert.deepEqual(await page.evaluate(()=>deck.map(q=>q.type)),Array(10).fill('closest'));
   await page.evaluate(()=>{window.p1=testJoin('Первый');window.p2=testJoin('Второй')});
   await key('ArrowDown');await key('ArrowDown');await key('Enter');
+  await page.locator('#beginRound').waitFor({state:'visible'});await key('Enter');
   await page.waitForFunction(()=>answerWindowOpen);
   await page.evaluate(()=>{
    p1.handlers.data({type:'answer',value:'1430',unit:''});

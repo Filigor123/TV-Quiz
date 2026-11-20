@@ -1,0 +1,67 @@
+[
+  {
+    "file": "assets/licensed/a01.mp3",
+    "title": "Carefree",
+    "attribution": "Kevin MacLeod (incompetech.com)",
+    "downloadUrl": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Carefree.mp3",
+    "termsUrl": "https://incompetech.com/music/royalty-free/licenses/",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "sourceStartSeconds": 8,
+    "sourceEndSeconds": 20,
+    "changes": "Extracted segment, transcoded, metadata stripped; audio-only clips have fades",
+    "sha256": "11d1c2eece25cc73337284080d19bcb10162dab242aa6b63f1223815dd773967",
+    "bytes": 193140
+  },
+  {
+    "file": "assets/licensed/a02.mp3",
+    "title": "Monkeys Spinning Monkeys",
+    "attribution": "Kevin MacLeod (incompetech.com)",
+    "downloadUrl": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Monkeys%20Spinning%20Monkeys.mp3",
+    "termsUrl": "https://incompetech.com/music/royalty-free/licenses/",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "sourceStartSeconds": 3,
+    "sourceEndSeconds": 15,
+    "changes": "Extracted segment, transcoded, metadata stripped; audio-only clips have fades",
+    "sha256": "018e91e7970ed9fe6c18525f760edbd470ef2b851c47f7bc655d00615dcbf7f2",
+    "bytes": 193140
+  },
+  {
+    "file": "assets/licensed/background.mp3",
+    "title": "Carefree",
+    "attribution": "Kevin MacLeod (incompetech.com)",
+    "downloadUrl": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Carefree.mp3",
+    "termsUrl": "https://incompetech.com/music/royalty-free/licenses/",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "sourceStartSeconds": 30,
+    "sourceEndSeconds": 62,
+    "changes": "Extracted segment, transcoded, metadata stripped; audio-only clips have fades",
+    "sha256": "2360eb69b6843a3f26e68064d2ca4c426d6d58930db7018a6918f8af4573af8d",
+    "bytes": 512878
+  },
+  {
+    "file": "assets/licensed/v01.mp4",
+    "title": "Big Buck Bunny",
+    "attribution": "(c) copyright 2008, Blender Foundation / www.bigbuckbunny.org",
+    "downloadUrl": "https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4.zip",
+    "termsUrl": "https://peach.blender.org/about/",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "sourceStartSeconds": 45,
+    "sourceEndSeconds": 57,
+    "changes": "Extracted segment, transcoded, metadata stripped; audio-only clips have fades",
+    "sha256": "b38e93d54127cb6de9f57e3f11a6b53c2aaa5f8c10d2c95fbba2fc3d9318f6e2",
+    "bytes": 492097
+  },
+  {
+    "file": "assets/licensed/v02.mp4",
+    "title": "Sintel trailer",
+    "attribution": "(c) copyright Blender Foundation / www.sintel.org",
+    "downloadUrl": "https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4",
+    "termsUrl": "https://durian.blender.org/sharing/",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "sourceStartSeconds": 26,
+    "sourceEndSeconds": 35,
+    "changes": "Extracted segment, transcoded, metadata stripped; audio-only clips have fades",
+    "sha256": "cfd60728c3d89114989f66097d23eb7041c59566e31602cef89608a84c01935b",
+    "bytes": 575643
+  }
+]

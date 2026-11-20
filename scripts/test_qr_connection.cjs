@@ -58,9 +58,9 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+(req
   assert.equal(await phones[1].evaluate(()=>localPlayerId===peer.id),true,'local player uses its own ID, not the host ID');
   await host.waitForFunction(()=>!document.getElementById('startGame').disabled);
   await host.keyboard.press('ArrowDown');await host.keyboard.press('ArrowDown');await host.keyboard.press('Enter');
-  await host.waitForFunction(()=>answerWindowOpen||!document.getElementById('continueQuestionBtn').hidden,{},{timeout:20000});
-  if(await host.locator('#continueQuestionBtn').isVisible()){console.log('No headless voice: remote continuation');await host.keyboard.press('Enter')}
-  await phones[0].waitForFunction(()=>!document.querySelector('.choice').disabled);
+  await host.locator('#beginRound').waitFor({state:'visible'});await host.locator('#beginRound').focus();await host.keyboard.press('Enter');
+   await host.waitForFunction(()=>answerWindowOpen,{},{timeout:20000});
+   for(const phone of phones)await phone.waitForFunction(()=>Boolean(document.querySelector('.choice:enabled')));
   const correct=await host.evaluate(()=>deck[round].correct);
   await phones[0].locator('.choice').nth((correct+1)%4).click();await phones[1].locator('.choice').nth(correct).click();
   await host.waitForFunction(()=>document.getElementById('answers').dataset.revealed==='1',{},{timeout:7000});
@@ -68,6 +68,7 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+(req
   assert.deepEqual(await host.evaluate(()=>roster().map(p=>p.score)),[0,1]);
   assert.match(await phones[1].locator('#answerMessage').innerText(),/Правильно!/);
   if(blockIdEndpoint){assert.equal(idRequests,1,'updated host/phones must not request a server-generated ID');console.log('PASS: real connection and game work with HTTP ID allocation blocked.');}
-  console.log('PASS real PeerJS: QR URL, two clients join/ready, direct catalog→QR, keyboard-only launch, dynamic first timer, answers/reveal and 0/1 scores.');
+  console.log('PASS real '+(id.startsWith('r1-')?'HTTPS rooms':'PeerJS')+': QR URL, two clients join/ready, direct catalog→QR, keyboard-only launch, answers/reveal and 0/1 scores.');
+  await host.evaluate(()=>peer.destroy());
  } finally {await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1});

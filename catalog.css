@@ -83,13 +83,40 @@ body.catalog-mode #setup {
   pointer-events: none;
 }
 #catalogHome .card-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+#catalogHome .catalog-card[data-level-key="medium"] .card-art img { object-position: 70% 45%; transform: scale(1.08); }
+#catalogHome .catalog-card[data-level-key="hard"] .card-art img { object-position: 90% 58%; transform: scale(1.15); }
+#catalogHome .catalog-card[data-level-key="expert"] .card-art img { object-position: 18% 68%; transform: scale(1.25); }
+#catalogHome .catalog-card[data-level-key="extreme"] .card-art img { object-position: 60% 85%; transform: scale(1.32); }
+#catalogHome .catalog-card[data-level-key="medium"] .card-art::before,
+#catalogHome .catalog-card[data-level-key="hard"] .card-art::before,
+#catalogHome .catalog-card[data-level-key="expert"] .card-art::before,
+#catalogHome .catalog-card[data-level-key="extreme"] .card-art::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: .55;
+  mix-blend-mode: screen;
+  mask-image: linear-gradient(transparent 18%, #000);
+}
+#catalogHome .catalog-card[data-level-key="medium"] .card-art::before {
+  background: repeating-linear-gradient(135deg, transparent 0 32px, #78aff43b 33px 35px, transparent 36px 65px);
+}
+#catalogHome .catalog-card[data-level-key="hard"] .card-art::before {
+  background: repeating-radial-gradient(ellipse at 95% 70%, transparent 0 20px, #f3ad603b 22px 24px, transparent 26px 38px);
+}
+#catalogHome .catalog-card[data-level-key="expert"] .card-art::before {
+  background: linear-gradient(35deg, transparent 40%, #c69dfa65 40% 44%, transparent 44% 65%, #c69dfa45 65% 67%, transparent 67%);
+}
+#catalogHome .catalog-card[data-level-key="extreme"] .card-art::before {
+  background: repeating-conic-gradient(from 20deg at 76% 52%, transparent 0 23deg, #fa728e45 24deg 25deg, transparent 26deg 45deg);
+}
 #catalogHome .card-art::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(0deg, #02050deb, #03060a52 30%, transparent 65%);
 }
-#catalogHome .card-art svg { height: 100%; width: 100%; filter: none; }
 #catalogHome .card-copy {
   width: 100%; max-width: 100%; padding: 0; margin: 0;
   min-height: 0; height: auto; gap: 0;

@@ -47,7 +47,7 @@
   const MUSIC_DURATION_SECONDS = MUSIC_SECTION_SECONDS * MUSIC_CHORDS.length;
 
   function loadSettings() {
-    const defaults = { effects: true, music: false, speech: true, voiceURI: '' };
+    const defaults = { effects: true, music: true, musicVolume: 0.13 };
 
     try {
       const stored = JSON.parse(window.localStorage.getItem(SETTINGS_KEY) || 'null');
@@ -55,8 +55,7 @@
       return {
         effects: typeof stored.effects === 'boolean' ? stored.effects : defaults.effects,
         music: typeof stored.music === 'boolean' ? stored.music : defaults.music,
-        speech: typeof stored.speech === 'boolean' ? stored.speech : defaults.speech,
-        voiceURI: typeof stored.voiceURI === 'string' ? stored.voiceURI : defaults.voiceURI,
+        musicVolume: Number.isFinite(stored.musicVolume) ? Math.max(0,Math.min(1,stored.musicVolume)) : defaults.musicVolume,
       };
     } catch (_) {
       return defaults;
@@ -68,6 +67,8 @@
   let effectsBus = null;
   let musicBus = null;
   let musicBuffer = null;
+  let licensedMusicBuffer = null;
+  let musicTrack = '';
   let musicSource = null;
   let musicGain = null;
   let musicStartPromise = null;
@@ -75,9 +76,6 @@
   let userGestureGranted = false;
   let musicDucked = false;
   let musicDuckGain = 0.06;
-  let currentUtterance = null;
-  let currentSpeechResolve = null;
-  let currentSpeechTimeout = null;
 
   function saveSettings() {
     try {
@@ -161,18 +159,6 @@
     return musicDucked;
   }
 
-  function setSpeechEnabled(enabled) {
-    settings.speech = Boolean(enabled);
-    saveSettings();
-    return settings.speech;
-  }
-
-  function setSpeechVoice(voiceURI) {
-    settings.voiceURI = String(voiceURI || '');
-    saveSettings();
-    return settings.voiceURI;
-  }
-
   function scheduleTone(audioContext, note) {
     const oscillator = audioContext.createOscillator();
     const envelope = audioContext.createGain();
@@ -253,13 +239,22 @@
       if (!ready || !settings.music || requestId !== musicRequestId || !musicBus) return false;
 
       try {
+        if (!licensedMusicBuffer) {
+          try {
+            const response = await fetch('assets/licensed/background.mp3');
+            if (!response.ok) throw new Error('Music unavailable');
+            licensedMusicBuffer = await context.decodeAudioData(await response.arrayBuffer());
+          } catch (_) { /* Offline fallback: the original generated instrumental loop. */ }
+        }
+        if (!settings.music || requestId !== musicRequestId) return false;
         const source = context.createBufferSource();
         const volume = context.createGain();
         const now = context.currentTime;
-        source.buffer = createMusicBuffer(context);
+        source.buffer = licensedMusicBuffer || createMusicBuffer(context);
+        musicTrack = licensedMusicBuffer ? 'Carefree — Kevin MacLeod' : 'Синтезированный фон';
         source.loop = true;
         volume.gain.setValueAtTime(0.0001, now);
-        volume.gain.exponentialRampToValueAtTime(0.13, now + 0.8);
+        volume.gain.exponentialRampToValueAtTime(Math.max(0.0001,settings.musicVolume), now + 0.8);
         source.connect(volume);
         volume.connect(musicBus);
         source.onended = () => {
@@ -310,87 +305,12 @@
     return true;
   }
 
-  function speechSupported() {
-    return typeof window.speechSynthesis !== 'undefined'
-      && typeof window.SpeechSynthesisUtterance !== 'undefined';
-  }
-
-  function getSpeechVoices() {
-    if (!speechSupported()) return [];
-    try {
-      return window.speechSynthesis.getVoices().filter((voice) => /^ru([_-]|$)/i.test(voice.lang));
-    } catch (_) {
-      return [];
-    }
-  }
-
-  function stopSpeech() {
-    if (speechSupported()) {
-      try {
-        window.speechSynthesis.cancel();
-      } catch (_) {
-        // Speech cancellation is best effort across browsers.
-      }
-    }
-
-    if (currentSpeechResolve) {
-      const resolve = currentSpeechResolve;
-      if (currentSpeechTimeout !== null) window.clearTimeout(currentSpeechTimeout);
-      currentSpeechTimeout = null;
-      currentUtterance = null;
-      currentSpeechResolve = null;
-      resolve(false);
-      return true;
-    }
-    return false;
-  }
-
-  function speakQuestion(text) {
-    if (!userGestureGranted || !speechSupported() || typeof text !== 'string' || !text.trim()) {
-      return Promise.resolve(false);
-    }
-
-    stopSpeech();
-
-    return new Promise((resolve) => {
-      try {
-        const utterance = new window.SpeechSynthesisUtterance(text.trim());
-        const voices = getSpeechVoices();
-        const russianVoice = voices.find((voice) => voice.voiceURI === settings.voiceURI)
-          || voices.find((voice) => /^ru([_-]|$)/i.test(voice.lang));
-        if (!russianVoice) {
-          resolve(false);
-          return;
-        }
-        utterance.lang = 'ru-RU';
-        utterance.rate = 0.96;
-        utterance.pitch = 1;
-        if (russianVoice) utterance.voice = russianVoice;
-
-        currentUtterance = utterance;
-        currentSpeechResolve = resolve;
-        const finish = (spoken) => {
-          if (currentUtterance !== utterance) return;
-          if (currentSpeechTimeout !== null) window.clearTimeout(currentSpeechTimeout);
-          currentSpeechTimeout = null;
-          currentUtterance = null;
-          currentSpeechResolve = null;
-          resolve(spoken);
-        };
-        utterance.onend = () => finish(true);
-        utterance.onerror = () => finish(false);
-        currentSpeechTimeout = window.setTimeout(() => {
-          if (currentUtterance !== utterance) return;
-          try { window.speechSynthesis.cancel(); } catch (_) { /* Best effort. */ }
-          finish(false);
-        }, 30000);
-        window.speechSynthesis.speak(utterance);
-      } catch (_) {
-        currentUtterance = null;
-        currentSpeechResolve = null;
-        resolve(false);
-      }
-    });
+  function setMusicVolume(value) {
+    if (!Number.isFinite(Number(value))) return settings.musicVolume;
+    settings.musicVolume=Math.max(0,Math.min(1,Number(value)));
+    saveSettings();
+    if(musicGain){musicGain.gain.cancelScheduledValues(context.currentTime);musicGain.gain.setValueAtTime(settings.musicVolume,context.currentTime);}
+    return settings.musicVolume;
   }
 
   window.QuizAudio = Object.freeze({
@@ -407,13 +327,8 @@
     stopMusic,
     setEffectsEnabled,
     setMusicEnabled,
+    setMusicVolume,
     setMusicDucked,
-    getSettings: () => ({ effects: settings.effects, music: settings.music, speech: settings.speech, voiceURI: settings.voiceURI }),
-    setSpeechEnabled,
-    setSpeechVoice,
-    isSpeechSupported: speechSupported,
-    getSpeechVoices,
-    speakQuestion,
-    stopSpeech,
+    getSettings: () => ({ effects: settings.effects, music: settings.music, musicVolume: settings.musicVolume, musicTrack }),
   });
 })();
