@@ -10,6 +10,7 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+(req
  const browser=await chromium.launch({channel:'msedge',headless:true});
  try{
   const local='http://127.0.0.1:'+server.address().port+'/';
+  const published=process.env.TV_TEST_PUBLISHED_URL;
   const host=await browser.newPage({viewport:{width:1920,height:1080},reducedMotion:'reduce'});
   // Regression: the original client fails with server-error when /id is blocked.
   // Updated clients must register local IDs using real WebSocket signalling.
@@ -33,7 +34,23 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+(req
    await blockId(host);
   }
   host.on('pageerror',e=>console.log('HOST ERROR',e.message));
-  await host.goto(require('node:url').pathToFileURL(path.join(root,'index.html')).href);await host.keyboard.press('Enter');
+   await host.goto(published||require('node:url').pathToFileURL(path.join(root,'index.html')).href);
+   if(published){
+    await host.locator('link[href="game-room.css"]').waitFor({state:'attached'});
+    await host.locator('.catalog-card:not(:disabled)').first().waitFor();
+   }
+   const quizId=process.env.TV_TEST_PUBLISHED_QUIZ;
+   if(quizId){
+    const index=await host.evaluate(quizId=>quizzes.findIndex(q=>q.id===quizId),quizId);
+    await host.locator(`[data-qi="${index}"]:not(:disabled)`).first().focus();
+   }
+   await host.keyboard.press('Enter');
+   if(published){
+    const counts=await host.evaluate(()=>config.roundCounts);
+    assert.equal(counts.length,3);assert(counts.every(n=>n>0));
+    if(quizId==='scrambled-words')assert.deepEqual(counts,[10,10,10]);
+    console.log('Published deck:',counts.join('/'));
+   }
   await host.waitForFunction(()=>peer&&peer.id&&!document.getElementById('joinLink').hidden,{},{timeout:20000});
   const id=await host.evaluate(()=>peer.id);
   const qr=PNG.sync.read(await host.locator('#qr').screenshot());
@@ -43,14 +60,14 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+(req
   assert.equal(scannedUrl.origin,'https://filigor123.github.io');
   assert.equal(scannedUrl.pathname,'/TV-Quiz/join.html');
   assert.equal(scannedUrl.searchParams.get('host'),id);
-  console.log('PASS: QR image decoded from file-launched host; valid published phone URL and exact room ID.');
+   console.log('PASS: QR image decoded from '+(published?'published host':'file-launched host')+'; valid published phone URL and exact room ID.');
   const phones=[];
   for(let i=0;i<2;i++){
    const phone=await browser.newPage({viewport:{width:390,height:844}});phones.push(phone);
    if(blockIdEndpoint)await blockId(phone);
    // Normal smoke visits the decoded public URL with the first phone.
    // With /id deliberately blocked, both phones use this branch's local-ID fix.
-   await phone.goto(i===0&&!blockIdEndpoint?scanned.data:local+'join.html?host='+encodeURIComponent(id));
+    await phone.goto(published||(i===0&&!blockIdEndpoint)?scanned.data:local+'join.html?host='+encodeURIComponent(id));
    await phone.locator('#playerName').fill('Проверка '+(i+1));
    await phone.locator('#connectBtn').click();await phone.locator('#readyBtn').waitFor({state:'visible',timeout:20000});await phone.locator('#readyBtn').click();
    assert.ok(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));

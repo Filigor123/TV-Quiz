@@ -244,6 +244,7 @@ button:focus,select:focus,input:focus,a:focus{outline:4px solid #fff;outline-off
 <script src="game-model.js"></script>
 <script src="audio.js"></script>
 <script src="slang-quiz.js"></script>
+<script src="scrambled-words.js"></script>
 <script src="audio-quiz.js"></script>
 <script src="facts-quiz.js"></script>
 <script src="media-preview-quiz.js"></script>
@@ -251,6 +252,7 @@ button:focus,select:focus,input:focus,a:focus{outline:4px solid #fff;outline-off
 <script src="catalog-collections.js"></script>
 <script src="question-review.js"></script>
 <script src="finale-extras.js"></script>
+<script src="bank-supplements.js"></script>
 <script src="licensed-media.js"></script>
 <script src="round-plans.js"></script>
 <script src="room-link.js"></script>
@@ -307,6 +309,8 @@ const questionShelves=[
 questionShelves[2].items.push({id:'slang-chat',category:window.QUIZ_SLENG.category,topic:window.QUIZ_SLENG.topic,title:window.QUIZ_SLENG.title,desc:window.QUIZ_SLENG.description,cover:window.QUIZ_SLENG.cover,multiRound:true});
 const factsQuizCard={id:'abbreviation-pilot',category:window.QUIZ_FACTS.category,topic:window.QUIZ_FACTS.topic,title:window.QUIZ_FACTS.title,desc:window.QUIZ_FACTS.description,cover:window.QUIZ_FACTS.cover,multiQuiz:window.QUIZ_FACTS};
 questionShelves[2].items.push(factsQuizCard);
+const scrambled=window.QUIZ_SCRAMBLED;
+questionShelves[2].items.push({...scrambled, desc:scrambled.description, multiQuiz:scrambled});
 questionShelves[2].items.push({id:'closest-numbers',category:'Эрудиция',topic:'Кто ближе?',title:'Кто ближе?',desc:'Угадывай числа · ближайший ответ получает очко',cover:'logic-numbers',fixedQuiz:window.QUIZ_CLOSEST});
 // Reserved media asset shape: {type:'image'|'audio'|'video',src,startSeconds?,endSeconds?}.
 const audioQuizCard={id:'audio-recognition',category:window.QUIZ_AUDIO.category,topic:window.QUIZ_AUDIO.topic,title:window.QUIZ_AUDIO.title,desc:window.QUIZ_AUDIO.description,cover:window.QUIZ_AUDIO.cover,multiQuiz:window.QUIZ_AUDIO};
@@ -328,8 +332,10 @@ function collectionPool(quiz){
 function quizPool(q,level){
  if(q.multiRound||q.multiQuiz)return [];
  if(q.fixedQuiz)return q.fixedQuiz;
- return (collectionPool(q)||window.QUIZ_QUESTIONS||[]).filter(item=>!window.QUIZ_EXCLUDED_TEXTS.has(item.text)&&item.difficulty===level&&
+ const original=(collectionPool(q)||window.QUIZ_QUESTIONS||[]).filter(item=>!window.QUIZ_EXCLUDED_TEXTS.has(item.text)&&item.difficulty===level&&
    (q.collection||(item.category===q.category&&item.topic===q.topic)));
+ const additions=(window.QUIZ_BANK_SUPPLEMENTS[q.id]||[]).filter(item=>item.difficulty===level);
+ return [...original,...additions];
 }
 function quizPlan(q,level){return QuizRoundPlans.plan(q,quizPool(q,level))}
 function catalogEntries(shelf){

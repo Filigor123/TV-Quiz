@@ -48,7 +48,8 @@ fs.mkdirSync(artifacts,{recursive:true});
    if(await host.evaluate(()=>phase!=='setup'))await host.reload();
    await host.evaluate(()=>{QuizAudio.setMusicEnabled(false);QuizAudio.setEffectsEnabled(false)});
    const qi=await host.evaluate(id=>quizzes.findIndex(q=>q.id===id),id);
-   await host.locator(`[data-qi="${qi}"]:not(:disabled)`).first().click();
+   const level=process.env.TV_TEST_LEVEL;
+   await host.locator(`[data-qi="${qi}"]:not(:disabled)${level?`[data-level-key="${level}"]`:''}`).first().click();
    await host.waitForFunction(()=>peer?.id?.startsWith('r1-')&&!document.getElementById('joinLink').hidden);
    const room=await host.evaluate(()=>peer.id),phones=[];
    for(let i=0;i<2;i++){
