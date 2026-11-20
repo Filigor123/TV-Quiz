@@ -109,7 +109,8 @@
   }
 
   function canUseWager(question, wagerUsed, requested) {
-    return Boolean(requested === true && wagerUsed !== true && question && question.roundIndex === 1);
+    return Boolean(requested === true && wagerUsed !== true && question && question.roundIndex === 1
+      && question.allowWager === true && question.type !== 'closest');
   }
 
   function answerScore(isCorrect, wagered) {

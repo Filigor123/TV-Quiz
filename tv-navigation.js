@@ -52,6 +52,12 @@
     const key = aliases[event.key] || codes[event.keyCode] || event.key;
     if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Enter','Back'].includes(key)) return;
     const input = document.activeElement;
+    if(input?.matches('input[type="range"]')&&(key==='ArrowLeft'||key==='ArrowRight')){
+      event.preventDefault();
+      if(key==='ArrowRight')input.stepUp();else input.stepDown();
+      input.dispatchEvent(new Event('input',{bubbles:true}));
+      return;
+    }
     const editing = input && (input.matches('textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="button"])') || input.isContentEditable);
     if (editing && (event.key === 'Backspace' || key === 'ArrowLeft' || key === 'ArrowRight')) return;
     event.preventDefault();

@@ -74,8 +74,10 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 <button class="action" id="readyBtn">Готов</button>
 <button class="action" id="startBtn" style="display:none">Начать игру</button>
 </section>
+<section id="roundWait" style="display:none"><h1 id="phoneRoundTitle"></h1><p id="phoneRoundRules"></p><div id="phoneRoundScores"></div><p>Следующий раунд запускается на экране ведущего.</p></section>
+<section id="phoneResults" style="display:none"><h1>🏆 Игра завершена</h1><div id="phoneFinalScores"></div><p>Ждём новую игру на экране ведущего.</p></section>
 <section id="play">
-<h1>Вопрос</h1><p class="roundInfo" id="roundInfo"></p><div class="phoneTimer" id="phoneTimer"></div><div class="question" id="question"></div><div class="choices" id="choices"></div><div class="text-answer" id="textAnswerForm" hidden><label for="freeAnswer">Твой ответ</label><input id="freeAnswer" type="text" maxlength="120" autocomplete="off" aria-label="Твой ответ" placeholder="Напиши ответ своими словами"><label class="wager-option" id="wagerOption" hidden><input id="wagerCheckbox" type="checkbox"><span><strong>Рискую</strong><br>Верный ответ: 2 очка. Ошибка: −1 очко. Ставка доступна один раз за второй раунд.</span></label><button id="sendFreeAnswer" type="button">Отправить ответ</button></div><div class="closest-form" id="closestForm" hidden><label for="closestValue">Твой ответ</label><input id="closestValue" inputmode="decimal" autocomplete="off"><select id="closestUnitChoice" hidden aria-label="Единица ответа"></select><div class="unit-label" id="closestUnitLabel"></div><button class="action" id="submitClosest" type="button">Отправить ответ</button></div><p class="hint" id="answerMessage"></p><p class="hint" id="explanationPhone"></p>
+<h1>Вопрос</h1><p class="roundInfo" id="roundInfo"></p><div class="phoneTimer" id="phoneTimer"></div><div class="question" id="question"></div><label class="wager-option" id="wagerOption" hidden><input id="wagerCheckbox" type="checkbox"><span><strong>Рискую</strong><br>Верный ответ: 2 очка. Ошибка: −1 очко. Ставка доступна один раз за второй раунд.</span></label><div class="choices" id="choices"></div><div class="text-answer" id="textAnswerForm" hidden><label for="freeAnswer">Твой ответ</label><input id="freeAnswer" type="text" maxlength="120" autocomplete="off" aria-label="Твой ответ" placeholder="Напиши ответ своими словами"><button id="sendFreeAnswer" type="button">Отправить ответ</button></div><div class="closest-form" id="closestForm" hidden><label for="closestValue">Твой ответ</label><input id="closestValue" inputmode="decimal" autocomplete="off"><select id="closestUnitChoice" hidden aria-label="Единица ответа"></select><div class="unit-label" id="closestUnitLabel"></div><button class="action" id="submitClosest" type="button">Отправить ответ</button></div><p class="hint" id="answerMessage"></p><p class="hint" id="explanationPhone"></p>
 </section>
 <p id="message" aria-live="polite"></p>
 </main>
@@ -106,9 +108,10 @@ function renderPlayers(list){
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function startQuestion(data){
+ document.getElementById('roundWait').style.display='none';document.getElementById('phoneResults').style.display='none';
  started=true;answered=false;selectedAnswer=null;clearInterval(phoneTimer);document.getElementById('lobby').style.display='none';document.getElementById('profile').style.display='none';document.getElementById('play').style.display='block';
  const q=QuizGameModel.normalizeQuestion(data.question||data);q.answerOpen=data.answerOpen!==false;currentQuestion=q;
- document.getElementById('roundInfo').textContent=data.round&&data.total?'Вопрос '+data.round+' из '+data.total:'';
+ document.getElementById('roundInfo').textContent=q.roundTitle?'Раунд '+(q.roundIndex+1)+' · '+q.roundTitle+' · вопрос '+q.roundQuestionNumber+' из '+q.roundQuestionCount:data.round&&data.total?'Вопрос '+data.round+' из '+data.total:'';
  let left=Number(data.time)||0;document.getElementById('phoneTimer').textContent=data.answerOpen===false?'Слушаем…':left?left+' сек.':'';if(left&&data.answerOpen!==false)phoneTimer=setInterval(()=>{left=Math.max(0,left-1);document.getElementById('phoneTimer').textContent=left+' сек.';if(left===0)clearInterval(phoneTimer)},1000);
  document.getElementById('question').textContent=q.text;
  const closest=q.type==='closest',freeText=q.type==='free-text',choices=document.getElementById('choices'),form=document.getElementById('closestForm'),textForm=document.getElementById('textAnswerForm'),input=document.getElementById('closestValue');
@@ -119,16 +122,25 @@ function startQuestion(data){
  else if(closest){input.type=q.answerMode==='date'?'date':'number';input.step='any';input.inputMode='decimal';input.value='';input.disabled=data.answerOpen===false;input.placeholder=q.answerMode==='date'?'ГГГГ-ММ-ДД':'Число';const unitChoice=document.getElementById('closestUnitChoice'),units=q.answerMode==='number'?QuizGameModel.unitOptions(q.unit):[];unitChoice.replaceChildren(...units.map(unit=>{const option=document.createElement('option');option.value=unit;option.textContent=unit;return option}));unitChoice.disabled=false;unitChoice.hidden=units.length<2;document.getElementById('closestUnitLabel').textContent=q.answerMode==='date'?'Укажи дату':(q.unit?'Можно выбрать другую единицу измерения':'Единица не требуется');document.getElementById('submitClosest').disabled=data.answerOpen===false}
  else choices.innerHTML=q.answers.map((a,i)=>'<button class="choice" data-index="'+i+'">'+String.fromCharCode(1040+i)+'. '+escapeHtml(a)+'</button>').join('');
  if(!closest&&!freeText)choices.querySelectorAll('.choice').forEach(b=>{b.disabled=data.answerOpen===false;b.addEventListener('click',()=>{
-  if(answered||!currentQuestion.answerOpen)return;answered=true;selectedAnswer=Number(b.dataset.index);send({type:'answer',answer:selectedAnswer});
+  if(answered||!currentQuestion.answerOpen)return;answered=true;selectedAnswer=Number(b.dataset.index);send({type:'answer',answer:selectedAnswer,wager:q.allowWager&&wagerAvailable&&document.getElementById('wagerCheckbox').checked});document.getElementById('wagerCheckbox').disabled=true;
   choices.querySelectorAll('.choice').forEach(x=>x.disabled=true);
   document.getElementById('answerMessage').textContent='Ответ принят. Ждём остальных игроков…';
  });});
  if(data.answerOpen===false){document.getElementById('answerMessage').textContent='Слушаем фрагмент на экране ведущего…';if(freeText){document.getElementById('freeAnswer').disabled=true;document.getElementById('sendFreeAnswer').disabled=true}if(closest){document.getElementById('closestValue').disabled=true;document.getElementById('submitClosest').disabled=true}}
 }
 
+function showPhoneRound(data){
+ clearInterval(phoneTimer);currentQuestion=null;answered=false;
+ ['play','lobby','phoneResults'].forEach(id=>document.getElementById(id).style.display='none');
+ document.getElementById('roundWait').style.display='block';
+ document.getElementById('phoneRoundTitle').textContent='Раунд '+(data.roundIndex+1)+' из '+data.counts.length+' · '+data.title;
+ document.getElementById('phoneRoundRules').textContent=data.rules;
+ document.getElementById('phoneRoundScores').innerHTML=data.players.map(p=>escapeHtml(p.name)+' — '+p.score+' очков').join('<br>');
+}
 function syncWagerControl(){const option=document.getElementById('wagerOption'),checkbox=document.getElementById('wagerCheckbox');if(!option||!checkbox)return;option.hidden=!(currentQuestion&&currentQuestion.allowWager&&wagerAvailable);checkbox.disabled=answered||!wagerAvailable||!currentQuestion?.allowWager||!currentQuestion?.answerOpen}
 function renderReveal(data){
  clearInterval(phoneTimer);
+ if(currentQuestion)currentQuestion.answerOpen=false;
  const input=document.getElementById('freeAnswer'),submit=document.getElementById('sendFreeAnswer'),checkbox=document.getElementById('wagerCheckbox');
  if(input)input.disabled=true;if(submit)submit.disabled=true;if(checkbox)checkbox.disabled=true;
  document.getElementById('wagerOption').hidden=true;
@@ -141,7 +153,7 @@ function renderReveal(data){
  document.getElementById('answerMessage').textContent=(correct?'✅ Правильно!':'❌ Неправильно.')+wagerResult+' Правильный ответ: '+data.answerText;document.getElementById('explanationPhone').textContent=data.explanation||'';document.getElementById('phoneTimer').textContent='Раунд завершён';
 }
 document.getElementById('submitClosest').addEventListener('click',()=>{
- if(answered||!currentQuestion||currentQuestion.type!=='closest')return;
+ if(answered||!currentQuestion?.answerOpen||currentQuestion.type!=='closest')return;
  const input=document.getElementById('closestValue'),value=input.value.trim();
  const unit=document.getElementById('closestUnitChoice').value||currentQuestion.unit;
  const valid=currentQuestion.answerMode==='date'?QuizGameModel.parseDate(value)!==null:QuizGameModel.parseQuantity(value+' '+(unit||''),currentQuestion.unit)!==null;
@@ -162,6 +174,8 @@ function resetConnect(message){
  document.getElementById('profile').style.display='block';
  document.getElementById('lobby').style.display='none';
  document.getElementById('play').style.display='none';
+ document.getElementById('roundWait').style.display='none';
+ document.getElementById('phoneResults').style.display='none';
  document.getElementById('readyBtn').textContent='Готов';
  setMessage(message);
  connectBtn.disabled=false;
@@ -222,10 +236,12 @@ connectBtn.addEventListener('click',()=>{
     if(!joined)return;
     if(data.type==='players')renderPlayers(data.players);
     if(data.type==='question')startQuestion(data);
-    if(data.type==='answer-open'){document.querySelectorAll('.choice').forEach(button=>button.disabled=false);currentQuestion.answerOpen=true;document.getElementById('freeAnswer').disabled=false;document.getElementById('sendFreeAnswer').disabled=false;document.getElementById('closestValue').disabled=false;document.getElementById('submitClosest').disabled=false;syncWagerControl();document.getElementById('answerMessage').textContent='Время пошло — отправь ответ.';let left=Number(data.time)||0;clearInterval(phoneTimer);document.getElementById('phoneTimer').textContent=left+' сек.';phoneTimer=setInterval(()=>{left=Math.max(0,left-1);document.getElementById('phoneTimer').textContent=left+' сек.';if(left===0)clearInterval(phoneTimer)},1000)}
+    if(data.type==='round-break')showPhoneRound(data);
+    if(data.type==='new-game'){clearInterval(phoneTimer);currentQuestion=null;amReady=false;answered=false;wagerAvailable=true;document.getElementById('readyBtn').textContent='Готов';['play','roundWait','phoneResults'].forEach(id=>document.getElementById(id).style.display='none');document.getElementById('lobby').style.display='block';renderPlayers(data.players);}
+    if(data.type==='answer-open'&&currentQuestion){document.querySelectorAll('.choice').forEach(button=>button.disabled=false);currentQuestion.answerOpen=true;document.getElementById('freeAnswer').disabled=false;document.getElementById('sendFreeAnswer').disabled=false;document.getElementById('closestValue').disabled=false;document.getElementById('submitClosest').disabled=false;syncWagerControl();document.getElementById('answerMessage').textContent='Время пошло — отправь ответ.';let left=Number(data.time)||0;clearInterval(phoneTimer);document.getElementById('phoneTimer').textContent=left+' сек.';phoneTimer=setInterval(()=>{left=Math.max(0,left-1);document.getElementById('phoneTimer').textContent=left+' сек.';if(left===0)clearInterval(phoneTimer)},1000)}
     if(data.type==='wager-status'){wagerAvailable=data.available===true;syncWagerControl()}
     if(data.type==='reveal')renderReveal(data);
-    if(data.type==='game-over'){clearInterval(phoneTimer);document.getElementById('play').innerHTML='<h1>🏆 Игра завершена</h1><div class="resultBox">'+data.players.map((p,i)=>(i+1)+'. '+escapeHtml(p.name)+' — '+p.score+' очков').join('<br>')+'</div><p class="hint">Спасибо за игру!</p>';}
+    if(data.type==='game-over'){clearInterval(phoneTimer);currentQuestion=null;document.getElementById('play').style.display='none';document.getElementById('roundWait').style.display='none';document.getElementById('phoneResults').style.display='block';document.getElementById('phoneFinalScores').innerHTML=data.players.map((p,i)=>(i+1)+'. '+escapeHtml(p.name)+' — '+p.score+' очков').join('<br>');}
    });
    attemptConnection.on('close',()=>fail('Связь с ведущим потеряна. Имя сохранено — можно повторить подключение.'));
    attemptConnection.on('error',error=>fail(connectionErrorMessage(error)));

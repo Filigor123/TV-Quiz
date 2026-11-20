@@ -11,12 +11,14 @@ assert.equal(model.answerScore(false, false), 0, 'ordinary wrong answer stays 0'
 assert.equal(model.answerScore(true, true), 2, 'wagered correct answer is +2 total');
 assert.equal(model.answerScore(false, true), -1, 'wagered wrong answer is -1');
 
-const secondRound = { roundIndex: 1 };
+const secondRound = { roundIndex: 1, allowWager: true, type: 'free-text' };
 assert.equal(model.canUseWager(secondRound, false, true), true);
 assert.equal(model.canUseWager({ roundIndex: 0 }, false, true), false, 'round one cannot wager');
 assert.equal(model.canUseWager({ roundIndex: 2 }, false, true), false, 'round three cannot wager');
 assert.equal(model.canUseWager(secondRound, true, true), false, 'used wager cannot be reused');
 assert.equal(model.canUseWager(secondRound, false, false), false, 'not requested wager is ordinary');
+assert.equal(model.canUseWager({...secondRound,type:'closest'}, false, true), false, 'closest never wagers');
+assert.equal(model.canUseWager({roundIndex:1}, false, true), false, 'round must opt in');
 
 const internal = { id: 'p1', name: 'Игрок', score: -1, answer: 'secret', wagerUsed: true, currentWager: true, awarded: -1, isCorrect: false };
 const beforeReveal = JSON.parse(JSON.stringify(model.toPublicRoster([internal])))[0];

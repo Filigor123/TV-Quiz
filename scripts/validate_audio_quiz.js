@@ -48,7 +48,7 @@ assert.equal(model.isFreeTextCorrect({ correctAnswer: 'Windows XP' }, 'WIndwos X
 assert.equal(model.isFreeTextCorrect(free[1], 'Winodws 11'), false, 'unrelated typo is rejected');
 assert.equal(model.isFreeTextCorrect(free[1], ''), false);
 
-const wagerQuestion = { roundIndex: 1 };
+const wagerQuestion = { roundIndex: 1, allowWager: true, type: 'free-text' };
 assert.equal(model.canUseWager(wagerQuestion, false, true), true);
 assert.equal(model.canUseWager(wagerQuestion, true, true), false, 'wager is single use');
 assert.equal(model.canUseWager({ roundIndex: 2 }, false, true), false, 'round three has no wager');

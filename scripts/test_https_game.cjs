@@ -24,6 +24,7 @@ const root=path.resolve(__dirname,'..');
   }
   await host.waitForFunction(()=>!document.getElementById('startGame').disabled);
   await host.keyboard.press('ArrowDown');await host.keyboard.press('ArrowDown');await host.keyboard.press('Enter');
+  await host.locator('#beginRound').waitFor({state:'visible'});await host.locator('#beginRound').focus();await host.keyboard.press('Enter');
   await host.waitForFunction(()=>answerWindowOpen||!document.getElementById('continueQuestionBtn').hidden,{},{timeout:20000});
   if(await host.locator('#continueQuestionBtn').isVisible())await host.keyboard.press('Enter');
   await phones[0].waitForFunction(()=>document.querySelector('.choice')&&!document.querySelector('.choice').disabled);
