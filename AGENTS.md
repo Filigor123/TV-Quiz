@@ -37,6 +37,8 @@ Use plain HTML, CSS, and browser JavaScript; avoid adding a framework or depende
 
 ## Testing Guidelines
 
+Для релиза достаточно общих проверок браузерного сценария и опубликованной версии. Отдельные прогоны на физических LG и iPhone не входят в критерии готовности. Проверяем конкретное устройство, когда есть сообщение о проблеме на нём.
+
 No automated test framework or coverage requirement is configured. After changes, manually check host setup through room creation, player joining/readiness, answering, and results, as applicable. Check `join.html` at a narrow mobile width. For question-bank edits, verify that every question has four answers and a valid `correct` index, and that category/topic/difficulty values match the selectors in `index.html`.
 
 ## Commits & Pull Requests

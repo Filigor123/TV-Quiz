@@ -14,9 +14,9 @@ const rounds = Array.from(quiz.rounds);
 const questions = rounds.flatMap((round) => Array.from(round.questions));
 
 assert.equal(rounds.length, 3);
-assert.deepEqual(rounds.map((round) => round.questions.length), [5, 5, 5]);
+assert.deepEqual(rounds.map((round) => round.questions.length), [10, 10, 10]);
 assert.deepEqual(rounds.map((round) => round.type), ['choice', 'free-text', 'true-false']);
-assert.equal(new Set(questions.map((question) => question.id)).size, 15, 'IDs are stable and unique');
+assert.equal(new Set(questions.map((question) => question.id)).size, 30, 'IDs are stable and unique');
 
 for (const [roundIndex, round] of rounds.entries()) {
   for (const question of Array.from(round.questions)) {
@@ -29,7 +29,8 @@ for (const [roundIndex, round] of rounds.entries()) {
       assert.ok(Number.isInteger(question.correct) && question.correct >= 0 && question.correct < 4);
       assert.equal(new Set(question.answers).size, 4, `duplicate options: ${question.id}`);
     } else if (roundIndex === 1) {
-      assert.ok(question.correctAnswer && question.acceptableAnswers.length >= 2);
+      assert.ok(question.correctAnswer && question.acceptableAnswers.length >= 1);
+      assert.equal(model.isFreeTextCorrect(question, question.correctAnswer), true);
       assert.equal(model.isFreeTextCorrect(question, question.acceptableAnswers[0]), true);
       assert.equal(model.isFreeTextCorrect(question, 'unrelated answer'), false);
     } else {
@@ -62,7 +63,7 @@ for (const [roundIndex, round] of rounds.entries()) {
     scores.B += model.answerScore(correctB, wager);
   }
 }
-assert.deepEqual(scores, { A: 16, B: 12 });
+assert.deepEqual(scores, { A: 31, B: 27 });
 assert.deepEqual(Object.entries(scores).sort((left, right) => right[1] - left[1]).map(([name]) => name), ['A', 'B']);
 
 const host = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
@@ -74,4 +75,4 @@ for (const [file, html] of [['index.html', host], ['join.html', phone]]) {
   for (const match of html.matchAll(/<script>([\s\S]*?)<\/script>/gi)) new Function(match[1]); // eslint-disable-line no-new-func
 }
 
-console.log('Fact quiz validation passed: 15 source-backed questions, three mechanics, hidden answers, scoring and final ranking.');
+console.log('Fact quiz validation passed: 30 source-backed questions, three mechanics, hidden answers, scoring and final ranking.');

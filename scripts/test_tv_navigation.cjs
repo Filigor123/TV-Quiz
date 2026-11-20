@@ -53,7 +53,7 @@ async function main() {
   const focused=()=>page.locator(':focus');
   const key=async name=>{await page.keyboard.press(name);await page.waitForTimeout(35)};
   const legacy=async code=>{await page.evaluate(code=>document.dispatchEvent(new KeyboardEvent('keydown',{key:'Unidentified',keyCode:code,bubbles:true,cancelable:true})),code);await page.waitForTimeout(35)};
-  assert.equal(await page.locator('.catalog-card').count(),105);
+  assert.equal(await page.locator('.catalog-card').count(),106);
   const coverInventory=await page.locator('.catalog-card').evaluateAll(cards=>{
     const byQuiz=new Map();
     for(const card of cards)byQuiz.set(card.dataset.qi,card.querySelector('.card-art img')?.getAttribute('src'));
@@ -81,7 +81,7 @@ async function main() {
   await legacy(39);assert.match(await focused().getAttribute('data-card-id'),/Queen-medium$/);
   await legacy(39);assert.match(await focused().getAttribute('data-card-id'),/Мировые хиты-hard$/);
   await legacy(39);await legacy(39);await legacy(39);
-  assert.match(await focused().getAttribute('data-card-id'),/Мировые хиты-easy$/,'skip unavailable expert/extreme');
+  assert.match(await focused().getAttribute('data-card-id'),/Queen-easy$/,'newly playable Queen card after skipping unavailable expert/extreme');
   await legacy(40);assert.match(await focused().getAttribute('data-card-id'),/^Кино/);
   const selected=await focused().getAttribute('data-card-id');
   await legacy(13);assert.equal(await focused().getAttribute('id'),'backLobby','card opens QR directly');
@@ -118,7 +118,7 @@ async function main() {
   // Numeric quiz is a prepared catalog item, not the question editor.
   await page.goto(url);await page.waitForTimeout(60);
   await page.locator('.catalog-card[data-card-id="Эрудиция-Кто ближе?-easy"]').click();
-  assert.deepEqual(await page.evaluate(()=>deck.map(q=>q.type)),Array(10).fill('closest'));
+  assert.deepEqual(await page.evaluate(()=>deck.map(q=>q.type)),Array(30).fill('closest'));
   await page.evaluate(()=>{window.p1=testJoin('Первый');window.p2=testJoin('Второй')});
   await key('ArrowDown');await key('ArrowDown');await key('Enter');
   await page.locator('#beginRound').waitFor({state:'visible'});await key('Enter');
@@ -152,7 +152,7 @@ async function main() {
    Storage.prototype.setItem=()=>{throw new Error('Storage blocked')};
   });
   await fallback.goto(url);await fallback.waitForTimeout(60);
-  assert.equal(await fallback.locator('.catalog-card').count(),105);
+  assert.equal(await fallback.locator('.catalog-card').count(),106);
   assert.match(await fallback.locator(':focus').getAttribute('data-card-id'),/^Музыка/);
   await fallback.setViewportSize({width:390,height:844});
   assert.ok(await fallback.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'narrow host has no horizontal overflow');

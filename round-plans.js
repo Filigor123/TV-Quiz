@@ -46,11 +46,14 @@
   const finales = {};
   const extra=window.QUIZ_FINALE_EXTRAS;
   for(const [name,bank] of Object.entries({music,queen,pop,cinema,soviet,auto,geography,space,physics,logic}))bank.push(...extra[name]);
-  const register = (ids, title, type, questions) => ids.forEach(id => {finales[id] = {title, type, questions};});
+  const register = (ids, title, type, questions, requireMedia = false) => ids.forEach(id => {
+    finales[id] = {title, type, questions, requireMedia};
+  });
   register(['rock-legends','music-groups'], 'Группа по подсказкам', 'choice', music);
   register(['queen-story'], 'Досье Queen', 'choice', queen);
-  register(['pop-hits','music-hits'], 'Исполнитель по подсказкам', 'choice', pop);
-  register(['screen-worlds','big-cinema','film-cinema','film-makers'], 'Герой в ситуации', 'choice', cinema);
+  register(['pop-hits','music-hits'], 'Музыкальные подсказки', 'choice', [...pop, ...window.QUIZ_LICENSED_AUDIO], true);
+  register(['screen-worlds','big-cinema','film-cinema'], 'Герой в ситуации', 'choice', [...cinema, ...window.QUIZ_LICENSED_VIDEO], true);
+  register(['film-makers'], 'Герой в ситуации', 'choice', cinema);
   register(['soviet-cinema'], 'Узнай сюжет', 'choice', soviet);
   register(['auto-cars','auto-engine'], 'Автомифы: правда или вымысел', 'true-false', auto);
   register(['world-travel','geo-globe','geo-mountains'], 'Маршрут в числах', 'closest', geography);
@@ -63,25 +66,32 @@
     'Как называется знаменитая самодельная гитара Брайана Мэя?'
   ];
   finales['soviet-cinema'].excludeTexts = ['Какое устройство построил инженер Шурик Тимофеев в фильме «Иван Васильевич меняет профессию»?'];
+  for (const id of ['rock-legends','music-groups']) finales[id].excludeTexts = [
+    'Какую группу называют «ливерпульской четвёркой»?',
+    'Какая группа выпустила альбом «The Dark Side of the Moon»?',
+    'Какая группа выпустила «Smells Like Teen Spirit»?',
+  ];
+  for (const id of ['pop-hits','music-hits']) finales[id].excludeTexts = ['Какой певец известен альбомом Purple Rain?'];
+  for (const id of ['screen-worlds','big-cinema','film-cinema','film-makers']) finales[id].excludeTexts = [
+    'Как зовут мальчика, который путешествует во времени в трилогии «Назад в будущее»?',
+  ];
 
   function plan(quiz, pool) {
     if (quiz.multiRound) return extendFinal(window.QUIZ_SLENG.rounds,extra.slang);
-    if (quiz.multiQuiz) return extendFinal(quiz.multiQuiz.rounds,
-      quiz.multiQuiz===window.QUIZ_AUDIO?window.QUIZ_LICENSED_AUDIO:
-      quiz.multiQuiz===window.QUIZ_MEDIA_PREVIEW?window.QUIZ_LICENSED_VIDEO:extra.facts);
-    if (quiz.id === 'closest-numbers') return [
-      {title:'Время и счёт',type:'closest',questions:pool.slice(0,4)},
-      {title:'Размеры и формы',type:'closest',questions:pool.slice(4,7)},
-      {title:'Числовые задачи',type:'closest',questionLimit:3,questions:[...pool.slice(7),...extra.logic]}
-    ];
+    if (quiz.multiQuiz === window.QUIZ_AUDIO) return extendFinal(quiz.multiQuiz.rounds, window.QUIZ_LICENSED_AUDIO);
+    if (quiz.multiQuiz === window.QUIZ_MEDIA_PREVIEW) return extendFinal(quiz.multiQuiz.rounds, window.QUIZ_LICENSED_VIDEO);
+    if (quiz.multiQuiz === window.QUIZ_FACTS) return extendFinal(quiz.multiQuiz.rounds, extra.facts);
+    if (quiz.multiQuiz) return quiz.multiQuiz.rounds;
+    if (quiz.id === 'closest-numbers') return window.QUIZ_CLOSEST_ROUNDS;
     const finale = finales[quiz.id];
     if (!finale) return [];
-    const unique = [...new Map(pool.filter(q=>!(finale.excludeTexts||[]).includes(q.text)).map(q => [q.text,q])).values()];
+    const unique = [...new Map(pool.filter(q=>!(finale.excludeTexts||[]).includes(q.text))
+      .map(q => [q.text+'\0'+(q.media?.src||''),q])).values()];
     const split = Math.ceil(Math.min(20,unique.length)/2);
     return [
       {title:'Разминка',type:'choice',questions:unique.slice(0,split)},
       {title:'Проверка знаний',type:'choice',allowWager:true,questions:unique.slice(split,20)},
-      {...finale,questionLimit:4}
+      {...finale,questionLimit:10}
     ];
   }
   function extendFinal(rounds,questions){return rounds.map((r,i)=>i===2?{...r,questionLimit:Math.min(10,r.questions.length),questions:[...r.questions,...questions]}:r);}
@@ -93,6 +103,10 @@
       if(i!==2)return r.questions.slice(0,count);
       const pool=r.questions.slice();
       for(let j=pool.length-1;j>0;j--){const k=Math.floor(random()*(j+1));[pool[j],pool[k]]=[pool[k],pool[j]];}
+      if(r.requireMedia){
+        const mediaIndex=pool.findIndex(q=>q.media);
+        if(mediaIndex>0)[pool[0],pool[mediaIndex]]=[pool[mediaIndex],pool[0]];
+      }
       const picked=pool.slice(0,count),previous=previousFinals.get(key);
       const id=q=>q.id||q.text;
       // A replay must change the set, even when the random draw repeats it.
